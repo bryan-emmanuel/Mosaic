@@ -51,7 +51,7 @@ public class OpenIdAuthenticator {
             throws ServletException, IOException {
         String op = request.getParameter("op");
         if (op == null) {
-            // check sign on result from Google or Yahoo:
+            request.setCharacterEncoding("UTF-8");
         	Nonce.storeNonce(request.getParameter("openid.response_nonce"), databaseManager);
             // get authentication:
             byte[] mac_key = (byte[]) request.getSession().getAttribute(ATTR_MAC);
@@ -59,7 +59,13 @@ public class OpenIdAuthenticator {
             Authentication authentication = manager.getAuthentication(request, mac_key, alias);
             response.setContentType("text/html; charset=UTF-8");
             Account.storeAccount(databaseManager, authentication.getIdentity(), authentication.getFirstname(), authentication.getLastname(), authentication.getEmail(), authentication.getGender(), authentication.getLanguage());
-            showAuthentication(response.getWriter(), authentication);
+			PrintWriter pw = response.getWriter();
+			pw.print("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><title>Mosaic</title></head><body>");
+			pw.print("<h1>Welcome, " + authentication.getFullname() + "</h1>");
+			pw.print("<p><a href=\"openid?op=Google\">Google</a></p>");
+			pw.print("<p><a href=\"openid?op=Yahoo\">Yahoo</a></p>");
+			pw.print("</body></html>");
+			pw.flush();
             return;
         }
         if (op.equals("Google") || op.equals("Yahoo")) {
@@ -73,18 +79,5 @@ public class OpenIdAuthenticator {
         }
         else
             throw new ServletException("Unsupported OP: " + op);
-    }
-
-    private void showAuthentication(PrintWriter pw, Authentication auth) {
-        pw.print("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><title>Test JOpenID</title></head><body><h1>You have successfully signed on!</h1>");
-        pw.print("<p>Identity: " + auth.getIdentity() + "</p>");
-        pw.print("<p>Email: " + auth.getEmail() + "</p>");
-        pw.print("<p>Full name: " + auth.getFullname() + "</p>");
-        pw.print("<p>First name: " + auth.getFirstname() + "</p>");
-        pw.print("<p>Last name: " + auth.getLastname() + "</p>");
-        pw.print("<p>Gender: " + auth.getGender() + "</p>");
-        pw.print("<p>Language: " + auth.getLanguage() + "</p>");
-        pw.print("</body></html>");
-        pw.flush();
     }
 }
