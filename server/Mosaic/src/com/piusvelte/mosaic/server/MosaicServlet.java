@@ -22,10 +22,6 @@ package com.piusvelte.mosaic.server;
 import java.io.IOException;
 import javax.servlet.http.*;
 
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.oauth.OAuthRequestException;
-import com.google.appengine.api.oauth.OAuthService;
-import com.google.appengine.api.oauth.OAuthServiceFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -39,23 +35,10 @@ public class MosaicServlet extends HttpServlet {
 		UserService userService = UserServiceFactory.getUserService();
 		resp.setContentType("text/html");
 		if (userService.isUserLoggedIn()) {
-			Entity user = Users.store(userService.getCurrentUser());
-			resp.getWriter().println("<p>Welcome, " + user.getProperty(Users.Columns.nickname.name()) + "</p>");
-		} else {
-			User user = null;
-			try {
-				OAuthService oauth = OAuthServiceFactory.getOAuthService();
-				user = oauth.getCurrentUser();
-			} catch (OAuthRequestException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			User user = userService.getCurrentUser();
+			resp.getWriter().println("<p>Welcome, " + user.getNickname() + "</p>");
+		} else
 			resp.getWriter().println("<p>Please <a href=\"" + userService.createLoginURL(url) + "\">sign in</a>.</p>");
-		}
-	}
-	
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
 	}
 
 }

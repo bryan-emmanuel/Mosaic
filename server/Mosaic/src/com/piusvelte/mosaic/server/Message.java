@@ -20,11 +20,19 @@
 package com.piusvelte.mosaic.server;
 
 public class Message {
-	
-	public static final String Table = "messages";
-	
-	public static enum Columns {
-		id, body, created, latitude, longitude, radius, expiry;
-	}
 
+	public static final String kind = "message";
+	public static final String body = "body";
+	public static final String created = "created";
+	public static final String latitude = "latitude";
+	public static final String minlatitude = "minlatitude";
+	public static final String maxlatitude = "maxlatitude";
+	public static final String longitude = "longitude";
+	public static final String minlongitude = "minlongitude";
+	public static final String maxlongitude = "maxlongitude";
+	public static final String radius = "radius";
+	public static final String expiry = "expiry";
+	public static final String visits = "visits";
+	public static final String reports = "reports";
+	
 }

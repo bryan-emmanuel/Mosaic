@@ -7,6 +7,14 @@
 		<servlet-name>Mosaic</servlet-name>
 		<url-pattern>/mosaic</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Messages</servlet-name>
+		<servlet-class>com.piusvelte.mosaic.server.MessagesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Messages</servlet-name>
+		<url-pattern>/messages</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
