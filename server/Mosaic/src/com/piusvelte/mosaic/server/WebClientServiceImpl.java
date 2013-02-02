@@ -31,16 +31,17 @@ WebClientService {
 	final static public UserService userService = UserServiceFactory.getUserService();
 
 	@Override
-	public boolean isUserLoggedIn() throws IllegalArgumentException {
-		return userService.isUserLoggedIn();
-	}
-
-	@Override
 	public String getUserNickname() throws IllegalArgumentException {
-		if (userService.isUserLoggedIn()) {
+		if (userService.isUserLoggedIn())
 			return userService.getCurrentUser().getNickname();
-		} else
-			throw new IllegalArgumentException("Please log in");
+		return "Please sign in";
+	}
+	
+	@Override
+	public String getAuthenticationURL() throws IllegalArgumentException {
+		if (userService.isUserLoggedIn())
+			return userService.createLogoutURL(this.getThreadLocalRequest().getRequestURI());
+		return userService.createLoginURL(this.getThreadLocalRequest().getRequestURI());
 	}
 	
 }

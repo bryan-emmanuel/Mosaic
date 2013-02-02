@@ -27,6 +27,6 @@ public interface WebClientService extends RemoteService {
 
 	String getUserNickname() throws IllegalArgumentException;
 	
-	boolean isUserLoggedIn() throws IllegalArgumentException;
+	String getAuthenticationURL() throws IllegalArgumentException;
 	
 }

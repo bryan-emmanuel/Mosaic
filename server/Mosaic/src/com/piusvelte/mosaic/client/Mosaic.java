@@ -43,23 +43,45 @@ public class Mosaic implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button loginButton = new Button("Please log in");
+		final Button authButton = new Button("Please log in");
+		authButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				webClientService.getAuthenticationURL(
+						new AsyncCallback<String>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								// show error
+							}
+
+							@Override
+							public void onSuccess(String result) {
+								// TODO Auto-generated method stub
+								// redirect to result
+							}
+							
+						});
+			}
+		
+		});
 		
 		webClientService.getUserNickname(
 				new AsyncCallback<String>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						loginButton.setText(caught.toString());
+						authButton.setText(caught.toString());
 					}
 
 					@Override
 					public void onSuccess(String result) {
-						loginButton.setText(result);
+						authButton.setText(result);
 					}
 					
 				});
-		
 		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();

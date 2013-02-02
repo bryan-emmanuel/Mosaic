@@ -23,10 +23,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface WebClientServiceAsync {
 	
-	void isUserLoggedIn(
-		    AsyncCallback<Boolean> callback);
-	
 	void getUserNickname(
+			AsyncCallback<String> callback);
+	
+	void getAuthenticationURL(
 			AsyncCallback<String> callback);
 	
 }
