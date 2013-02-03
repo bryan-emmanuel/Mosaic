@@ -21,6 +21,7 @@ package com.piusvelte.mosaic.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.piusvelte.mosaic.shared.WebClientMessage;
 
 @RemoteServiceRelativePath("webclient")
 public interface WebClientService extends RemoteService {
@@ -28,5 +29,7 @@ public interface WebClientService extends RemoteService {
 	String getUserNickname() throws IllegalArgumentException;
 
 	String getAuthenticationURL(String url) throws IllegalArgumentException;
+	
+	WebClientMessage[] getMessages(int page) throws IllegalArgumentException;
 	
 }

@@ -23,6 +23,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.piusvelte.mosaic.client.WebClientService;
+import com.piusvelte.mosaic.shared.WebClientMessage;
 
 @SuppressWarnings("serial")
 public class WebClientServiceImpl extends RemoteServiceServlet implements
@@ -34,7 +35,7 @@ WebClientService {
 	public String getUserNickname() throws IllegalArgumentException {
 		if (userService.isUserLoggedIn())
 			return userService.getCurrentUser().getNickname();
-		return "Please sign in";
+		throw new IllegalArgumentException("Sign in");
 	}
 	
 	@Override
@@ -42,6 +43,13 @@ WebClientService {
 		if (userService.isUserLoggedIn())
 			return userService.createLogoutURL(url);
 		return userService.createLoginURL(url);
+	}
+	
+	@Override
+	public WebClientMessage[] getMessages(int page) throws IllegalArgumentException {
+		if (userService.isUserLoggedIn())
+			return Message.getMessages(userService.getCurrentUser(), page);
+		throw new IllegalArgumentException("Please sign in to view messages.");
 	}
 	
 }

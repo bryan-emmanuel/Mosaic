@@ -21,15 +21,22 @@ package com.piusvelte.mosaic.server;
 
 import java.util.List;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.oauth.OAuthRequestException;
+import com.google.appengine.api.oauth.OAuthServiceFactory;
+import com.google.appengine.api.users.User;
 import com.google.appengine.labs.repackaged.org.json.JSONArray;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import com.piusvelte.mosaic.shared.WebClientMessage;
 
 public class Message {
 
@@ -117,6 +124,26 @@ public class Message {
 		newMessage.setProperty(Message.expiry, exp);
 		//TODO: calc range
 		return newMessage;
+	}
+	
+	public static WebClientMessage[] getMessages(User user, int page) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query query = new Query(Message.kind);
+		query.setAncestor(MosaicUser.getUserKey(user));
+		List<Entity> messages = datastore.prepare(query).asList(FetchOptions.Builder.withOffset(page).limit(10));
+		WebClientMessage[] webClientMessages = new WebClientMessage[messages.size()];
+		int i = 0;
+		for (Entity message : messages) {
+			WebClientMessage webClientMessage = new WebClientMessage();
+			webClientMessage.id = message.getKey().getId();
+			webClientMessage.body = (String) message.getProperty(body);
+			webClientMessage.latitude = (Long) message.getProperty(latitude);
+			webClientMessage.longitude = (Long) message.getProperty(longitude);
+			webClientMessage.radius = (Integer) message.getProperty(radius);
+			webClientMessage.expiry = (Long) message.getProperty(expiry);
+			webClientMessages[i++] = webClientMessage;
+		}
+		return webClientMessages;
 	}
 	
 }

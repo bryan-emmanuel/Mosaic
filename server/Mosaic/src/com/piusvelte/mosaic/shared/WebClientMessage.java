@@ -17,22 +17,15 @@
  *  
  *  Bryan Emmanuel piusvelte@gmail.com
  */
-package com.piusvelte.mosaic.client;
+package com.piusvelte.mosaic.shared;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.piusvelte.mosaic.shared.WebClientMessage;
-
-public interface WebClientServiceAsync {
+public class WebClientMessage {
 	
-	void getUserNickname(
-			AsyncCallback<String> callback);
-	
-	void getAuthenticationURL(
-			String url,
-			AsyncCallback<String> callback);
-	
-	void getMessages(
-			int page,
-			AsyncCallback<WebClientMessage[]> callback);
+	public long id;
+	public String body;
+	public long latitude;
+	public long longitude;
+	public int radius;
+	public long expiry;
 	
 }
