@@ -38,10 +38,10 @@ WebClientService {
 	}
 	
 	@Override
-	public String getAuthenticationURL() throws IllegalArgumentException {
+	public String getAuthenticationURL(String url) throws IllegalArgumentException {
 		if (userService.isUserLoggedIn())
-			return userService.createLogoutURL(this.getThreadLocalRequest().getRequestURI());
-		return userService.createLoginURL(this.getThreadLocalRequest().getRequestURI());
+			return userService.createLogoutURL(url);
+		return userService.createLoginURL(url);
 	}
 	
 }

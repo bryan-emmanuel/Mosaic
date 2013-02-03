@@ -27,6 +27,7 @@ public interface WebClientServiceAsync {
 			AsyncCallback<String> callback);
 	
 	void getAuthenticationURL(
+			String url,
 			AsyncCallback<String> callback);
 	
 }

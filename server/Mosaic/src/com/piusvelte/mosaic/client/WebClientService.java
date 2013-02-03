@@ -26,7 +26,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface WebClientService extends RemoteService {
 
 	String getUserNickname() throws IllegalArgumentException;
-	
-	String getAuthenticationURL() throws IllegalArgumentException;
+
+	String getAuthenticationURL(String url) throws IllegalArgumentException;
 	
 }

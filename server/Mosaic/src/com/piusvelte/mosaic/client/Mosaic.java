@@ -1,21 +1,16 @@
 package com.piusvelte.mosaic.client;
 
-import com.piusvelte.mosaic.shared.FieldVerifier;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -30,77 +25,11 @@ public class Mosaic implements EntryPoint {
 			+ "attempting to contact the server. Please check your network "
 			+ "connection and try again.";
 
-	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
-	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
-	
 	private final WebClientServiceAsync webClientService = GWT
 			.create(WebClientService.class);
-
-	/**
-	 * This is the entry point method.
-	 */
+	
 	public void onModuleLoad() {
-		final Button authButton = new Button("Please log in");
-		authButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				webClientService.getAuthenticationURL(
-						new AsyncCallback<String>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								// show error
-							}
-
-							@Override
-							public void onSuccess(String result) {
-								// TODO Auto-generated method stub
-								// redirect to result
-							}
-							
-						});
-			}
 		
-		});
-		
-		webClientService.getUserNickname(
-				new AsyncCallback<String>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						authButton.setText(caught.toString());
-					}
-
-					@Override
-					public void onSuccess(String result) {
-						authButton.setText(result);
-					}
-					
-				});
-		
-		final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
-		final Label errorLabel = new Label();
-
-		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
-
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("errorLabelContainer").add(errorLabel);
-
-		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
-
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
 		dialogBox.setText("Remote Procedure Call");
@@ -124,74 +53,53 @@ public class Mosaic implements EntryPoint {
 		closeButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
 			}
 		});
+		
+		final Button authButton = new Button("Please log in");
+		RootPanel.get("authContainer").add(authButton);
+		authButton.addClickHandler(new ClickHandler() {
 
-		// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
-			 * Fired when the user clicks on the sendButton.
-			 */
+			@Override
 			public void onClick(ClickEvent event) {
-				sendNameToServer();
-			}
-
-			/**
-			 * Fired when the user types in the nameField.
-			 */
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					sendNameToServer();
-				}
-			}
-
-			/**
-			 * Send the name from the nameField to the server and wait for a response.
-			 */
-			private void sendNameToServer() {
-				// First, we validate the input.
-				errorLabel.setText("");
-				String textToServer = nameField.getText();
-				if (!FieldVerifier.isValidName(textToServer)) {
-					errorLabel.setText("Please enter at least four characters");
-					return;
-				}
-
-				// Then, we send the input to the server.
-				sendButton.setEnabled(false);
-				textToServerLabel.setText(textToServer);
-				serverResponseLabel.setText("");
-				
-				greetingService.greetServer(textToServer,
+				webClientService.getAuthenticationURL(
+						Window.Location.getHref(),
 						new AsyncCallback<String>() {
+
+							@Override
 							public void onFailure(Throwable caught) {
-								// Show the RPC error message to the user
 								dialogBox
-										.setText("Remote Procedure Call - Failure");
+								.setText("Remote Procedure Call - Failure");
 								serverResponseLabel
-										.addStyleName("serverResponseLabelError");
+								.addStyleName("serverResponseLabelError");
 								serverResponseLabel.setHTML(SERVER_ERROR);
 								dialogBox.center();
 								closeButton.setFocus(true);
 							}
 
+							@Override
 							public void onSuccess(String result) {
-								dialogBox.setText("Remote Procedure Call");
-								serverResponseLabel
-										.removeStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(result);
-								dialogBox.center();
-								closeButton.setFocus(true);
+								Window.Location.replace(result);
 							}
+
 						});
 			}
-		}
 
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler);
+		});
+
+		webClientService.getUserNickname(
+				new AsyncCallback<String>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						//
+					}
+
+					@Override
+					public void onSuccess(String result) {
+						authButton.setText(result);
+					}
+
+				});
 	}
 }
