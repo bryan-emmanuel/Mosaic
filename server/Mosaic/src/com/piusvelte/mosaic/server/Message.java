@@ -90,6 +90,11 @@ public class Message {
 				new FilterPredicate(coordinate, FilterOperator.LESS_THAN_OR_EQUAL, max));
 	}
 	
+	public static String jsonFromRequest(String latitude, String longitude, String self, Key userKey) throws Exception {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		return jsonFromEntities(datastore.prepare(getMessagesQuery(latitude, longitude, self, userKey)).asList(FetchOptions.Builder.withDefaults()));
+	}
+	
 	public static String jsonFromEntities(List<Entity> messages) throws Exception {
 		JSONArray jarr = new JSONArray();
 		for (Entity message : messages) {

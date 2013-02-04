@@ -48,10 +48,9 @@ public class MessagesServlet extends HttpServlet {
 			throws IOException {
 		try {
 			Key userKey = MosaicUser.getUserKey(OAuthServiceFactory.getOAuthService().getCurrentUser());
-			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 			JSONObject responseObj = new JSONObject();
 			try {
-				responseObj.put(Message.kind, Message.jsonFromEntities(datastore.prepare(Message.getMessagesQuery(req.getParameter(lat), req.getParameter(lon), req.getParameter(self), userKey)).asList(FetchOptions.Builder.withDefaults())));
+				responseObj.put(Message.kind, Message.jsonFromRequest(req.getParameter(lat), req.getParameter(lon), req.getParameter(self), userKey));
 				resp.setContentType("application/json");
 				resp.getWriter().write(responseObj.toString());
 			} catch (JSONException e) {

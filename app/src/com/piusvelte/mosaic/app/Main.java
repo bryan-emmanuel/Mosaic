@@ -27,19 +27,25 @@ import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
 
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.provider.Settings;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.webkit.WebView;
 
-public class Main extends Activity {
+public class Main extends Activity implements ServiceConnection {
+	
+	//TODO: need to call
+	// GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(context)
 
 	private static final String preferenceToken = "oauth_token";
 	private static final String preferenceSecret = "oauth_secret";
@@ -50,6 +56,7 @@ public class Main extends Activity {
 	private MessageLoader messageLoader;
 	private ProgressDialog loadingDialog;
 	protected List<Message> messages = new ArrayList<Message>();
+	private ILocationService iLocationService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +77,7 @@ public class Main extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setCoordinates();
+		bindService(new Intent(getApplicationContext(), LocationService.class), this, BIND_AUTO_CREATE);
 		if (hasSignedIn()) {
 			loadMessages();
 		} else {
@@ -153,14 +160,64 @@ public class Main extends Activity {
 		} else
 			finish();
 	}
-
-	private void setCoordinates() {
-		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		if (location != null) {
-			latitude = (int) (location.getLatitude() * 1E6);
-			longitude = (int) (location.getLongitude() * 1E6);
+	
+	private void enableGPSPrompt() {
+		new AlertDialog.Builder(getApplicationContext())
+		.setTitle("GPS Settings")
+		.setMessage("Please enable GPS.")
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+			}
+		})
+		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				finish();
+			}
+		})
+		.show();
+	}
+	
+	private IMain.Stub iMain = new IMain.Stub() {
+		
+		@Override
+		public void setGPSEnabled(boolean enabled) throws RemoteException {
+			// TODO Auto-generated method stub
+			if (!enabled)
+				enableGPSPrompt();
 		}
+		
+		@Override
+		public void setCoordinates(int latitude, int longitude)
+				throws RemoteException {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+
+	@Override
+	public void onServiceConnected(ComponentName name, IBinder service) {
+		// TODO Auto-generated method stub
+		iLocationService = ILocationService.Stub.asInterface(service);
+		try {
+			iLocationService.setCallback(iMain);
+			iLocationService.checkGPS();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onServiceDisconnected(ComponentName name) {
+		// TODO Auto-generated method stub
+		iLocationService = null;
 	}
 
 }
