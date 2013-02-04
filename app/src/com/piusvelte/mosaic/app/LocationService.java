@@ -17,18 +17,18 @@
  *  
  *  Bryan Emmanuel piusvelte@gmail.com
  */
-package com.piusvelte.mosaic.client;
+package com.piusvelte.mosaic.app;
 
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
-@RemoteServiceRelativePath("webclient")
-public interface WebClientService extends RemoteService {
+public class LocationService extends Service {
 
-	String getUserNickname() throws IllegalArgumentException;
+	@Override
+	public IBinder onBind(Intent arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	String getAuthenticationURL(String url) throws IllegalArgumentException;
-	
-	WebClientMessage[] getMessages(int page) throws IllegalArgumentException;
-	
 }

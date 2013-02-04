@@ -71,6 +71,7 @@ public class MessagesServlet extends HttpServlet {
 			throws IOException {
 		try {
 			User user = OAuthServiceFactory.getOAuthService().getCurrentUser();
+			//TODO: handle creating a message
 		} catch (OAuthRequestException e) {
 			resp.setStatus(401);
 		}

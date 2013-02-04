@@ -1,6 +1,8 @@
 com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
 com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
 com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+com.piusvelte.mosaic.client.WebClientMessage, true, true, false, false, com.piusvelte.mosaic.client.WebClientMessage/938019498, 938019498
+[Lcom.piusvelte.mosaic.client.WebClientMessage;, true, true, false, false, [Lcom.piusvelte.mosaic.client.WebClientMessage;/666516633, 666516633
 com.piusvelte.mosaic.client.WebClientService, false, false, false, false, _, 1825339870
 java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
 java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560

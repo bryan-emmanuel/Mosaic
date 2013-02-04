@@ -36,7 +36,7 @@ import com.google.appengine.api.oauth.OAuthServiceFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.labs.repackaged.org.json.JSONArray;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
-import com.piusvelte.mosaic.shared.WebClientMessage;
+import com.piusvelte.mosaic.client.WebClientMessage;
 
 public class Message {
 
@@ -122,6 +122,7 @@ public class Message {
 		newMessage.setProperty(Message.longitude, lon);
 		newMessage.setProperty(Message.radius, rad);
 		newMessage.setProperty(Message.expiry, exp);
+		newMessage.setProperty(Message.created, System.currentTimeMillis());
 		//TODO: calc range
 		return newMessage;
 	}
@@ -137,10 +138,11 @@ public class Message {
 			WebClientMessage webClientMessage = new WebClientMessage();
 			webClientMessage.id = message.getKey().getId();
 			webClientMessage.body = (String) message.getProperty(body);
-			webClientMessage.latitude = (Long) message.getProperty(latitude);
-			webClientMessage.longitude = (Long) message.getProperty(longitude);
+			webClientMessage.latitude = (Integer) message.getProperty(latitude);
+			webClientMessage.longitude = (Integer) message.getProperty(longitude);
 			webClientMessage.radius = (Integer) message.getProperty(radius);
 			webClientMessage.expiry = (Long) message.getProperty(expiry);
+			webClientMessage.created = (Long) message.getProperty(created);
 			webClientMessages[i++] = webClientMessage;
 		}
 		return webClientMessages;

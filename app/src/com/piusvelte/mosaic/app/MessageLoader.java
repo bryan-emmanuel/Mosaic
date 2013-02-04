@@ -19,34 +19,44 @@
  */
 package com.piusvelte.mosaic.app;
 
+import org.apache.http.client.methods.HttpGet;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.AsyncTask;
 
-public class MessageLoader extends AsyncTask<Void, String, Void> {
+public class MessageLoader extends AsyncTask<Void, Void, Void> {
 	
 	private Main activity;
-	private String token;
-	private String secret;
 	
-	public MessageLoader(Main activity, String token, String secret) {
+	public MessageLoader(Main activity) {
 		this.activity = activity;
-		this.token = token;
-		this.secret = secret;
 	}
 
 	@Override
 	protected Void doInBackground(Void... arg0) {
-		// TODO Auto-generated method stub
+		String msgsResponse = HttpClientManager.httpResponse(activity.getApplicationContext(),
+				activity.oAuthManager.getSignedRequest(new HttpGet("http://mosaic-messaging.appspot.com/messages?lat=" + activity.latitude + "&longitude=" + activity.longitude)));
+		if (msgsResponse != null) {
+			try {
+				JSONObject msgsJobj = new JSONObject(msgsResponse);
+				if (msgsJobj.has("message")) {
+					activity.messages.clear();
+					JSONArray msgsJarr = msgsJobj.getJSONArray("message");
+					for (int i = 0, l = msgsJarr.length(); i < l; i++)
+						activity.messages.add(Message.messageFromJSON(msgsJarr.getJSONObject(i)));
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 	
 	@Override
-	protected void onProgressUpdate(String... values) {
-		
-	}
-	
-	@Override
 	protected void onPostExecute(Void result) {
-		
+		activity.reloadMessagesList();
 	}
 
 }

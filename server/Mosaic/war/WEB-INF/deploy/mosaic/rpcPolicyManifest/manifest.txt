@@ -1,3 +1,3 @@
 # Module mosaic
 # RPC service class, partial path of RPC policy file
-com.piusvelte.mosaic.client.WebClientService, E49AC3C14E8B6B0FCCE9C2A6DD5A2065.gwt.rpc
+com.piusvelte.mosaic.client.WebClientService, CF03CBD6705F6903209F7F042C24E269.gwt.rpc

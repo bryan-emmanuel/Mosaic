@@ -17,15 +17,36 @@
  *  
  *  Bryan Emmanuel piusvelte@gmail.com
  */
-package com.piusvelte.mosaic.shared;
+package com.piusvelte.mosaic.app;
 
-public class WebClientMessage {
-	
-	public long id;
-	public String body;
-	public long latitude;
-	public long longitude;
-	public int radius;
-	public long expiry;
-	
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
+
+public class MosaicLocationListener implements LocationListener {
+
+	@Override
+	public void onLocationChanged(Location arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

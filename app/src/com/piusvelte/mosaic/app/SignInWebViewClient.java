@@ -17,18 +17,35 @@
  *  
  *  Bryan Emmanuel piusvelte@gmail.com
  */
-package com.piusvelte.mosaic.client;
+package com.piusvelte.mosaic.app;
 
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import static oauth.signpost.OAuth.OAUTH_VERIFIER;
 
-@RemoteServiceRelativePath("webclient")
-public interface WebClientService extends RemoteService {
+import android.net.Uri;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-	String getUserNickname() throws IllegalArgumentException;
-
-	String getAuthenticationURL(String url) throws IllegalArgumentException;
+public class SignInWebViewClient extends WebViewClient {
 	
-	WebClientMessage[] getMessages(int page) throws IllegalArgumentException;
+	Main activity;
 	
+	public SignInWebViewClient(Main activity) {
+		this.activity = activity;
+	}
+
+	@Override
+	public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		if (url != null) {
+			Uri uri = Uri.parse(url);
+			uri.getQueryParameter(OAUTH_VERIFIER);
+			// return OAUTH_VERIFIER to activity
+		}
+		return true;
+	}
+	
+	@Override
+	public void onPageFinished(WebView view, String url) {
+		
+	}
+
 }

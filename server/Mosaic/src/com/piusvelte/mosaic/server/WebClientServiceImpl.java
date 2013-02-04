@@ -22,8 +22,8 @@ package com.piusvelte.mosaic.server;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.piusvelte.mosaic.client.WebClientMessage;
 import com.piusvelte.mosaic.client.WebClientService;
-import com.piusvelte.mosaic.shared.WebClientMessage;
 
 @SuppressWarnings("serial")
 public class WebClientServiceImpl extends RemoteServiceServlet implements

@@ -19,16 +19,16 @@
  */
 package com.piusvelte.mosaic.client;
 
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-@RemoteServiceRelativePath("webclient")
-public interface WebClientService extends RemoteService {
-
-	String getUserNickname() throws IllegalArgumentException;
-
-	String getAuthenticationURL(String url) throws IllegalArgumentException;
+public class WebClientMessage implements IsSerializable {
 	
-	WebClientMessage[] getMessages(int page) throws IllegalArgumentException;
+	public long id;
+	public String body;
+	public int latitude;
+	public int longitude;
+	public int radius;
+	public long expiry;
+	public long created;
 	
 }

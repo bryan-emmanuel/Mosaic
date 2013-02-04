@@ -21,14 +21,42 @@ package com.piusvelte.mosaic.app;
 
 import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Message extends HashMap<String, String> {
 
 	public enum Properties {
-		key, body, latitude, longitude, radius, expiry, created;
+		id, body, latitude, longitude, radius, expiry, created, userid, nickname;
 	}
 	
-	public void setKey(String key) {
-		this.put(Properties.key.name(), key);
+	public Message(String id, String body, String latitude, String longitude, String radius, String expiry, String created, String userId, String nickname) {
+		setId(id);
+		setBody(body);
+		setLatitude(latitude);
+		setLongitude(longitude);
+		setRadius(radius);
+		setExpiry(expiry);
+		setCreated(created);
+		setUserId(userId);
+		setNickname(nickname);
+	}
+	
+	public static Message messageFromJSON(JSONObject msg) throws JSONException {
+		JSONObject usr = msg.getJSONObject("user");
+		return new Message(msg.getString(Properties.id.name()),
+				msg.getString(Properties.body.name()),
+				msg.getString(Properties.latitude.name()),
+				msg.getString(Properties.longitude.name()),
+				msg.getString(Properties.radius.name()),
+				msg.getString(Properties.expiry.name()),
+				msg.getString(Properties.created.name()),
+				usr.getString(Properties.id.name()),
+				usr.getString(Properties.nickname.name()));
+	}
+	
+	public void setId(String key) {
+		this.put(Properties.id.name(), key);
 	}
 	
 	public void setBody(String body) {
@@ -53,6 +81,14 @@ public class Message extends HashMap<String, String> {
 	
 	public void setCreated(String created) {
 		this.put(Properties.created.name(), created);
+	}
+	
+	public void setUserId(String userId) {
+		this.put(Properties.userid.name(), userId);
+	}
+	
+	public void setNickname(String nickname) {
+		this.put(Properties.nickname.name(), nickname);
 	}
 	
 }

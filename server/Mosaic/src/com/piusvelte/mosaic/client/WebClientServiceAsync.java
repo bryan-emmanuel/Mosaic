@@ -20,7 +20,6 @@
 package com.piusvelte.mosaic.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.piusvelte.mosaic.shared.WebClientMessage;
 
 public interface WebClientServiceAsync {
 	

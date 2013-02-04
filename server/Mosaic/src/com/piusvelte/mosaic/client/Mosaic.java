@@ -47,6 +47,8 @@ public class Mosaic implements EntryPoint {
 	private final WebClientServiceAsync webClientService = GWT
 			.create(WebClientService.class);
 	
+	private int page = 0;
+	
 	public void onModuleLoad() {
 		
 		// Create the popup dialog box
@@ -117,7 +119,23 @@ public class Mosaic implements EntryPoint {
 					@Override
 					public void onSuccess(String result) {
 						authButton.setText(result);
-						//TODO: get first 10 messages
+						webClientService.getMessages(page,
+								new AsyncCallback<WebClientMessage[]>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+										
+									}
+
+									@Override
+									public void onSuccess(
+											WebClientMessage[] result) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+								});
 					}
 
 				});
