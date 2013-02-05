@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Message extends HashMap<String, String> {
+	
+	private static final long serialVersionUID = 1L;
 
 	public enum Properties {
 		id, body, latitude, longitude, radius, expiry, created, userid, nickname;
@@ -40,6 +42,10 @@ public class Message extends HashMap<String, String> {
 		setCreated(created);
 		setUserId(userId);
 		setNickname(nickname);
+	}
+	
+	public static Message messageFromJSONString(String json) throws JSONException {
+		return messageFromJSON(new JSONObject(json));
 	}
 	
 	public static Message messageFromJSON(JSONObject msg) throws JSONException {

@@ -23,4 +23,8 @@ interface ILocationService {
 	void setCallback(in IBinder mainBinder);
 	void checkGPS();
 	void getCoordinates();
+	void checkSignIn();
+	void loadAuthURL();
+	void loadMessages();
+	void cancelMessages();
 }

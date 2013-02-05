@@ -38,26 +38,41 @@ public class OAuthManager {
 	
 	private static final String TAG = "OAuthManager";
 
-	private OAuthConsumer oAuthConsumer;
-	private OAuthProvider oAuthProvider;
+	private static OAuthManager oAuthManager = null;
+	private static OAuthConsumer oAuthConsumer;
+	private static OAuthProvider oAuthProvider;
 	
-	public OAuthManager(String apiKey, String apiSecret) {
+	public static OAuthManager getInstance(String apiKey, String apiSecret) {
+		if (oAuthManager == null)
+			oAuthManager = new OAuthManager(apiKey, apiSecret);
+		return oAuthManager;
+	}
+	
+	public static OAuthManager getInstance(String apiKey, String apiSecret, String token, String tokenSecret) {
+		if (oAuthManager == null)
+			oAuthManager = new OAuthManager(apiKey, apiSecret, token, tokenSecret);
+		else
+			oAuthConsumer.setTokenWithSecret(token, tokenSecret);
+		return oAuthManager;
+	}
+	
+	private OAuthManager(String apiKey, String apiSecret) {
 		oAuthConsumer = new CommonsHttpOAuthConsumer(apiKey, apiSecret);
 		oAuthConsumer.setMessageSigner(new HmacSha1MessageSigner());
 	}
 	
-	public OAuthManager(String apiKey, String apiSecret, String token, String tokenSecret) {
+	private OAuthManager(String apiKey, String apiSecret, String token, String tokenSecret) {
 		this(apiKey, apiSecret);
 		oAuthConsumer.setTokenWithSecret(token, tokenSecret);
 	}
 	
-	public void loadAuthURL(Main activity) throws OAuthMessageSignerException, OAuthNotAuthorizedException, OAuthExpectationFailedException, OAuthCommunicationException {
+	public void loadAuthURL(LocationService service) throws OAuthMessageSignerException, OAuthNotAuthorizedException, OAuthExpectationFailedException, OAuthCommunicationException {
 		oAuthProvider = new CommonsHttpOAuthProvider("https://mosaic-messaging.appspot.com/_ah/OAuthGetRequestToken",
 				"https://mosaic-messaging.appspot.com/_ah/OAuthGetAccessToken",
 				"https://mosaic-messaging.appspot.com/_ah/OAuthAuthorizeToken",
-				HttpClientManager.getThreadSafeClient(activity.getApplicationContext()));
+				HttpClientManager.getThreadSafeClient(service.getApplicationContext()));
 		oAuthProvider.setOAuth10a(false);
-		new URLLoader(activity).execute();
+		new URLLoader(service).execute();
 	}
 
 	public void retrieveAccessToken(String verifier, Main activity) {
@@ -88,10 +103,10 @@ public class OAuthManager {
 	
 	class URLLoader extends AsyncTask<Void, Void, String> {
 		
-		private Main activity;
+		private LocationService service;
 		
-		public URLLoader(Main activity) {
-			this.activity = activity;
+		public URLLoader(LocationService service) {
+			this.service = service;
 		}
 
 		@Override
@@ -116,7 +131,7 @@ public class OAuthManager {
 		
 		@Override
 		protected void onPostExecute(String url) {
-			activity.doAuth(url);
+			service.doAuth(url);
 		}
 		
 	}

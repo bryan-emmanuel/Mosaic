@@ -19,9 +19,19 @@
  */
 package com.piusvelte.mosaic.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONException;
+
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+import oauth.signpost.exception.OAuthNotAuthorizedException;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -31,9 +41,15 @@ import android.os.RemoteException;
 
 public class LocationService extends Service implements LocationListener {
 
+	private static final String preferenceToken = "oauth_token";
+	private static final String preferenceSecret = "oauth_secret";
+
+	protected OAuthManager oAuthManager;
 	private LocationManager locationManager;
-	private int latitude = 0;
-	private int longitude = 0;
+	protected int latitude = 0;
+	protected int longitude = 0;
+	protected List<Message> messages = new ArrayList<Message>();
+	private MessageLoader messageLoader;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -66,6 +82,20 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 
+	private boolean hasSignedIn() {
+		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+		if (sharedPreferences.contains(preferenceToken) && sharedPreferences.contains(preferenceSecret)) {
+			String token = sharedPreferences.getString(preferenceToken, null);
+			String secret = sharedPreferences.getString(preferenceSecret, null);
+			if ((token != null) && (secret != null)) {
+				oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret), token, secret);
+				return true;
+			}
+		}
+		oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
+		return false;
+	}
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return iLocationService;
@@ -83,6 +113,78 @@ public class LocationService extends Service implements LocationListener {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	protected void clearMessages() {
+		messages.clear();
+		if (iMain != null) {
+			try {
+				iMain.clearMessages();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	protected void addMessage(String json) {
+		try {
+			messages.add(Message.messageFromJSONString(json));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (iMain != null) {
+			try {
+				iMain.addMessage(json);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	protected void startMessageLoading() {
+		messageLoader = new MessageLoader(this);
+		messageLoader.execute();
+	}
+	
+	protected void finishedMessageLoading() {
+		if (iMain != null) {
+			try {
+				iMain.reloadListAdapter();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	protected void doAuth(String url) {
+		try {
+			iMain.doAuth(url);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void getAuthURL() {
+		try {
+			oAuthManager.loadAuthURL(this);
+		} catch (OAuthMessageSignerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OAuthNotAuthorizedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OAuthExpectationFailedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OAuthCommunicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -107,6 +209,32 @@ public class LocationService extends Service implements LocationListener {
 				throws RemoteException {
 			// TODO Auto-generated method stub
 			iMain = IMain.Stub.asInterface(mainBinder);
+		}
+
+		@Override
+		public void checkSignIn() throws RemoteException {
+			// TODO Auto-generated method stub
+			if (!hasSignedIn())
+				iMain.promptSignIn();
+		}
+
+		@Override
+		public void loadAuthURL() throws RemoteException {
+			// TODO Auto-generated method stub
+			getAuthURL();
+		}
+
+		@Override
+		public void loadMessages() throws RemoteException {
+			// TODO Auto-generated method stub
+			startMessageLoading();
+		}
+
+		@Override
+		public void cancelMessages() throws RemoteException {
+			// TODO Auto-generated method stub
+			if (!messageLoader.isCancelled())
+				messageLoader.cancel(true);
 		}
 	};
 

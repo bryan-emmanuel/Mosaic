@@ -28,24 +28,24 @@ import android.os.AsyncTask;
 
 public class MessageLoader extends AsyncTask<Void, Void, Void> {
 	
-	private Main activity;
+	private LocationService service;
 	
-	public MessageLoader(Main activity) {
-		this.activity = activity;
+	public MessageLoader(LocationService service) {
+		this.service = service;
 	}
 
 	@Override
 	protected Void doInBackground(Void... arg0) {
-		String msgsResponse = HttpClientManager.httpResponse(activity.getApplicationContext(),
-				activity.oAuthManager.getSignedRequest(new HttpGet("http://mosaic-messaging.appspot.com/messages?lat=" + activity.latitude + "&longitude=" + activity.longitude)));
+		String msgsResponse = HttpClientManager.httpResponse(service.getApplicationContext(),
+				service.oAuthManager.getSignedRequest(new HttpGet("http://mosaic-messaging.appspot.com/messages?lat=" + service.latitude + "&longitude=" + service.longitude)));
 		if (msgsResponse != null) {
 			try {
 				JSONObject msgsJobj = new JSONObject(msgsResponse);
 				if (msgsJobj.has("message")) {
-					activity.messages.clear();
+					service.clearMessages();
 					JSONArray msgsJarr = msgsJobj.getJSONArray("message");
 					for (int i = 0, l = msgsJarr.length(); i < l; i++)
-						activity.messages.add(Message.messageFromJSON(msgsJarr.getJSONObject(i)));
+						service.addMessage(msgsJarr.getString(i));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -56,7 +56,7 @@ public class MessageLoader extends AsyncTask<Void, Void, Void> {
 	
 	@Override
 	protected void onPostExecute(Void result) {
-		activity.reloadMessagesList();
+		service.finishedMessageLoading();
 	}
 
 }

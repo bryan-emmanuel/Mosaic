@@ -22,6 +22,8 @@ package com.piusvelte.mosaic.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
@@ -46,17 +48,10 @@ public class Main extends Activity implements ServiceConnection {
 	
 	//TODO: need to call
 	// GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(context)
-
-	private static final String preferenceToken = "oauth_token";
-	private static final String preferenceSecret = "oauth_secret";
 	
-	protected int latitude = 0;
-	protected int longitude = 0;
-	protected OAuthManager oAuthManager;
-	private MessageLoader messageLoader;
 	private ProgressDialog loadingDialog;
-	protected List<Message> messages = new ArrayList<Message>();
 	private ILocationService iLocationService;
+	protected List<Message> messages = new ArrayList<Message>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,56 +73,6 @@ public class Main extends Activity implements ServiceConnection {
 	protected void onResume() {
 		super.onResume();
 		bindService(new Intent(getApplicationContext(), LocationService.class), this, BIND_AUTO_CREATE);
-		if (hasSignedIn()) {
-			loadMessages();
-		} else {
-			new AlertDialog.Builder(getApplicationContext())
-			.setTitle("Sign in")
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					try {
-						oAuthManager.loadAuthURL(Main.this);
-					} catch (OAuthMessageSignerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OAuthNotAuthorizedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OAuthExpectationFailedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OAuthCommunicationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-					Main.this.finish();
-				}
-			})
-			.show();
-		}
-	}
-
-	private boolean hasSignedIn() {
-		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-		if (sharedPreferences.contains(preferenceToken) && sharedPreferences.contains(preferenceSecret)) {
-			String token = sharedPreferences.getString(preferenceToken, null);
-			String secret = sharedPreferences.getString(preferenceSecret, null);
-			if ((token != null) && (secret != null)) {
-				oAuthManager = new OAuthManager(getString(R.string.consumer_key), getString(R.string.consumer_secret), token, secret);
-				return true;
-			}
-		}
-		oAuthManager = new OAuthManager(getString(R.string.consumer_key), getString(R.string.consumer_secret));
-		return false;
 	}
 
 	private void loadMessages() {
@@ -135,14 +80,22 @@ public class Main extends Activity implements ServiceConnection {
 
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				if (!messageLoader.isCancelled())
-					messageLoader.cancel(true);
+				try {
+					iLocationService.cancelMessages();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		});
 		loadingDialog.show();
-		messageLoader = new MessageLoader(this);
-		messageLoader.execute();
+		try {
+			iLocationService.loadMessages();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected void reloadMessagesList() {
@@ -151,7 +104,7 @@ public class Main extends Activity implements ServiceConnection {
 		//TODO list adapter reload
 	}
 
-	protected void doAuth(String url) {
+	protected void loadWebView(String url) {
 		if (url != null) {
 			WebView webView = new WebView(getApplicationContext());
 			setContentView(webView);
@@ -198,6 +151,61 @@ public class Main extends Activity implements ServiceConnection {
 				throws RemoteException {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void promptSignIn() throws RemoteException {
+			new AlertDialog.Builder(getApplicationContext())
+			.setTitle("Sign in")
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					try {
+						iLocationService.loadAuthURL();
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			})
+			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+					Main.this.finish();
+				}
+			})
+			.show();
+		}
+
+		@Override
+		public void doAuth(String url) throws RemoteException {
+			loadWebView(url);
+		}
+
+		@Override
+		public void addMessage(String json) throws RemoteException {
+			// TODO Auto-generated method stub
+			try {
+				messages.add(Message.messageFromJSONString(json));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void reloadListAdapter() throws RemoteException {
+			// TODO Auto-generated method stub
+			reloadMessagesList();
+		}
+
+		@Override
+		public void clearMessages() throws RemoteException {
+			// TODO Auto-generated method stub
+			messages.clear();
 		}
 	};
 
