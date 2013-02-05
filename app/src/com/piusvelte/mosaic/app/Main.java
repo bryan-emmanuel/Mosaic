@@ -19,39 +19,35 @@
  */
 package com.piusvelte.mosaic.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONException;
-
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.exception.OAuthNotAuthorizedException;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.view.Menu;
 import android.webkit.WebView;
 
-public class Main extends Activity implements ServiceConnection {
-	
+public class Main extends android.support.v4.app.FragmentActivity implements ServiceConnection, OnMapLongClickListener, OnMarkerClickListener {
+
 	//TODO: need to call
 	// GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(context)
-	
+
 	private ProgressDialog loadingDialog;
 	private ILocationService iLocationService;
-	protected List<Message> messages = new ArrayList<Message>();
+	private GoogleMap map;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,36 +68,14 @@ public class Main extends Activity implements ServiceConnection {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (map == null)
+			map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+					.getMap();
+		if (map != null)
+			map.setMyLocationEnabled(true);
+		map.setOnMapLongClickListener(this);
+		//map.setOnMarkerClickListener(this);
 		bindService(new Intent(getApplicationContext(), LocationService.class), this, BIND_AUTO_CREATE);
-	}
-
-	private void loadMessages() {
-		loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				try {
-					iLocationService.cancelMessages();
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-		});
-		loadingDialog.show();
-		try {
-			iLocationService.loadMessages();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	protected void reloadMessagesList() {
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
-		//TODO list adapter reload
 	}
 
 	protected void loadWebView(String url) {
@@ -113,71 +87,91 @@ public class Main extends Activity implements ServiceConnection {
 		} else
 			finish();
 	}
-	
-	private void enableGPSPrompt() {
-		new AlertDialog.Builder(getApplicationContext())
-		.setTitle("GPS Settings")
-		.setMessage("Please enable GPS.")
-		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-			}
-		})
-		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				finish();
-			}
-		})
-		.show();
-	}
-	
+
 	private IMain.Stub iMain = new IMain.Stub() {
-		
+
 		@Override
 		public void setGPSEnabled(boolean enabled) throws RemoteException {
 			// TODO Auto-generated method stub
-			if (!enabled)
-				enableGPSPrompt();
+			if (enabled) {
+				loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						try {
+							iLocationService.cancelMessages();
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				});
+				loadingDialog.show();
+				iLocationService.loadMessages();
+			} else {
+				if (loadingDialog.isShowing())
+					loadingDialog.dismiss();
+				new AlertDialog.Builder(getApplicationContext())
+				.setTitle("GPS Settings")
+				.setMessage("Please enable GPS.")
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						finish();
+					}
+				})
+				.show();
+			}
 		}
-		
+
 		@Override
-		public void setCoordinates(int latitude, int longitude)
+		public void setCoordinates(double latitude, double longitude)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
-		public void promptSignIn() throws RemoteException {
-			new AlertDialog.Builder(getApplicationContext())
-			.setTitle("Sign in")
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					try {
-						iLocationService.loadAuthURL();
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			})
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+		public void hasSignedIn(boolean signedIn) throws RemoteException {
+			if (signedIn)
+				iLocationService.checkGPS();
+			else {
+				if (loadingDialog.isShowing())
+					loadingDialog.dismiss();
+				new AlertDialog.Builder(getApplicationContext())
+				.setTitle("Sign in")
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-					Main.this.finish();
-				}
-			})
-			.show();
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						try {
+							iLocationService.loadAuthURL();
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						Main.this.finish();
+					}
+				})
+				.show();
+			}
 		}
 
 		@Override
@@ -186,26 +180,18 @@ public class Main extends Activity implements ServiceConnection {
 		}
 
 		@Override
-		public void addMessage(String json) throws RemoteException {
-			// TODO Auto-generated method stub
-			try {
-				messages.add(Message.messageFromJSONString(json));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public void reloadListAdapter() throws RemoteException {
-			// TODO Auto-generated method stub
-			reloadMessagesList();
-		}
-
-		@Override
 		public void clearMessages() throws RemoteException {
 			// TODO Auto-generated method stub
-			messages.clear();
+			if (map != null)
+				map.clear();
+		}
+
+		@Override
+		public void addMessage(double latitude, double longitude, String nick, String body)
+				throws RemoteException {
+			// TODO Auto-generated method stub
+			if (map != null)
+				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nick).snippet(body));
 		}
 	};
 
@@ -215,7 +201,7 @@ public class Main extends Activity implements ServiceConnection {
 		iLocationService = ILocationService.Stub.asInterface(service);
 		try {
 			iLocationService.setCallback(iMain);
-			iLocationService.checkGPS();
+			iLocationService.checkSignIn();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,6 +212,18 @@ public class Main extends Activity implements ServiceConnection {
 	public void onServiceDisconnected(ComponentName name) {
 		// TODO Auto-generated method stub
 		iLocationService = null;
+	}
+
+	@Override
+	public boolean onMarkerClick(Marker arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onMapLongClick(LatLng point) {
+		// TODO Auto-generated method stub
+		//create a new message
 	}
 
 }

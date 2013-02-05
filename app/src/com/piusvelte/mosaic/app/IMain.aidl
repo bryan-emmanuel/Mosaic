@@ -21,10 +21,9 @@ package com.piusvelte.mosaic.app;
 
 interface IMain {
 	void setGPSEnabled(boolean enabled);
-	void setCoordinates(int latitude, int longitude);
-	void promptSignIn();
+	void setCoordinates(double latitude, double longitude);
+	void hasSignedIn(boolean signedIn);
 	void doAuth(String url);
-	void addMessage(String json);
-	void reloadListAdapter();
+	void addMessage(double latitude, double longitude, String nick, String body);
 	void clearMessages();
 }

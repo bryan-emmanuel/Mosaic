@@ -44,11 +44,7 @@ public class Message extends HashMap<String, String> {
 		setNickname(nickname);
 	}
 	
-	public static Message messageFromJSONString(String json) throws JSONException {
-		return messageFromJSON(new JSONObject(json));
-	}
-	
-	public static Message messageFromJSON(JSONObject msg) throws JSONException {
+	public static Message messageFrom(JSONObject msg) throws JSONException {
 		JSONObject usr = msg.getJSONObject("user");
 		return new Message(msg.getString(Properties.id.name()),
 				msg.getString(Properties.body.name()),
@@ -95,6 +91,22 @@ public class Message extends HashMap<String, String> {
 	
 	public void setNickname(String nickname) {
 		this.put(Properties.nickname.name(), nickname);
+	}
+	
+	public String getNick() {
+		return this.get(Properties.nickname.name());
+	}
+	
+	public String getBody() {
+		return this.get(Properties.body.name());
+	}
+	
+	public double getLatitudeDegrees() {
+		return Integer.parseInt(this.get(Properties.latitude.name())) / 1E6;
+	}
+	
+	public double getLongitudeDegrees() {
+		return Integer.parseInt(this.get(Properties.longitude.name())) / 1E6;
 	}
 	
 }

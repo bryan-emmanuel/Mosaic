@@ -45,18 +45,13 @@ public class MessageLoader extends AsyncTask<Void, Void, Void> {
 					service.clearMessages();
 					JSONArray msgsJarr = msgsJobj.getJSONArray("message");
 					for (int i = 0, l = msgsJarr.length(); i < l; i++)
-						service.addMessage(msgsJarr.getString(i));
+						service.addMessage(msgsJarr.getJSONObject(i));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 		return null;
-	}
-	
-	@Override
-	protected void onPostExecute(Void result) {
-		service.finishedMessageLoading();
 	}
 
 }

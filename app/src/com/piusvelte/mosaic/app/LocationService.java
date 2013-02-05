@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
@@ -107,7 +108,7 @@ public class LocationService extends Service implements LocationListener {
 			longitude = (int) (location.getLongitude() * 1E6);
 			if (iMain != null) {
 				try {
-					iMain.setCoordinates(latitude, longitude);
+					iMain.setCoordinates(location.getLatitude(), location.getLongitude());
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -128,37 +129,28 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 	
-	protected void addMessage(String json) {
+	protected void addMessage(JSONObject json) {
+		Message msg;
 		try {
-			messages.add(Message.messageFromJSONString(json));
+			msg = Message.messageFrom(json);
+			messages.add(msg);
+			if (iMain != null) {
+				try {
+					iMain.addMessage(msg.getLatitudeDegrees(), msg.getLongitudeDegrees(), msg.getNick(), msg.getBody());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if (iMain != null) {
-			try {
-				iMain.addMessage(json);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
 	protected void startMessageLoading() {
 		messageLoader = new MessageLoader(this);
 		messageLoader.execute();
-	}
-	
-	protected void finishedMessageLoading() {
-		if (iMain != null) {
-			try {
-				iMain.reloadListAdapter();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	protected void doAuth(String url) {
@@ -214,8 +206,7 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void checkSignIn() throws RemoteException {
 			// TODO Auto-generated method stub
-			if (!hasSignedIn())
-				iMain.promptSignIn();
+			iMain.hasSignedIn(hasSignedIn());
 		}
 
 		@Override
