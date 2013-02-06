@@ -2,7 +2,7 @@
 
 	<servlet>
 		<servlet-name>webclient</servlet-name>
-		<servlet-class>com.piusvelte.mosaic.server.WebClientServiceImpl</servlet-class>
+		<servlet-class>com.piusvelte.mosaic.gwt.server.WebClientServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -12,7 +12,7 @@
 
 	<servlet>
 		<servlet-name>Messages</servlet-name>
-		<servlet-class>com.piusvelte.mosaic.server.MessagesServlet</servlet-class>
+		<servlet-class>com.piusvelte.mosaic.gwt.server.MessagesServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
