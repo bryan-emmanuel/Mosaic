@@ -1,2 +1,0 @@
-serviceClass: com.piusvelte.mosaic.client.WebClientService
-path: CF03CBD6705F6903209F7F042C24E269.gwt.rpc

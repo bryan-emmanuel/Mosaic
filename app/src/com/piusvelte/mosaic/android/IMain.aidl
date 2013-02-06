@@ -23,7 +23,7 @@ interface IMain {
 	void setGPSEnabled(boolean enabled);
 	void setCoordinates(double latitude, double longitude);
 	void hasSignedIn(boolean signedIn);
-	void doAuth(String url);
 	void addMessage(double latitude, double longitude, String nick, String body);
 	void clearMessages();
+	void messageLoadError(String e);
 }

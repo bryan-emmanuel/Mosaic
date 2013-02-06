@@ -24,7 +24,6 @@ interface ILocationService {
 	void checkGPS();
 	void getCoordinates();
 	void checkSignIn();
-	void loadAuthURL();
 	void loadMessages();
 	void cancelMessages();
 }

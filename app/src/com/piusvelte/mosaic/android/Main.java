@@ -20,6 +20,7 @@
 package com.piusvelte.mosaic.android;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -40,10 +41,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.util.Log;
 import android.view.Menu;
-import android.webkit.WebView;
 
 public class Main extends android.support.v4.app.FragmentActivity implements ServiceConnection, OnMapLongClickListener, OnMarkerClickListener {
 
+	private static final String TAG = "Main";
 	private ProgressDialog loadingDialog;
 	private ILocationService iLocationService;
 	private GoogleMap map;
@@ -75,12 +76,15 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			map.setMyLocationEnabled(true);
 		map.setOnMapLongClickListener(this);
 		//map.setOnMarkerClickListener(this);
+		loadingDialog.show();
 		bindService(new Intent(this, LocationService.class), this, BIND_AUTO_CREATE);
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
+		if (loadingDialog.isShowing())
+			loadingDialog.dismiss();
 		if (iLocationService != null) {
 			try {
 				iLocationService.setCallback(null);
@@ -92,37 +96,27 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		unbindService(this);
 	}
 
-	protected void loadWebView(String url) {
-		Log.d("Main.java", "***loadWebView: " + url);
-		if (url != null) {
-			WebView webView = new WebView(this);
-			setContentView(webView);
-			webView.setWebViewClient(new SignInWebViewClient(this));
-			webView.loadUrl(url);
-		} else
-			finish();
-	}
-
 	private IMain.Stub iMain = new IMain.Stub() {
 
 		@Override
 		public void setGPSEnabled(boolean enabled) throws RemoteException {
 			// TODO Auto-generated method stub
+			Log.d(TAG, "setGPSEnabled: " + enabled);
 			if (enabled) {
-				loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						try {
-							iLocationService.cancelMessages();
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-				});
-				loadingDialog.show();
+//				loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//
+//					@Override
+//					public void onCancel(DialogInterface dialog) {
+//						try {
+//							iLocationService.cancelMessages();
+//						} catch (RemoteException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//					}
+//
+//				});
+//				loadingDialog.show();
 				iLocationService.loadMessages();
 			} else {
 				if (loadingDialog.isShowing())
@@ -154,10 +148,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void setCoordinates(double latitude, double longitude)
 				throws RemoteException {
 			// TODO Auto-generated method stub
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
 		}
 
 		@Override
 		public void hasSignedIn(boolean signedIn) throws RemoteException {
+			Log.d(TAG, "hasSignedIn: " + signedIn);
 			if (signedIn)
 				iLocationService.checkGPS();
 			else {
@@ -169,12 +165,8 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						try {
-							iLocationService.loadAuthURL();
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						dialog.dismiss();
+						startActivity(new Intent(getApplicationContext(), SignIn.class));
 					}
 				})
 				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -190,11 +182,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		}
 
 		@Override
-		public void doAuth(String url) throws RemoteException {
-			loadWebView(url);
-		}
-
-		@Override
 		public void clearMessages() throws RemoteException {
 			// TODO Auto-generated method stub
 			if (map != null)
@@ -205,8 +192,17 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void addMessage(double latitude, double longitude, String nick, String body)
 				throws RemoteException {
 			// TODO Auto-generated method stub
+			if (loadingDialog.isShowing())
+				loadingDialog.dismiss();
 			if (map != null)
 				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nick).snippet(body));
+		}
+
+		@Override
+		public void messageLoadError(String e) throws RemoteException {
+			// TODO Auto-generated method stub
+			if (loadingDialog.isShowing())
+				loadingDialog.dismiss();
 		}
 	};
 

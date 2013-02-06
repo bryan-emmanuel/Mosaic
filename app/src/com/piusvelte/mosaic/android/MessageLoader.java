@@ -37,7 +37,7 @@ public class MessageLoader extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... arg0) {
 		String msgsResponse = HttpClientManager.httpResponse(service.getApplicationContext(),
-				service.oAuthManager.getSignedRequest(new HttpGet("http://mosaic-messaging.appspot.com/messages?lat=" + service.latitude + "&longitude=" + service.longitude)));
+				service.oAuthManager.getSignedRequest(new HttpGet("http://mosaic-messaging.appspot.com/messages?lat=" + service.latitude + "&lon=" + service.longitude)));
 		if (msgsResponse != null) {
 			try {
 				JSONObject msgsJobj = new JSONObject(msgsResponse);
@@ -48,9 +48,11 @@ public class MessageLoader extends AsyncTask<Void, Void, Void> {
 						service.addMessage(msgsJarr.getJSONObject(i));
 				}
 			} catch (JSONException e) {
+				service.messageLoadError(e.getMessage());
 				e.printStackTrace();
 			}
-		}
+		} else
+			service.messageLoadError("no response");
 		return null;
 	}
 

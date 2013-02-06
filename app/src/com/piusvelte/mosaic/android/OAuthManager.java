@@ -66,17 +66,17 @@ public class OAuthManager {
 		oAuthConsumer.setTokenWithSecret(token, tokenSecret);
 	}
 	
-	public void loadAuthURL(LocationService service) throws OAuthMessageSignerException, OAuthNotAuthorizedException, OAuthExpectationFailedException, OAuthCommunicationException {
+	public void loadAuthURL(SignIn activity) throws OAuthMessageSignerException, OAuthNotAuthorizedException, OAuthExpectationFailedException, OAuthCommunicationException {
 		oAuthProvider = new CommonsHttpOAuthProvider("https://mosaic-messaging.appspot.com/_ah/OAuthGetRequestToken",
 				"https://mosaic-messaging.appspot.com/_ah/OAuthGetAccessToken",
 				"https://mosaic-messaging.appspot.com/_ah/OAuthAuthorizeToken",
-				HttpClientManager.getThreadSafeClient(service.getApplicationContext()));
-		oAuthProvider.setOAuth10a(false);
-		new URLLoader(service).execute();
+				HttpClientManager.getThreadSafeClient(activity.getApplicationContext()));
+		oAuthProvider.setOAuth10a(true);
+		new URLLoader(activity).execute();
 	}
 
-	public void retrieveAccessToken(String verifier, Main activity) {
-		new TokenLoader(activity).execute();
+	public void retrieveAccessToken(SignIn activity, String verifier) {
+		new TokenLoader(activity, verifier).execute();
 	}
 
 	public HttpUriRequest getSignedRequest(HttpUriRequest httpRequest) {
@@ -92,21 +92,17 @@ public class OAuthManager {
 		}
 		return null;
 	}
-
-	public String getToken() {
-		return oAuthConsumer.getToken();
-	}
-
-	public String getTokenSecret() {
-		return oAuthConsumer.getTokenSecret();
+	
+	public boolean hasCredentials() {
+		return oAuthConsumer.getToken() != null && oAuthConsumer.getTokenSecret() != null;
 	}
 	
 	class URLLoader extends AsyncTask<Void, Void, String> {
 		
-		private LocationService service;
+		private SignIn activity;
 		
-		public URLLoader(LocationService service) {
-			this.service = service;
+		public URLLoader(SignIn activity) {
+			this.activity = activity;
 		}
 
 		@Override
@@ -131,25 +127,25 @@ public class OAuthManager {
 		
 		@Override
 		protected void onPostExecute(String url) {
-			service.doAuth(url);
+			activity.loadWebView(url);
 		}
 		
 	}
 	
-	class TokenLoader extends AsyncTask<Void, Void, Boolean> {
+	class TokenLoader extends AsyncTask<Void, Void, Void> {
 		
-		private Main activity;
+		private SignIn activity;
 		private String verifier;
 		
-		public TokenLoader(Main activity) {
+		public TokenLoader(SignIn activity, String verifier) {
 			this.activity = activity;
+			this.verifier = verifier;
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... arg0) {
+		protected Void doInBackground(Void... arg0) {
 			try {
 				oAuthProvider.retrieveAccessToken(oAuthConsumer, verifier);
-				return true;
 			} catch (OAuthMessageSignerException e) {
 				Log.e(TAG, e.toString());
 			} catch (OAuthNotAuthorizedException e) {
@@ -159,12 +155,12 @@ public class OAuthManager {
 			} catch (OAuthCommunicationException e) {
 				Log.e(TAG, e.toString());
 			}
-			return false;
+			return null;
 		}
 		
 		@Override
-		protected void onPostExecute(Boolean hasToken) {
-			//TODO success?
+		protected void onPostExecute(Void arg0) {
+			activity.setTokenSecret(oAuthConsumer.getToken(), oAuthConsumer.getTokenSecret());
 		}
 		
 	}

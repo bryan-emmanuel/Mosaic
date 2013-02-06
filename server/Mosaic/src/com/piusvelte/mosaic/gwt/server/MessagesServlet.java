@@ -55,6 +55,7 @@ public class MessagesServlet extends HttpServlet {
 				resp.getWriter().write(responseObj.toString());
 			} catch (JSONException e) {
 				resp.setStatus(500);
+				resp.getWriter().write(e.getMessage());
 				e.printStackTrace();
 			} catch (Exception e) {
 				resp.setStatus(400);
@@ -63,6 +64,7 @@ public class MessagesServlet extends HttpServlet {
 			}
 		} catch (OAuthRequestException e) {
 			resp.setStatus(401);
+			resp.getWriter().write(e.getMessage());
 		}
 	}
 

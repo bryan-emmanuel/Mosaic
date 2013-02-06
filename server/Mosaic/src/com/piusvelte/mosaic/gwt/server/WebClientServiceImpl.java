@@ -35,7 +35,7 @@ WebClientService {
 	public String getUserNickname() throws IllegalArgumentException {
 		if (userService.isUserLoggedIn())
 			return userService.getCurrentUser().getNickname();
-		throw new IllegalArgumentException("Sign in");
+		throw new IllegalArgumentException("not signed in");
 	}
 	
 	@Override

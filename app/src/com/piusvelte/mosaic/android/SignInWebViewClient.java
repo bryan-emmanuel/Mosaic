@@ -22,31 +22,34 @@ package com.piusvelte.mosaic.android;
 import static oauth.signpost.OAuth.OAUTH_VERIFIER;
 
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class SignInWebViewClient extends WebViewClient {
-	
-	Main activity;
-	
-	public SignInWebViewClient(Main activity) {
+
+	private static final String TAG = "SignInWebViewClient";
+	SignIn activity;
+
+	public SignInWebViewClient(SignIn activity) {
 		this.activity = activity;
 	}
 
 	@Override
 	public boolean shouldOverrideUrlLoading(WebView view, String url) {
-		//TODO need to eval url
+		Log.d(TAG, "shouldOverrideUrlLoading, url: " + url);
 		if (url != null) {
 			Uri uri = Uri.parse(url);
-			uri.getQueryParameter(OAUTH_VERIFIER);
-			// return OAUTH_VERIFIER to activity
+			if (("mosaic").equals(uri.getScheme()))
+				activity.setVerifier(uri.getQueryParameter(OAUTH_VERIFIER));
+			else
+				return false;
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void onPageFinished(WebView view, String url) {
-		
 	}
 
 }

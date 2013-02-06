@@ -25,10 +25,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.exception.OAuthNotAuthorizedException;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -39,18 +35,19 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 public class LocationService extends Service implements LocationListener {
 
-	private static final String preferenceToken = "oauth_token";
-	private static final String preferenceSecret = "oauth_secret";
-
-	protected OAuthManager oAuthManager;
+	private static final String TAG = "LocationService";
+	protected OAuthManager oAuthManager = null;
 	private LocationManager locationManager;
 	protected int latitude = 0;
 	protected int longitude = 0;
 	protected List<Message> messages = new ArrayList<Message>();
 	private MessageLoader messageLoader;
+	private static long UPDATE_TIME = 10000L;
+	private static float UPDATE_DISTANCE = 10F;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -62,6 +59,7 @@ public class LocationService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
 	}
 
 	@Override
@@ -75,37 +73,39 @@ public class LocationService extends Service implements LocationListener {
 	}
 
 	private void start(Intent intent) {
-		//TODO
+		loadTokenSecret();
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 10F, this);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} else {
-			//TODO notify about no GPS
-			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 10F, this);
+			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
+			else {
+				//TODO notify about no GPS
 			}
 		}
 	}
 
-	private boolean hasSignedIn() {
-		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-		if (sharedPreferences.contains(preferenceToken) && sharedPreferences.contains(preferenceSecret)) {
-			String token = sharedPreferences.getString(preferenceToken, null);
-			String secret = sharedPreferences.getString(preferenceSecret, null);
-			if ((token != null) && (secret != null)) {
-				oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret), token, secret);
-				return true;
+	private void loadTokenSecret() {
+		Log.d(TAG, "loadTokenSecret");
+		if (!oAuthManager.hasCredentials()) {
+			SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+			if (sharedPreferences.contains(getString(R.string.preference_token)) && sharedPreferences.contains(getString(R.string.preference_secret))) {
+				String token = sharedPreferences.getString(getString(R.string.preference_token), null);
+				String secret = sharedPreferences.getString(getString(R.string.preference_secret), null);
+				Log.d(TAG, "token: " + token);
+				if ((token != null) && (secret != null))
+					oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret), token, secret);
 			}
 		}
-		oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
-		return false;
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return iLocationService;
 	}
-	
+
 	private void setCoordinates(Location location) {
+		Log.d(TAG, "setCoordinates");
 		if (location != null) {
 			latitude = (int) (location.getLatitude() * 1E6);
 			longitude = (int) (location.getLongitude() * 1E6);
@@ -119,7 +119,7 @@ public class LocationService extends Service implements LocationListener {
 			}
 		}
 	}
-	
+
 	protected void clearMessages() {
 		messages.clear();
 		if (iMain != null) {
@@ -131,7 +131,7 @@ public class LocationService extends Service implements LocationListener {
 			}
 		}
 	}
-	
+
 	protected void addMessage(JSONObject json) {
 		Message msg;
 		try {
@@ -151,18 +151,20 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 	
+	protected void messageLoadError(String e) {
+		if (iMain != null) {
+			try {
+				iMain.messageLoadError(e);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+
 	protected void startMessageLoading() {
 		messageLoader = new MessageLoader(this);
 		messageLoader.execute();
-	}
-	
-	protected void doAuth(String url) {
-		try {
-			iMain.doAuth(url);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	private IMain iMain;
@@ -177,6 +179,7 @@ public class LocationService extends Service implements LocationListener {
 
 		@Override
 		public void checkGPS() throws RemoteException {
+			Log.d(TAG, "checkGPS");
 			// TODO Auto-generated method stub
 			iMain.setGPSEnabled(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
 		}
@@ -190,28 +193,10 @@ public class LocationService extends Service implements LocationListener {
 
 		@Override
 		public void checkSignIn() throws RemoteException {
+			Log.d(TAG, "checkSignIn");
 			// TODO Auto-generated method stub
-			iMain.hasSignedIn(hasSignedIn());
-		}
-
-		@Override
-		public void loadAuthURL() throws RemoteException {
-			// TODO Auto-generated method stub
-			try {
-				oAuthManager.loadAuthURL(LocationService.this);
-			} catch (OAuthMessageSignerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (OAuthNotAuthorizedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (OAuthExpectationFailedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (OAuthCommunicationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			loadTokenSecret();
+			iMain.hasSignedIn(oAuthManager.hasCredentials());
 		}
 
 		@Override
@@ -237,12 +222,32 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
-		if (LocationManager.GPS_PROVIDER.equals(provider) && (iMain != null)) {
-			try {
-				iMain.setGPSEnabled(false);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (LocationManager.GPS_PROVIDER.equals(provider)) {
+			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+				locationManager.removeUpdates(this);
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
+			} else {
+				if (iMain != null) {
+					try {
+						iMain.setGPSEnabled(false);
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//TODO notify about no GPS
+				}
+			}
+		} else if (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			if (iMain != null) {
+				try {
+					iMain.setGPSEnabled(false);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				//TODO notify about no GPS
 			}
 		}
 	}
@@ -250,13 +255,39 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
-		
+		if (LocationManager.GPS_PROVIDER.equals(provider)) {
+			locationManager.removeUpdates(this);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
+			if (iMain != null) {
+				try {
+					iMain.setGPSEnabled(false);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				//TODO clear no GPS notification
+			}
+		} else if (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			locationManager.removeUpdates(this);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
+			if (iMain != null) {
+				try {
+					iMain.setGPSEnabled(false);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				//TODO clear no GPS notification
+			}
+		}
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle arg2) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

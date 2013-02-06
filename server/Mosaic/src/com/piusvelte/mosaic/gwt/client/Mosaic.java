@@ -113,7 +113,7 @@ public class Mosaic implements EntryPoint {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						authButton.setText(caught.toString());
+						authButton.setText("Sign in");
 					}
 
 					@Override
