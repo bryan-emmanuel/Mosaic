@@ -25,5 +25,5 @@ interface IMain {
 	void hasSignedIn(boolean signedIn);
 	void addMessage(double latitude, double longitude, String nick, String body);
 	void clearMessages();
-	void messageLoadError(String e);
+	void setRequestFinished(String message);
 }

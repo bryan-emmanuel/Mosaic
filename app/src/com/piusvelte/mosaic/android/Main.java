@@ -148,6 +148,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void setCoordinates(double latitude, double longitude)
 				throws RemoteException {
 			// TODO Auto-generated method stub
+			Log.d(TAG, "setCoordinates: " + latitude + ", " + longitude);
 			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
 		}
 
@@ -199,7 +200,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		}
 
 		@Override
-		public void messageLoadError(String e) throws RemoteException {
+		public void setRequestFinished(String nessage) throws RemoteException {
 			// TODO Auto-generated method stub
 			if (loadingDialog.isShowing())
 				loadingDialog.dismiss();

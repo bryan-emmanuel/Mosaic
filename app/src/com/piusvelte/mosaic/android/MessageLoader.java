@@ -19,15 +19,23 @@
  */
 package com.piusvelte.mosaic.android;
 
-import org.apache.http.client.methods.HttpGet;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpResponse;
+
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class MessageLoader extends AsyncTask<Void, Void, Void> {
 	
+	private static final String TAG = "MessageLoader";
 	private LocationService service;
 	
 	public MessageLoader(LocationService service) {
@@ -36,11 +44,47 @@ public class MessageLoader extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected Void doInBackground(Void... arg0) {
-		String msgsResponse = HttpClientManager.httpResponse(service.getApplicationContext(),
-				service.oAuthManager.getSignedRequest(new HttpGet("http://mosaic-messaging.appspot.com/messages?lat=" + service.latitude + "&lon=" + service.longitude)));
-		if (msgsResponse != null) {
+		HttpRequest request = service.oAuthManager.getSignedRequest("http://mosaic-messaging.appspot.com/messages?lat=" + service.latitude + "&lon=" + service.longitude,
+				null);
+		HttpResponse httpResponse;
+		InputStream is;
+		ByteArrayOutputStream content;
+		byte[] buffer;
+		int readBytes;
+		String response = null;
+		try {
+			httpResponse = request.execute();
+			switch(httpResponse.getStatusCode()) {
+			case 200:
+			case 201:
+			case 204:
+				is = httpResponse.getContent();
+				content = new ByteArrayOutputStream();
+				buffer = new byte[512];
+				readBytes = 0;
+				while ((readBytes = is.read(buffer)) != -1)
+					content.write(buffer, 0, readBytes);
+				httpResponse.disconnect();
+				response = new String(content.toByteArray());
+			default:
+				Log.e(TAG, request.getUrl().toString());
+				Log.e(TAG, "" + httpResponse.getStatusCode() + " " + httpResponse.getStatusMessage());
+				is = httpResponse.getContent();
+				content = new ByteArrayOutputStream();
+				buffer = new byte[512];
+				readBytes = 0;
+				while ((readBytes = is.read(buffer)) != -1)
+					content.write(buffer, 0, readBytes);
+				Log.e(TAG, "response: " + new String(content.toByteArray()));
+			}
+			httpResponse.disconnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (response != null) {
 			try {
-				JSONObject msgsJobj = new JSONObject(msgsResponse);
+				JSONObject msgsJobj = new JSONObject(response);
 				if (msgsJobj.has("message")) {
 					service.clearMessages();
 					JSONArray msgsJarr = msgsJobj.getJSONArray("message");
@@ -48,11 +92,11 @@ public class MessageLoader extends AsyncTask<Void, Void, Void> {
 						service.addMessage(msgsJarr.getJSONObject(i));
 				}
 			} catch (JSONException e) {
-				service.messageLoadError(e.getMessage());
+				service.requestFinished(e.getMessage());
 				e.printStackTrace();
 			}
 		} else
-			service.messageLoadError("no response");
+			service.requestFinished("no response");
 		return null;
 	}
 

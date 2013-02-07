@@ -19,10 +19,6 @@
  */
 package com.piusvelte.mosaic.android;
 
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.exception.OAuthNotAuthorizedException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -34,7 +30,7 @@ public class SignIn extends Activity {
 
 	private static final String TAG = "SignIn";
 	private ProgressDialog loadingDialog;
-	protected OAuthManager oAuthManager;
+	protected OAuthHelper oAuthManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +39,10 @@ public class SignIn extends Activity {
 		loadingDialog.setMessage("loading");
 		loadingDialog.setCancelable(true);
 		loadingDialog.show();
-		oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
-		try {
-			oAuthManager.loadAuthURL(this);
-			return;
-		} catch (OAuthMessageSignerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OAuthNotAuthorizedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OAuthExpectationFailedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OAuthCommunicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finish();
+		oAuthManager = OAuthHelper.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
+		oAuthManager.loadAuthURL(this);
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -86,15 +66,23 @@ public class SignIn extends Activity {
 		} else
 			finish();
 	}
-	
+
+	protected boolean shouldOverrideUrlLoading(String url) {
+		Log.d(TAG, "shouldOverrideUrlLoading, url: " + url);
+		if (OAuthHelper.isCallback(url)) {
+			oAuthManager.retrieveAccessToken(this, url);
+			return true;
+		} else
+			return false;
+	}
+
 	protected void setVerifier(String verifier) {
-		Log.d(TAG, "setVerifier");
 		loadingDialog.show();
 		oAuthManager.retrieveAccessToken(this, verifier);
 	}
-	
-	protected void setTokenSecret(String token, String secret) {
-		Log.d(TAG, "setTokenSecret");
+
+	protected void storeTokenSecret(String token, String secret) {
+		Log.d(TAG, "storeTokenSecret");
 		if (loadingDialog.isShowing())
 			loadingDialog.dismiss();
 		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)

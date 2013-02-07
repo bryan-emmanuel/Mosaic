@@ -40,7 +40,7 @@ import android.util.Log;
 public class LocationService extends Service implements LocationListener {
 
 	private static final String TAG = "LocationService";
-	protected OAuthManager oAuthManager = null;
+	protected OAuthHelper oAuthManager = null;
 	private LocationManager locationManager;
 	protected int latitude = 0;
 	protected int longitude = 0;
@@ -59,7 +59,7 @@ public class LocationService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
+		oAuthManager = OAuthHelper.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
 	}
 
 	@Override
@@ -70,6 +70,8 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if ((messageLoader != null) && !messageLoader.isCancelled())
+			messageLoader.cancel(true);
 	}
 
 	private void start(Intent intent) {
@@ -92,9 +94,11 @@ public class LocationService extends Service implements LocationListener {
 			if (sharedPreferences.contains(getString(R.string.preference_token)) && sharedPreferences.contains(getString(R.string.preference_secret))) {
 				String token = sharedPreferences.getString(getString(R.string.preference_token), null);
 				String secret = sharedPreferences.getString(getString(R.string.preference_secret), null);
-				Log.d(TAG, "token: " + token);
 				if ((token != null) && (secret != null))
-					oAuthManager = OAuthManager.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret), token, secret);
+					oAuthManager = OAuthHelper.getInstance(getString(R.string.consumer_key),
+							getString(R.string.consumer_secret),
+							token,
+							secret);
 			}
 		}
 	}
@@ -150,14 +154,14 @@ public class LocationService extends Service implements LocationListener {
 			e.printStackTrace();
 		}
 	}
-	
-	protected void messageLoadError(String e) {
+
+	protected void requestFinished(String message) {
 		if (iMain != null) {
 			try {
-				iMain.messageLoadError(e);
-			} catch (RemoteException e1) {
+				iMain.setRequestFinished(message);
+			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 	}
