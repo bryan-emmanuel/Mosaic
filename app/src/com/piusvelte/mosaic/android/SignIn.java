@@ -19,77 +19,116 @@
  */
 package com.piusvelte.mosaic.android;
 
-import android.app.Activity;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.app.Dialog;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class SignIn extends Activity {
+public class SignIn extends ListActivity {
 
 	private static final String TAG = "SignIn";
-	private ProgressDialog loadingDialog;
-	protected OAuthHelper oAuthManager;
+//	private ProgressDialog loadingDialog;
+	
+	private MosaicService mosaicService;
+	private AccountManager accountManager;
+	private String[] accountNames;
+
+    private static final int REQUEST_CODE_RECOVER_FROM_AUTH_ERROR = 1001;
+    private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1002;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		loadingDialog = new ProgressDialog(this);
-		loadingDialog.setMessage("loading");
-		loadingDialog.setCancelable(true);
-		loadingDialog.show();
-		oAuthManager = OAuthHelper.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
-		oAuthManager.loadAuthURL(this);
+        setContentView(R.layout.signin);
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadAccountList();
+	}
+
+	@Override
+	protected void onListItemClick(ListView list, View view, int position, long id) {
+		super.onListItemClick(list, view, position, id);
+        mosaicService = MosaicService.getInstance(getString(R.string.webapp_client_id)).setEmail(accountNames[position]);
+		mosaicService.addAccount(this, REQUEST_CODE_RECOVER_FROM_AUTH_ERROR);
+	}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_RECOVER_FROM_AUTH_ERROR) {
+            if (data == null) {
+                show("Unknown error, click the button again");
+                return;
+            }
+            if (resultCode == RESULT_OK) {
+                Log.i(TAG, "Retrying");
+                //TODO
+                show("need to retry");
+                return;
+            }
+            if (resultCode == RESULT_CANCELED) {
+                show("User rejected authorization.");
+                return;
+            }
+            show("Unknown error, click the button again");
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+	
+	private void loadAccountList() {
+		accountNames = getAccountNames();
+		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, accountNames));
+	}
+	
+    public void showErrorDialog(final int code) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              Dialog d = GooglePlayServicesUtil.getErrorDialog(
+                  code,
+                  SignIn.this,
+                  REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+              d.show();
+            }
+        });
+    }
+    
+    public void show(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            	Toast.makeText(SignIn.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private String[] getAccountNames() {
+    	accountManager = AccountManager.get(this);
+        Account[] accounts = accountManager.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+        String[] names = new String[accounts.length];
+        for (int i = 0; i < names.length; i++) {
+            names[i] = accounts[i].name;
+        }
+        return names;
+    }
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.d(TAG, "onPause");
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
-	}
-
-	protected void loadWebView(String url) {
-		Log.d(TAG, "loadWebView, url: " + url);
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
-		if (url != null) {
-			WebView webView = new WebView(this);
-			WebSettings webSettings = webView.getSettings();
-			webSettings.setJavaScriptEnabled(true);
-			webSettings.setDefaultTextEncodingName("UTF-8");
-			setContentView(webView);
-			webView.setWebViewClient(new SignInWebViewClient(this));
-			webView.loadUrl(url);
-		} else
-			finish();
-	}
-
-	protected boolean shouldOverrideUrlLoading(String url) {
-		Log.d(TAG, "shouldOverrideUrlLoading, url: " + url);
-		if (OAuthHelper.isCallback(url)) {
-			oAuthManager.retrieveAccessToken(this, url);
-			return true;
-		} else
-			return false;
-	}
-
-	protected void setVerifier(String verifier) {
-		loadingDialog.show();
-		oAuthManager.retrieveAccessToken(this, verifier);
-	}
-
-	protected void storeTokenSecret(String token, String secret) {
-		Log.d(TAG, "storeTokenSecret");
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
-		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
-		.edit()
-		.putString(getString(R.string.preference_token), token)
-		.putString(getString(R.string.preference_secret), secret)
-		.commit();
-		finish();
 	}
 }

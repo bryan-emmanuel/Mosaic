@@ -32,6 +32,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -40,12 +41,11 @@ import android.util.Log;
 public class LocationService extends Service implements LocationListener {
 
 	private static final String TAG = "LocationService";
-	protected OAuthHelper oAuthManager = null;
+	private MosaicService mosaicService;
 	private LocationManager locationManager;
 	protected int latitude = 0;
 	protected int longitude = 0;
 	protected List<Message> messages = new ArrayList<Message>();
-	private MessageLoader messageLoader;
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
 
@@ -59,7 +59,10 @@ public class LocationService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		oAuthManager = OAuthHelper.getInstance(getString(R.string.consumer_key), getString(R.string.consumer_secret));
+        mosaicService = MosaicService.getInstance(getString(R.string.webapp_client_id));
+		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+		if (sharedPreferences.contains(getString(R.string.preference_account_email)))
+			mosaicService.setEmail(sharedPreferences.getString(getString(R.string.preference_account_email), null));
 	}
 
 	@Override
@@ -70,12 +73,9 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		if ((messageLoader != null) && !messageLoader.isCancelled())
-			messageLoader.cancel(true);
 	}
 
 	private void start(Intent intent) {
-		loadTokenSecret();
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} else {
@@ -83,22 +83,6 @@ public class LocationService extends Service implements LocationListener {
 				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 			else {
 				//TODO notify about no GPS
-			}
-		}
-	}
-
-	private void loadTokenSecret() {
-		Log.d(TAG, "loadTokenSecret");
-		if (!oAuthManager.hasCredentials()) {
-			SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-			if (sharedPreferences.contains(getString(R.string.preference_token)) && sharedPreferences.contains(getString(R.string.preference_secret))) {
-				String token = sharedPreferences.getString(getString(R.string.preference_token), null);
-				String secret = sharedPreferences.getString(getString(R.string.preference_secret), null);
-				if ((token != null) && (secret != null))
-					oAuthManager = OAuthHelper.getInstance(getString(R.string.consumer_key),
-							getString(R.string.consumer_secret),
-							token,
-							secret);
 			}
 		}
 	}
@@ -136,22 +120,15 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 
-	protected void addMessage(JSONObject json) {
-		Message msg;
-		try {
-			msg = Message.messageFrom(json);
-			messages.add(msg);
-			if (iMain != null) {
-				try {
-					iMain.addMessage(msg.getLatitudeDegrees(), msg.getLongitudeDegrees(), msg.getNick(), msg.getBody());
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	protected void addMessage(Message msg) {
+		messages.add(msg);
+		if (iMain != null) {
+			try {
+				iMain.addMessage(msg.getLatitudeDegrees(), msg.getLongitudeDegrees(), msg.getNick(), msg.getBody());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -167,8 +144,7 @@ public class LocationService extends Service implements LocationListener {
 	}
 
 	protected void startMessageLoading() {
-		messageLoader = new MessageLoader(this);
-		messageLoader.execute();
+        mosaicService.getMessages(this, latitude, longitude);
 	}
 
 	private IMain iMain;
@@ -199,8 +175,7 @@ public class LocationService extends Service implements LocationListener {
 		public void checkSignIn() throws RemoteException {
 			Log.d(TAG, "checkSignIn");
 			// TODO Auto-generated method stub
-			loadTokenSecret();
-			iMain.hasSignedIn(oAuthManager.hasCredentials());
+			iMain.hasSignedIn(mosaicService.email != null);
 		}
 
 		@Override
@@ -212,8 +187,6 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void cancelMessages() throws RemoteException {
 			// TODO Auto-generated method stub
-			if (!messageLoader.isCancelled())
-				messageLoader.cancel(true);
 		}
 	};
 

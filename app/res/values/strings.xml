@@ -2,9 +2,8 @@
 <resources>
 
     <string name="app_name">Mosaic</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="preference_token">oauth_token</string>
-    <string name="preference_secret">oauth_secret</string>
+    <string name="preference_account_email">account_email</string>
+    <string name="no_accounts">Please add a Google account through Settings</string>
 
 </resources>

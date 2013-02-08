@@ -44,19 +44,6 @@ public class Message extends HashMap<String, String> {
 		setNickname(nickname);
 	}
 	
-	public static Message messageFrom(JSONObject msg) throws JSONException {
-		JSONObject usr = msg.getJSONObject("user");
-		return new Message(msg.getString(Properties.id.name()),
-				msg.getString(Properties.body.name()),
-				msg.getString(Properties.latitude.name()),
-				msg.getString(Properties.longitude.name()),
-				msg.getString(Properties.radius.name()),
-				msg.getString(Properties.expiry.name()),
-				msg.getString(Properties.created.name()),
-				usr.getString(Properties.id.name()),
-				usr.getString(Properties.nickname.name()));
-	}
-	
 	public void setId(String key) {
 		this.put(Properties.id.name(), key);
 	}

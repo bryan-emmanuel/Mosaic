@@ -47,23 +47,24 @@ public class MessagesServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		try {
-			Key userKey = MosaicUser.getUserKey(OAuthServiceFactory.getOAuthService().getCurrentUser());
-			JSONObject responseObj = new JSONObject();
-			try {
-				responseObj.put(Message.kind, Message.jsonFromRequest(req.getParameter(lat), req.getParameter(lon), req.getParameter(self), userKey));
-				resp.setContentType("application/json");
-				resp.getWriter().write(responseObj.toString());
-			} catch (JSONException e) {
-				resp.setStatus(500);
-				resp.getWriter().write(e.toString());
-				e.printStackTrace();
-			} catch (Exception e) {
-				resp.setStatus(400);
-				resp.getWriter().write(e.toString());
-				e.printStackTrace();
-			}
+			resp.getWriter().write("get: " + OAuthServiceFactory.getOAuthService().getOAuthConsumerKey());
+//			Key userKey = MosaicUser.getUserKey(OAuthServiceFactory.getOAuthService().getCurrentUser());
+//			JSONObject responseObj = new JSONObject();
+//			try {
+//				responseObj.put(Message.kind, Message.jsonFromRequest(req.getParameter(lat), req.getParameter(lon), req.getParameter(self), userKey));
+//				resp.setContentType("application/json");
+//				resp.getWriter().write(responseObj.toString());
+//			} catch (JSONException e) {
+//				resp.setStatus(500);
+//				resp.getWriter().write(e.toString());
+//				e.printStackTrace();
+//			} catch (Exception e) {
+//				resp.setStatus(400);
+//				resp.getWriter().write(e.toString());
+//				e.printStackTrace();
+//			}
 		} catch (OAuthRequestException e) {
-			resp.setStatus(401);
+//			resp.setStatus(401);
 			resp.getWriter().write(e.toString());
 		}
 	}
@@ -71,10 +72,11 @@ public class MessagesServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		try {
-			User user = OAuthServiceFactory.getOAuthService().getCurrentUser();
+			resp.getWriter().write("post: " + OAuthServiceFactory.getOAuthService().getOAuthConsumerKey());
+//			User user = OAuthServiceFactory.getOAuthService().getCurrentUser();
 			//TODO: handle creating a message
 		} catch (OAuthRequestException e) {
-			resp.setStatus(401);
+//			resp.setStatus(401);
 			resp.getWriter().write(e.toString());
 		}
 	}
