@@ -54,7 +54,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		loadingDialog = new ProgressDialog(this);
-		loadingDialog.setMessage("loading");
+		loadingDialog.setTitle("loading");
 		loadingDialog.setCancelable(true);
 		GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
 	}
@@ -103,20 +103,20 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			// TODO Auto-generated method stub
 			Log.d(TAG, "setGPSEnabled: " + enabled);
 			if (enabled) {
-//				loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//
-//					@Override
-//					public void onCancel(DialogInterface dialog) {
-//						try {
-//							iLocationService.cancelMessages();
-//						} catch (RemoteException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-//
-//				});
-//				loadingDialog.show();
+				loadingDialog.setMessage("messages");
+				loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						try {
+							iLocationService.cancelMessages();
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				});
 				iLocationService.loadMessages();
 			} else {
 				if (loadingDialog.isShowing())
@@ -155,9 +155,10 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void hasSignedIn(boolean signedIn) throws RemoteException {
 			Log.d(TAG, "hasSignedIn: " + signedIn);
-			if (signedIn)
+			if (signedIn) {
+				loadingDialog.setMessage("location");
 				iLocationService.checkGPS();
-			else {
+			} else {
 				if (loadingDialog.isShowing())
 					loadingDialog.dismiss();
 				new AlertDialog.Builder(Main.this)
@@ -213,6 +214,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		iLocationService = ILocationService.Stub.asInterface(service);
 		try {
 			iLocationService.setCallback(iMain);
+			loadingDialog.setMessage("account");
 			iLocationService.checkSignIn();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

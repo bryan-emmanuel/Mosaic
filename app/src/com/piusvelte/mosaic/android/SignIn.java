@@ -20,38 +20,38 @@
 package com.piusvelte.mosaic.android;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.piusvelte.mosaic.android.MosaicService.AddAccountTask;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SignIn extends ListActivity {
+public class SignIn extends ListActivity implements OnCancelListener {
 
 	private static final String TAG = "SignIn";
-//	private ProgressDialog loadingDialog;
+	private ProgressDialog loadingDialog;
 	
 	private MosaicService mosaicService;
 	private AccountManager accountManager;
 	private String[] accountNames;
-
-    private static final int REQUEST_CODE_RECOVER_FROM_AUTH_ERROR = 1001;
-    private static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1002;
+	private AddAccountTask task;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
+		loadingDialog = new ProgressDialog(this);
+		loadingDialog.setMessage("loading");
+		loadingDialog.setCancelable(true);
 	}
 
 	@Override
@@ -64,71 +64,53 @@ public class SignIn extends ListActivity {
 	protected void onListItemClick(ListView list, View view, int position, long id) {
 		super.onListItemClick(list, view, position, id);
         mosaicService = MosaicService.getInstance(getString(R.string.webapp_client_id)).setEmail(accountNames[position]);
-		mosaicService.addAccount(this, REQUEST_CODE_RECOVER_FROM_AUTH_ERROR);
+		task = mosaicService.addAccount(this);
+		loadingDialog.setOnCancelListener(this);
+		loadingDialog.show();
+		task.execute();
 	}
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_RECOVER_FROM_AUTH_ERROR) {
-            if (data == null) {
-                show("Unknown error, click the button again");
-                return;
-            }
-            if (resultCode == RESULT_OK) {
-                Log.i(TAG, "Retrying");
-                //TODO
-                show("need to retry");
-                return;
-            }
-            if (resultCode == RESULT_CANCELED) {
-                show("User rejected authorization.");
-                return;
-            }
-            show("Unknown error, click the button again");
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+	
+	protected void taskFinished(String message) {
+		if (loadingDialog.isShowing())
+			loadingDialog.dismiss();
+		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+		finish();
+	}
 	
 	private void loadAccountList() {
 		accountNames = getAccountNames();
 		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, accountNames));
 	}
 	
-    public void showErrorDialog(final int code) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              Dialog d = GooglePlayServicesUtil.getErrorDialog(
-                  code,
-                  SignIn.this,
-                  REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
-              d.show();
-            }
-        });
-    }
-    
-    public void show(final String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-            	Toast.makeText(SignIn.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+	protected void storeEmail(String email) {
+		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+		.edit()
+		.putString(getString(R.string.preference_account_email), email)
+		.commit();
+	}
 
     private String[] getAccountNames() {
     	accountManager = AccountManager.get(this);
         Account[] accounts = accountManager.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
         String[] names = new String[accounts.length];
-        for (int i = 0; i < names.length; i++) {
+        for (int i = 0; i < names.length; i++)
             names[i] = accounts[i].name;
-        }
         return names;
     }
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		if ((task != null) && !task.isCancelled())
+			task.cancel(true);
+		if (loadingDialog.isShowing())
+			loadingDialog.dismiss();
+	}
+
+	@Override
+	public void onCancel(DialogInterface dialog) {
+		dialog.cancel();
+		if ((task != null) && !task.isCancelled())
+			task.cancel(true);
 	}
 }

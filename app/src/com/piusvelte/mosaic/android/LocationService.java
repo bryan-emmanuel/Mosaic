@@ -22,8 +22,7 @@ package com.piusvelte.mosaic.android;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.piusvelte.mosaic.android.MosaicService.GetMessagesTask;
 
 import android.app.Service;
 import android.content.Context;
@@ -32,7 +31,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -48,6 +46,7 @@ public class LocationService extends Service implements LocationListener {
 	protected List<Message> messages = new ArrayList<Message>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
+	private GetMessagesTask task;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -73,6 +72,8 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if ((task != null) && !task.isCancelled())
+			task.cancel(true);
 	}
 
 	private void start(Intent intent) {
@@ -132,7 +133,7 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 
-	protected void requestFinished(String message) {
+	protected void taskFinished(String message) {
 		if (iMain != null) {
 			try {
 				iMain.setRequestFinished(message);
@@ -144,7 +145,8 @@ public class LocationService extends Service implements LocationListener {
 	}
 
 	protected void startMessageLoading() {
-        mosaicService.getMessages(this, latitude, longitude);
+		task = mosaicService.getMessages(this, latitude, longitude);
+		task.execute();
 	}
 
 	private IMain iMain;
@@ -187,6 +189,8 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void cancelMessages() throws RemoteException {
 			// TODO Auto-generated method stub
+			if ((task != null) && !task.isCancelled())
+				task.cancel(true);
 		}
 	};
 

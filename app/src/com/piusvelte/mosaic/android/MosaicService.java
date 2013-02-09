@@ -42,26 +42,8 @@ public class MosaicService {
 		return this;
 	}
 
-	public void addAccount(SignIn callback, int requestCode) {
-		new addAccount(callback, requestCode).execute();
-	}
-
-	private String getToken(SignIn callback, int requestCode) throws IOException {
-		try {
-			return GoogleAuthUtil.getToken(callback, email, scope);
-		} catch (GooglePlayServicesAvailabilityException playEx) {
-			// GooglePlayServices.apk is either old, disabled, or not present.
-			callback.showErrorDialog(playEx.getConnectionStatusCode());
-		} catch (UserRecoverableAuthException userRecoverableException) {
-			// Unable to authenticate, but the user can fix this.
-			// Forward the user to the appropriate activity.
-			callback.startActivityForResult(userRecoverableException.getIntent(), requestCode);
-		} catch (GoogleAuthException fatalException) {
-			if (fatalException != null)
-				Log.e(TAG, "Exception: ", fatalException);
-			callback.show("Unrecoverable error " + fatalException.getMessage());
-		}
-		return null;
+	public AddAccountTask addAccount(SignIn callback) {
+		return new AddAccountTask(callback);
 	}
 
 	private static String readResponse(InputStream is) throws IOException {
@@ -73,25 +55,36 @@ public class MosaicService {
 		return new String(bos.toByteArray(), "UTF-8");
 	}
 
-	class addAccount extends AsyncTask<Void, Void, Void> {
+	class AddAccountTask extends AsyncTask<Void, Void, String> {
 
 		SignIn callback;
-		int requestCode;
 
-		addAccount(SignIn callback, int requestCode) {
+		AddAccountTask(SignIn callback) {
 			this.callback = callback;
-			this.requestCode = requestCode;
 		}
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected String doInBackground(Void... params) {
 			try {
-				String token = getToken(callback, requestCode);
+				GoogleAuthUtil.getToken(callback, email, scope);
+				callback.storeEmail(email);
+				return "account added";
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				email = null;
+				Log.e(TAG, e.getMessage());
+				return e.getMessage();
+			} catch (GoogleAuthException e) {
+				// TODO Auto-generated catch block
+				email = null;
+				Log.e(TAG, e.getMessage());
+				return e.getMessage();
 			}
-			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			callback.taskFinished(result);
 		}
 	}
 
@@ -108,24 +101,24 @@ public class MosaicService {
 				usr.getString(Properties.nickname.name()));
 	}
 	
-	public void getMessages(LocationService callback, int latitude, int longitude) {
-		
+	public GetMessagesTask getMessages(LocationService callback, int latitude, int longitude) {
+		return new GetMessagesTask(callback, latitude, longitude);
 	}
 
-	class getMessages extends AsyncTask<Void, Void, Void> {
+	class GetMessagesTask extends AsyncTask<Void, Void, String> {
 
 		LocationService callback;
 		String latitude;
 		String longitude;
 
-		getMessages(LocationService callback, String latitude, String longitude) {
+		GetMessagesTask(LocationService callback, int latitude, int longitude) {
 			this.callback = callback;
-			this.latitude = latitude;
-			this.longitude = longitude;
+			this.latitude = Long.toString(latitude);
+			this.longitude = Long.toString(longitude);
 		}
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected String doInBackground(Void... params) {
 			String token = null;
 			try {
 				token = GoogleAuthUtil.getToken(callback, email, scope);
@@ -141,7 +134,7 @@ public class MosaicService {
 			
 			URL url = null;
 			try {
-				url = new URL("http://mosaic-messaging.appspot.com/messages?lat=" + latitude + "&lon=" + longitude + "&access_token=" + token);
+				url = new URL("https://mosaic-messaging.appspot.com/messages?lat=" + latitude + "&lon=" + longitude + "&access_token=" + token);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -180,6 +173,11 @@ public class MosaicService {
 				e.printStackTrace();
 			}
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			callback.taskFinished(result);
 		}
 
 	}
