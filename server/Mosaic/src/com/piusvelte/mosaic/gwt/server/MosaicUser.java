@@ -19,73 +19,51 @@
  */
 package com.piusvelte.mosaic.gwt.server;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.users.User;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
-
+@Entity
 public class MosaicUser {
 	
-	public static final String kind = "user";
-	public static final String id = "id";
-	public static final String userid = "userid";
-	public static final String nickname = "nickname";
-	public static final String email = "email";
-	
-	public static Key getUserKey(User user) {
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Filter filter = new FilterPredicate(userid, FilterOperator.EQUAL, user.getUserId());
-		Query query = new Query(kind).setFilter(filter);
-		List<Entity> users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1));
-		if (users.isEmpty())
-			return null;
-		return users.get(0).getKey();
+	@Id
+	private String id;
+	public String getId() {
+		return id;
 	}
-	
-	public static Key storeUser(User user) {
-		Key userKey = getUserKey(user);
-		if (userKey != null)
-			return userKey;
-		Entity newUser = new Entity(kind);
-		newUser.setProperty(userid, user.getUserId());
-		newUser.setProperty(nickname, user.getNickname());
-		newUser.setProperty(email, user.getEmail());
-		return DatastoreServiceFactory.getDatastoreService().put(newUser);
+
+	public void setId(String id) {
+		this.id = id;
 	}
-	
-	public static Entity getUser(Key key) throws Exception {
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, key);
-		Query query = new Query(kind).setFilter(filter);
-		List<Entity> users = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(1));
-		if (users.isEmpty())
-			throw new Exception("user does not exist");
-		return users.get(0);
+
+	public String getUserid() {
+		return userid;
 	}
-	
-	public static String jsonFromEntity(Entity user) {
-		JSONObject jobj = new JSONObject();
-		try {
-			jobj.put(id, user.getKey().getId());
-			jobj.put(nickname, user.getProperty(nickname));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return jobj.toString();
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-	
-	public static String jsonFromKey(Key key) throws Exception {
-		return jsonFromEntity(getUser(key));
+
+	public String getNickname() {
+		return nickname;
 	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	private String userid;
+	private String nickname;
+	private String email;
 	
+	public MosaicUser() {
+	}
+
 }

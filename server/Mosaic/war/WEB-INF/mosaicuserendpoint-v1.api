@@ -1,0 +1,200 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://mosaic-messaging.appspot.com/_ah/api",
+  "name" : "mosaicuserendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "http://mosaic-messaging.appspot.com/_ah/spi",
+    "deadline" : 10.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "methods" : {
+    "mosaicuserendpoint.getMosaicUser" : {
+      "path" : "mosaicuser/{id}",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicUserEndpoint.getMosaicUser",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicuserendpoint.removeMosaicUser" : {
+      "path" : "mosaicuser/{id}",
+      "httpMethod" : "DELETE",
+      "scopes" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicUserEndpoint.removeMosaicUser",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicuserendpoint.insertMosaicUser" : {
+      "path" : "mosaicuser",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicUserEndpoint.insertMosaicUser",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicuserendpoint.listMosaicUser" : {
+      "path" : "mosaicuser",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicUserEndpoint.listMosaicUser",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicuserendpoint.updateMosaicUser" : {
+      "path" : "mosaicuser",
+      "httpMethod" : "PUT",
+      "scopes" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicUserEndpoint.updateMosaicUser",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "User" : {
+        "id" : "User",
+        "type" : "object",
+        "properties" : {
+          "authDomain" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "federatedIdentity" : {
+            "type" : "string"
+          },
+          "nickname" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MosaicUser" : {
+        "id" : "MosaicUser",
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "nickname" : {
+            "type" : "string"
+          },
+          "userid" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MosaicUserCollection" : {
+        "id" : "MosaicUserCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MosaicUser"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "MosaicUserEndpoint.getMosaicUser" : {
+        "response" : {
+          "$ref" : "MosaicUser"
+        }
+      },
+      "MosaicUserEndpoint.removeMosaicUser" : {
+        "response" : {
+          "$ref" : "MosaicUser"
+        }
+      },
+      "MosaicUserEndpoint.insertMosaicUser" : {
+        "request" : {
+          "$ref" : "MosaicUser"
+        },
+        "response" : {
+          "$ref" : "MosaicUser"
+        }
+      },
+      "MosaicUserEndpoint.listMosaicUser" : {
+        "response" : {
+          "$ref" : "MosaicUserCollection"
+        }
+      },
+      "MosaicUserEndpoint.updateMosaicUser" : {
+        "request" : {
+          "$ref" : "MosaicUser"
+        },
+        "response" : {
+          "$ref" : "MosaicUser"
+        }
+      }
+    }
+  }
+}

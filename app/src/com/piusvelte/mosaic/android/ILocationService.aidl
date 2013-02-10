@@ -21,9 +21,8 @@ package com.piusvelte.mosaic.android;
 
 interface ILocationService {
 	void setCallback(in IBinder mainBinder);
-	void checkGPS();
 	void getCoordinates();
-	void checkSignIn();
-	void loadMessages();
+	void getNickname();
+	void getMessages();
 	void cancelMessages();
 }

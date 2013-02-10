@@ -29,7 +29,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value/>
+   <param-value>com.piusvelte.mosaic.gwt.server.MosaicMessageEndpoint,com.piusvelte.mosaic.gwt.server.DeviceInfoEndpoint,com.piusvelte.mosaic.gwt.server.MosaicUserEndpoint</param-value>
   </init-param>
  </servlet>
 

@@ -20,38 +20,27 @@
 package com.piusvelte.mosaic.android;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
-import com.piusvelte.mosaic.android.MosaicService.AddAccountTask;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class SignIn extends ListActivity implements OnCancelListener {
+public class SignIn extends ListActivity {
 
 	private static final String TAG = "SignIn";
-	private ProgressDialog loadingDialog;
-	
-	private MosaicService mosaicService;
 	private AccountManager accountManager;
 	private String[] accountNames;
-	private AddAccountTask task;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
-		loadingDialog = new ProgressDialog(this);
-		loadingDialog.setMessage("loading");
-		loadingDialog.setCancelable(true);
 	}
 
 	@Override
@@ -63,17 +52,10 @@ public class SignIn extends ListActivity implements OnCancelListener {
 	@Override
 	protected void onListItemClick(ListView list, View view, int position, long id) {
 		super.onListItemClick(list, view, position, id);
-        mosaicService = MosaicService.getInstance(getString(R.string.webapp_client_id)).setEmail(accountNames[position]);
-		task = mosaicService.addAccount(this);
-		loadingDialog.setOnCancelListener(this);
-		loadingDialog.show();
-		task.execute();
-	}
-	
-	protected void taskFinished(String message) {
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
-		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+		.edit()
+		.putString(getString(R.string.preference_account_name), accountNames[position])
+		.commit();
 		finish();
 	}
 	
@@ -83,10 +65,6 @@ public class SignIn extends ListActivity implements OnCancelListener {
 	}
 	
 	protected void storeEmail(String email) {
-		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
-		.edit()
-		.putString(getString(R.string.preference_account_email), email)
-		.commit();
 	}
 
     private String[] getAccountNames() {
@@ -97,20 +75,4 @@ public class SignIn extends ListActivity implements OnCancelListener {
             names[i] = accounts[i].name;
         return names;
     }
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if ((task != null) && !task.isCancelled())
-			task.cancel(true);
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
-	}
-
-	@Override
-	public void onCancel(DialogInterface dialog) {
-		dialog.cancel();
-		if ((task != null) && !task.isCancelled())
-			task.cancel(true);
-	}
 }

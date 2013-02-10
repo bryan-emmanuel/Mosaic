@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.piusvelte.mosaic.android.MosaicService.GetMessagesTask;
+import com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage;
 
 import android.app.Service;
 import android.content.Context;
@@ -31,6 +32,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -43,10 +45,10 @@ public class LocationService extends Service implements LocationListener {
 	private LocationManager locationManager;
 	protected int latitude = 0;
 	protected int longitude = 0;
-	protected List<Message> messages = new ArrayList<Message>();
+	protected List<MosaicMessage> messages = new ArrayList<MosaicMessage>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
-	private GetMessagesTask task;
+	private AsyncTask<Void, Void, String> task;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -58,10 +60,14 @@ public class LocationService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        mosaicService = MosaicService.getInstance(getString(R.string.webapp_client_id));
+        mosaicService = MosaicService.getInstance(getString(R.string.appengine_app_id));
+        loadAccountName();
+	}
+	
+	private void loadAccountName() {
 		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-		if (sharedPreferences.contains(getString(R.string.preference_account_email)))
-			mosaicService.setEmail(sharedPreferences.getString(getString(R.string.preference_account_email), null));
+		if (sharedPreferences.contains(getString(R.string.preference_account_name)))
+			mosaicService.accountName = sharedPreferences.getString(getString(R.string.preference_account_name), null);
 	}
 
 	@Override
@@ -120,33 +126,29 @@ public class LocationService extends Service implements LocationListener {
 			}
 		}
 	}
-
-	protected void addMessage(Message msg) {
-		messages.add(msg);
+	
+	protected void setMessages(List<MosaicMessage> messages) {
+		this.messages = messages;
 		if (iMain != null) {
 			try {
-				iMain.addMessage(msg.getLatitudeDegrees(), msg.getLongitudeDegrees(), msg.getNick(), msg.getBody());
+				for (MosaicMessage message : messages)
+					iMain.addMessage(message.getLatitude(), message.getLongitude(), null, message.getBody());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
-	protected void taskFinished(String message) {
+	
+	protected void setNickname(String nickname) {
 		if (iMain != null) {
 			try {
-				iMain.setRequestFinished(message);
+				iMain.setNickname(nickname);
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-	}
-
-	protected void startMessageLoading() {
-		task = mosaicService.getMessages(this, latitude, longitude);
-		task.execute();
 	}
 
 	private IMain iMain;
@@ -156,14 +158,10 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void getCoordinates() throws RemoteException {
 			// TODO Auto-generated method stub
-			setCoordinates(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
-		}
-
-		@Override
-		public void checkGPS() throws RemoteException {
-			Log.d(TAG, "checkGPS");
-			// TODO Auto-generated method stub
-			iMain.setGPSEnabled(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+				setCoordinates(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+			else
+				iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
 		}
 
 		@Override
@@ -174,16 +172,10 @@ public class LocationService extends Service implements LocationListener {
 		}
 
 		@Override
-		public void checkSignIn() throws RemoteException {
-			Log.d(TAG, "checkSignIn");
+		public void getMessages() throws RemoteException {
 			// TODO Auto-generated method stub
-			iMain.hasSignedIn(mosaicService.email != null);
-		}
-
-		@Override
-		public void loadMessages() throws RemoteException {
-			// TODO Auto-generated method stub
-			startMessageLoading();
+			task = mosaicService.getMessages(LocationService.this, latitude, longitude);
+			task.execute();
 		}
 
 		@Override
@@ -191,6 +183,18 @@ public class LocationService extends Service implements LocationListener {
 			// TODO Auto-generated method stub
 			if ((task != null) && !task.isCancelled())
 				task.cancel(true);
+		}
+
+		@Override
+		public void getNickname() throws RemoteException {
+			// TODO Auto-generated method stub
+			if (mosaicService.accountName == null)
+				loadAccountName();
+			if (mosaicService.accountName != null) {
+				task = mosaicService.getUser(LocationService.this);
+				task.execute();
+			} else
+				setNickname(null);
 		}
 	};
 
@@ -210,7 +214,7 @@ public class LocationService extends Service implements LocationListener {
 			} else {
 				if (iMain != null) {
 					try {
-						iMain.setGPSEnabled(false);
+						iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
 					} catch (RemoteException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -222,7 +226,7 @@ public class LocationService extends Service implements LocationListener {
 		} else if (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			if (iMain != null) {
 				try {
-					iMain.setGPSEnabled(false);
+					iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -241,7 +245,7 @@ public class LocationService extends Service implements LocationListener {
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 			if (iMain != null) {
 				try {
-					iMain.setGPSEnabled(false);
+					iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -254,7 +258,7 @@ public class LocationService extends Service implements LocationListener {
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 			if (iMain != null) {
 				try {
-					iMain.setGPSEnabled(false);
+					iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

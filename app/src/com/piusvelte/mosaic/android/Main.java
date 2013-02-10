@@ -41,6 +41,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Button;
 
 public class Main extends android.support.v4.app.FragmentActivity implements ServiceConnection, OnMapLongClickListener, OnMarkerClickListener {
 
@@ -48,14 +49,17 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	private ProgressDialog loadingDialog;
 	private ILocationService iLocationService;
 	private GoogleMap map;
+	private Button btnNickname;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		btnNickname = ((Button) findViewById(R.id.nickname));
 		loadingDialog = new ProgressDialog(this);
 		loadingDialog.setTitle("loading");
 		loadingDialog.setCancelable(true);
+		GCMIntentService.register(getApplicationContext());
 		GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
 	}
 
@@ -71,7 +75,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		super.onResume();
 		if (map == null)
 			map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-					.getMap();
+			.getMap();
 		if (map != null)
 			map.setMyLocationEnabled(true);
 		map.setOnMapLongClickListener(this);
@@ -79,7 +83,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		loadingDialog.show();
 		bindService(new Intent(this, LocationService.class), this, BIND_AUTO_CREATE);
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -99,28 +103,16 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	private IMain.Stub iMain = new IMain.Stub() {
 
 		@Override
-		public void setGPSEnabled(boolean enabled) throws RemoteException {
+		public void setCoordinates(double latitude, double longitude)
+				throws RemoteException {
 			// TODO Auto-generated method stub
-			Log.d(TAG, "setGPSEnabled: " + enabled);
-			if (enabled) {
-				loadingDialog.setMessage("messages");
-				loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						try {
-							iLocationService.cancelMessages();
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-				});
-				iLocationService.loadMessages();
+			Log.d(TAG, "setCoordinates: " + latitude + ", " + longitude);
+			if (loadingDialog.isShowing())
+				loadingDialog.dismiss();
+			if (latitude != Integer.MAX_VALUE) {
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
+				iLocationService.getMessages();
 			} else {
-				if (loadingDialog.isShowing())
-					loadingDialog.dismiss();
 				new AlertDialog.Builder(Main.this)
 				.setTitle("GPS Settings")
 				.setMessage("Please enable GPS.")
@@ -145,19 +137,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		}
 
 		@Override
-		public void setCoordinates(double latitude, double longitude)
-				throws RemoteException {
-			// TODO Auto-generated method stub
-			Log.d(TAG, "setCoordinates: " + latitude + ", " + longitude);
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
-		}
-
-		@Override
-		public void hasSignedIn(boolean signedIn) throws RemoteException {
-			Log.d(TAG, "hasSignedIn: " + signedIn);
-			if (signedIn) {
+		public void setNickname(String nickname) throws RemoteException {
+			Log.d(TAG, "setNickname: " + nickname);
+			if (nickname != null) {
 				loadingDialog.setMessage("location");
-				iLocationService.checkGPS();
+				iLocationService.getCoordinates();
+				btnNickname.setText(nickname);
 			} else {
 				if (loadingDialog.isShowing())
 					loadingDialog.dismiss();
@@ -199,13 +184,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			if (map != null)
 				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nick).snippet(body));
 		}
-
-		@Override
-		public void setRequestFinished(String nessage) throws RemoteException {
-			// TODO Auto-generated method stub
-			if (loadingDialog.isShowing())
-				loadingDialog.dismiss();
-		}
 	};
 
 	@Override
@@ -215,7 +193,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		try {
 			iLocationService.setCallback(iMain);
 			loadingDialog.setMessage("account");
-			iLocationService.checkSignIn();
+			iLocationService.getNickname();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

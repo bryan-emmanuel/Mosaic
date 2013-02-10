@@ -1,21 +1,19 @@
 package com.piusvelte.mosaic.android;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson.JacksonFactory;
 import com.piusvelte.mosaic.android.Message.Properties;
+import com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint;
+import com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage;
+import com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint;
+import com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -24,67 +22,55 @@ public class MosaicService {
 
 	private static final String TAG = "MosaicService";
 	private static MosaicService service;
-	public String email;
-	public String scope;
+	public String accountName;
+	public String appengineAppId;
 
-	private MosaicService(String scope) {
-		this.scope = "audience:server:client_id:" + scope;
+	private MosaicService(String appengineAppId) {
+		this.appengineAppId = appengineAppId;
 	}
 
-	public static MosaicService getInstance(String scope) {
+	public static MosaicService getInstance(String appengineAppId) {
 		if (service == null)
-			service = new MosaicService(scope);
+			service = new MosaicService(appengineAppId);
 		return service;
 	}
 
-	public MosaicService setEmail(String email) {
-		this.email = email;
-		return this;
+	public GetUserTask getUser(LocationService callback) {
+		return new GetUserTask(callback);
 	}
 
-	public AddAccountTask addAccount(SignIn callback) {
-		return new AddAccountTask(callback);
-	}
+	class GetUserTask extends AsyncTask<Void, Void, String> {
 
-	private static String readResponse(InputStream is) throws IOException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		byte[] data = new byte[2048];
-		int len = 0;
-		while ((len = is.read(data, 0, data.length)) >= 0)
-			bos.write(data, 0, len);
-		return new String(bos.toByteArray(), "UTF-8");
-	}
+		LocationService callback;
 
-	class AddAccountTask extends AsyncTask<Void, Void, String> {
-
-		SignIn callback;
-
-		AddAccountTask(SignIn callback) {
+		GetUserTask(LocationService callback) {
 			this.callback = callback;
 		}
 
 		@Override
 		protected String doInBackground(Void... params) {
+			Log.d(TAG, "audience: " + appengineAppId);
+			Log.d(TAG, "accountName: " + accountName);
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineAppId);
+			credential.setSelectedAccountName(accountName);
+			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(new NetHttpTransport(),
+					new JacksonFactory(),
+					credential);
+			Mosaicuserendpoint endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+			MosaicUser user;
 			try {
-				GoogleAuthUtil.getToken(callback, email, scope);
-				callback.storeEmail(email);
-				return "account added";
-			} catch (IOException e) {
+				user = endpoint.getMosaicUser(accountName).execute();
+				return user.getNickname();
+			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				email = null;
-				Log.e(TAG, e.getMessage());
-				return e.getMessage();
-			} catch (GoogleAuthException e) {
-				// TODO Auto-generated catch block
-				email = null;
-				Log.e(TAG, e.getMessage());
-				return e.getMessage();
+				e1.printStackTrace();
 			}
+			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
-			callback.taskFinished(result);
+			callback.setNickname(result);
 		}
 	}
 
@@ -100,7 +86,7 @@ public class MosaicService {
 				usr.getString(Properties.id.name()),
 				usr.getString(Properties.nickname.name()));
 	}
-	
+
 	public GetMessagesTask getMessages(LocationService callback, int latitude, int longitude) {
 		return new GetMessagesTask(callback, latitude, longitude);
 	}
@@ -110,6 +96,7 @@ public class MosaicService {
 		LocationService callback;
 		String latitude;
 		String longitude;
+		List<MosaicMessage> messages;
 
 		GetMessagesTask(LocationService callback, int latitude, int longitude) {
 			this.callback = callback;
@@ -119,65 +106,25 @@ public class MosaicService {
 
 		@Override
 		protected String doInBackground(Void... params) {
-			String token = null;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineAppId)
+					.setSelectedAccountName(accountName);
+			Mosaicmessageendpoint.Builder endpointBuilder = new Mosaicmessageendpoint.Builder(new NetHttpTransport(),
+					new JacksonFactory(),
+					credential);
+			Mosaicmessageendpoint endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+			List<MosaicMessage> messages;
 			try {
-				token = GoogleAuthUtil.getToken(callback, email, scope);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			} catch (GoogleAuthException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}
-			
-			URL url = null;
-			try {
-				url = new URL("https://mosaic-messaging.appspot.com/messages?lat=" + latitude + "&lon=" + longitude + "&access_token=" + token);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}
-			
-			HttpURLConnection con;
-			try {
-				con = (HttpURLConnection) url.openConnection();
-				int sc = con.getResponseCode();
-				if (sc == 200) {
-					InputStream is = con.getInputStream();
-					JSONObject msgsJobj;
-					try {
-						msgsJobj = new JSONObject(readResponse(is));
-						if (msgsJobj.has("message")) {
-							callback.clearMessages();
-							JSONArray msgsJarr = msgsJobj.getJSONArray("message");
-							for (int i = 0, l = msgsJarr.length(); i < l; i++)
-								callback.addMessage(messageFrom(msgsJarr.getJSONObject(i)));
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					is.close();
-				} else if (sc == 401) {
-//					GoogleAuthUtil.invalidateToken(callback, token);
-//					onError("Server auth error, please try again.", null);
-					Log.i(TAG, "Server auth error: " + readResponse(con.getErrorStream()));
-				} else {
-//					onError("Server returned the following error code: " + sc, null);
-				}
+				messages = endpoint.listMosaicMessage().execute().getItems();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
-			callback.taskFinished(result);
+			callback.setMessages(messages);
 		}
 
 	}
