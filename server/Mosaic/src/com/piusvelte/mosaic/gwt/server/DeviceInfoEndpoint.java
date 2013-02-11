@@ -11,7 +11,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-@Api(name = "deviceinfoendpoint")
+@Api(name = "deviceinfoendpoint",
+clientIds = {"147772138122.apps.googleusercontent.com"},
+audiences = {"mosaic-messaging.appspot.com"})
 public class DeviceInfoEndpoint {
 
 	/**

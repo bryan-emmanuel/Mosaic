@@ -28,8 +28,8 @@
       "path" : "deviceinfo/{id}",
       "httpMethod" : "DELETE",
       "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "DeviceInfoEndpoint.removeDeviceInfo",
       "request" : {
         "parameters" : {
@@ -48,8 +48,8 @@
       "path" : "deviceinfo",
       "httpMethod" : "POST",
       "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "DeviceInfoEndpoint.insertDeviceInfo",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
@@ -63,8 +63,8 @@
       "path" : "deviceinfo",
       "httpMethod" : "GET",
       "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "DeviceInfoEndpoint.listDeviceInfo",
       "request" : {
         "body" : "empty"
@@ -77,8 +77,8 @@
       "path" : "deviceinfo/{id}",
       "httpMethod" : "GET",
       "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "DeviceInfoEndpoint.getDeviceInfo",
       "request" : {
         "parameters" : {
@@ -97,8 +97,8 @@
       "path" : "deviceinfo",
       "httpMethod" : "PUT",
       "scopes" : [ ],
-      "audiences" : [ ],
-      "clientIds" : [ ],
+      "audiences" : [ "mosaic-messaging.appspot.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "DeviceInfoEndpoint.updateDeviceInfo",
       "request" : {
         "body" : "autoTemplate(backendRequest)",

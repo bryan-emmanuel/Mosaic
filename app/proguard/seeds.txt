@@ -472,6 +472,7 @@ com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage: java.lan
 com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage: java.lang.Integer minlongitude
 com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage: java.lang.Integer radius
 com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage: java.lang.Integer reports
+com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage: java.lang.String title
 com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage: java.lang.Integer visits
 com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessageCollection: java.util.List items
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser: java.lang.String id

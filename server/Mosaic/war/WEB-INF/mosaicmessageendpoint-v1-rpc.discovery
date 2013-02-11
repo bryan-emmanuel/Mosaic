@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/ftVGCdZQNG2uqI4gcp03XqaJrns\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/ODRXO7zDJb9MMXUPkC5eKOoYeFY\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessageendpoint:v1",
  "name": "mosaicmessageendpoint",
@@ -112,6 +112,9 @@
     "reports": {
      "type": "integer",
      "format": "int32"
+    },
+    "title": {
+     "type": "string"
     },
     "visits": {
      "type": "integer",

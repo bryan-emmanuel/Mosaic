@@ -1,11 +1,11 @@
 {
   "files": [
     {
-      "path": "mosaic-messaging-mosaicmessageendpoint-v1-20130210013157-java-1.13.2-beta-sources.jar", 
+      "path": "mosaic-messaging-mosaicmessageendpoint-v1-20130211015008-java-1.13.2-beta-sources.jar", 
       "type": "source"
     }, 
     {
-      "path": "mosaic-messaging-mosaicmessageendpoint-v1-20130210013157-java-1.13.2-beta.jar.properties", 
+      "path": "mosaic-messaging-mosaicmessageendpoint-v1-20130211015008-java-1.13.2-beta.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -690,7 +690,7 @@
     }
   ], 
   "language_version": "1.13.2-beta", 
-  "revision": 20130210013157, 
+  "revision": 20130211015008, 
   "id": "mosaicmessageendpoint:v1", 
   "name": "mosaicmessageendpoint"
 }

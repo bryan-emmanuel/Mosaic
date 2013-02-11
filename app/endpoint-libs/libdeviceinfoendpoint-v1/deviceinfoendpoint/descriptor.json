@@ -1,11 +1,11 @@
 {
   "files": [
     {
-      "path": "mosaic-messaging-deviceinfoendpoint-v1-20130210013215-java-1.13.2-beta-sources.jar", 
+      "path": "mosaic-messaging-deviceinfoendpoint-v1-20130211014944-java-1.13.2-beta-sources.jar", 
       "type": "source"
     }, 
     {
-      "path": "mosaic-messaging-deviceinfoendpoint-v1-20130210013215-java-1.13.2-beta.jar.properties", 
+      "path": "mosaic-messaging-deviceinfoendpoint-v1-20130211014944-java-1.13.2-beta.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -690,7 +690,7 @@
     }
   ], 
   "language_version": "1.13.2-beta", 
-  "revision": 20130210013215, 
+  "revision": 20130211014944, 
   "id": "deviceinfoendpoint:v1", 
   "name": "deviceinfoendpoint"
 }

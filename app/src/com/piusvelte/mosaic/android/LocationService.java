@@ -43,8 +43,8 @@ public class LocationService extends Service implements LocationListener {
 	private static final String TAG = "LocationService";
 	private MosaicService mosaicService;
 	private LocationManager locationManager;
-	protected int latitude = 0;
-	protected int longitude = 0;
+	protected int latitude = Integer.MAX_VALUE;
+	protected int longitude = Integer.MAX_VALUE;
 	protected List<MosaicMessage> messages = new ArrayList<MosaicMessage>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
@@ -60,10 +60,10 @@ public class LocationService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        mosaicService = MosaicService.getInstance(getString(R.string.appengine_app_id));
-        loadAccountName();
+		mosaicService = MosaicService.getInstance(getString(R.string.appengine_app_id));
+		loadAccountName();
 	}
-	
+
 	private void loadAccountName() {
 		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 		if (sharedPreferences.contains(getString(R.string.preference_account_name)))
@@ -80,23 +80,26 @@ public class LocationService extends Service implements LocationListener {
 		super.onDestroy();
 		if ((task != null) && !task.isCancelled())
 			task.cancel(true);
+		locationManager.removeUpdates(this);
 	}
 
+	private String[] providers = new String[]{LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER};
+
 	private void start(Intent intent) {
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
-		} else {
-			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
-			else {
-				//TODO notify about no GPS
-			}
+		for (String provider : providers) {
+			if (locationManager.isProviderEnabled(provider))
+				initLocationUpdates(provider);
 		}
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return iLocationService;
+	}
+
+	private void initLocationUpdates(String provider) {
+		locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
+		setCoordinates(locationManager.getLastKnownLocation(provider));
 	}
 
 	private void setCoordinates(Location location) {
@@ -126,7 +129,7 @@ public class LocationService extends Service implements LocationListener {
 			}
 		}
 	}
-	
+
 	protected void setMessages(List<MosaicMessage> messages) {
 		this.messages = messages;
 		if (iMain != null) {
@@ -139,7 +142,7 @@ public class LocationService extends Service implements LocationListener {
 			}
 		}
 	}
-	
+
 	protected void setNickname(String nickname) {
 		if (iMain != null) {
 			try {
@@ -158,10 +161,7 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void getCoordinates() throws RemoteException {
 			// TODO Auto-generated method stub
-			if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-				setCoordinates(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
-			else
-				iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
+			iMain.setCoordinates(latitude, longitude);
 		}
 
 		@Override
@@ -207,26 +207,12 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
-		if (LocationManager.GPS_PROVIDER.equals(provider)) {
-			if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-				locationManager.removeUpdates(this);
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
-			} else {
-				if (iMain != null) {
-					try {
-						iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} else {
-					//TODO notify about no GPS
-				}
-			}
-		} else if (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+		if ((LocationManager.GPS_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) || (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
+			latitude = Integer.MAX_VALUE;
+			longitude = Integer.MAX_VALUE;
 			if (iMain != null) {
 				try {
-					iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
+					iMain.setCoordinates(latitude, longitude);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -240,33 +226,8 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
-		if (LocationManager.GPS_PROVIDER.equals(provider)) {
-			locationManager.removeUpdates(this);
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
-			if (iMain != null) {
-				try {
-					iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else {
-				//TODO clear no GPS notification
-			}
-		} else if (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.removeUpdates(this);
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
-			if (iMain != null) {
-				try {
-					iMain.setCoordinates(Integer.MAX_VALUE, Integer.MAX_VALUE);
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else {
-				//TODO clear no GPS notification
-			}
-		}
+		if (LocationManager.GPS_PROVIDER.equals(provider) || LocationManager.NETWORK_PROVIDER.equals(provider))
+			initLocationUpdates(provider);
 	}
 
 	@Override

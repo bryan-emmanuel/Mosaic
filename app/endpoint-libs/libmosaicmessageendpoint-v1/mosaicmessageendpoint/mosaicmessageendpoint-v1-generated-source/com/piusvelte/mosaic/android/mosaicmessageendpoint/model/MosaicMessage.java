@@ -118,6 +118,12 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
+  private String title;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
   private Integer visits;
 
   /**
@@ -338,6 +344,23 @@ public final class MosaicMessage extends GenericJson {
    */
   public MosaicMessage setReports(Integer reports) {
     this.reports = reports;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicMessage setTitle(String title) {
+    this.title = title;
     return this;
   }
 

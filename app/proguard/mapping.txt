@@ -3358,8 +3358,9 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     long UPDATE_TIME -> f
     float UPDATE_DISTANCE -> g
     android.os.AsyncTask task -> h
-    com.piusvelte.mosaic.android.IMain iMain -> i
-    com.piusvelte.mosaic.android.ILocationService$Stub iLocationService -> j
+    java.lang.String[] providers -> i
+    com.piusvelte.mosaic.android.IMain iMain -> j
+    com.piusvelte.mosaic.android.ILocationService$Stub iLocationService -> k
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     void onCreate() -> onCreate
     void loadAccountName() -> a
@@ -3367,6 +3368,7 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     void onDestroy() -> onDestroy
     void start(android.content.Intent) -> a
     android.os.IBinder onBind(android.content.Intent) -> onBind
+    void initLocationUpdates(java.lang.String) -> b
     void setCoordinates(android.location.Location) -> a
     void setMessages(java.util.List) -> a
     void setNickname(java.lang.String) -> a
@@ -3374,14 +3376,12 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     void onProviderDisabled(java.lang.String) -> onProviderDisabled
     void onProviderEnabled(java.lang.String) -> onProviderEnabled
     void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    android.location.LocationManager access$0(com.piusvelte.mosaic.android.LocationService) -> a
-    void access$1(com.piusvelte.mosaic.android.LocationService,android.location.Location) -> a
-    com.piusvelte.mosaic.android.IMain access$2(com.piusvelte.mosaic.android.LocationService) -> b
-    void access$3(com.piusvelte.mosaic.android.LocationService,com.piusvelte.mosaic.android.IMain) -> a
-    com.piusvelte.mosaic.android.MosaicService access$4(com.piusvelte.mosaic.android.LocationService) -> c
-    void access$5(com.piusvelte.mosaic.android.LocationService,android.os.AsyncTask) -> a
-    android.os.AsyncTask access$6(com.piusvelte.mosaic.android.LocationService) -> d
-    void access$7(com.piusvelte.mosaic.android.LocationService) -> e
+    com.piusvelte.mosaic.android.IMain access$0(com.piusvelte.mosaic.android.LocationService) -> a
+    void access$1(com.piusvelte.mosaic.android.LocationService,com.piusvelte.mosaic.android.IMain) -> a
+    com.piusvelte.mosaic.android.MosaicService access$2(com.piusvelte.mosaic.android.LocationService) -> b
+    void access$3(com.piusvelte.mosaic.android.LocationService,android.os.AsyncTask) -> a
+    android.os.AsyncTask access$4(com.piusvelte.mosaic.android.LocationService) -> c
+    void access$5(com.piusvelte.mosaic.android.LocationService) -> d
 com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.j:
     com.piusvelte.mosaic.android.LocationService this$0 -> a
     void getCoordinates() -> a
@@ -3524,6 +3524,7 @@ com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage -> com.pi
     java.lang.Integer minlongitude -> minlongitude
     java.lang.Integer radius -> radius
     java.lang.Integer reports -> reports
+    java.lang.String title -> title
     java.lang.Integer visits -> visits
     java.lang.String getBody() -> c
     java.lang.Integer getLatitude() -> d
