@@ -179,8 +179,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void addMessage(double latitude, double longitude, String nick, String body)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			if (loadingDialog.isShowing())
-				loadingDialog.dismiss();
 			if (map != null)
 				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nick).snippet(body));
 		}

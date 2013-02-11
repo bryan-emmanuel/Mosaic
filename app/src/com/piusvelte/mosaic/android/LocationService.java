@@ -24,6 +24,7 @@ import java.util.List;
 
 import com.piusvelte.mosaic.android.MosaicService.GetMessagesTask;
 import com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage;
+import com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser;
 
 import android.app.Service;
 import android.content.Context;
@@ -48,7 +49,6 @@ public class LocationService extends Service implements LocationListener {
 	protected List<MosaicMessage> messages = new ArrayList<MosaicMessage>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
-	private AsyncTask<Void, Void, String> task;
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -60,7 +60,7 @@ public class LocationService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		mosaicService = MosaicService.getInstance(getString(R.string.appengine_app_id));
+		mosaicService = MosaicService.getInstance(getString(R.string.client_id));
 		loadAccountName();
 	}
 
@@ -78,8 +78,6 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		if ((task != null) && !task.isCancelled())
-			task.cancel(true);
 		locationManager.removeUpdates(this);
 	}
 
@@ -118,22 +116,12 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 
-	protected void clearMessages() {
-		messages.clear();
-		if (iMain != null) {
-			try {
-				iMain.clearMessages();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
 	protected void setMessages(List<MosaicMessage> messages) {
+		messages.clear();
 		this.messages = messages;
 		if (iMain != null) {
 			try {
+				iMain.clearMessages();
 				for (MosaicMessage message : messages)
 					iMain.addMessage(message.getLatitude(), message.getLongitude(), null, message.getBody());
 			} catch (RemoteException e) {
@@ -141,6 +129,13 @@ public class LocationService extends Service implements LocationListener {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	protected void setMosaicUser(MosaicUser user) {
+		if (user != null)
+			setNickname(user.getNickname());
+		else
+			setNickname(null);
 	}
 
 	protected void setNickname(String nickname) {
@@ -174,15 +169,7 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void getMessages() throws RemoteException {
 			// TODO Auto-generated method stub
-			task = mosaicService.getMessages(LocationService.this, latitude, longitude);
-			task.execute();
-		}
-
-		@Override
-		public void cancelMessages() throws RemoteException {
-			// TODO Auto-generated method stub
-			if ((task != null) && !task.isCancelled())
-				task.cancel(true);
+			mosaicService.getMessages(LocationService.this, latitude, longitude).execute();
 		}
 
 		@Override
@@ -191,8 +178,7 @@ public class LocationService extends Service implements LocationListener {
 			if (mosaicService.accountName == null)
 				loadAccountName();
 			if (mosaicService.accountName != null) {
-				task = mosaicService.getUser(LocationService.this);
-				task.execute();
+				mosaicService.getUser(LocationService.this).execute();
 			} else
 				setNickname(null);
 		}

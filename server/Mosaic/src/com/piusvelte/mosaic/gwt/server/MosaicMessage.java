@@ -20,12 +20,13 @@
 package com.piusvelte.mosaic.gwt.server;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class MosaicMessage {
 
-	@Id
+	@Id @GeneratedValue
 	private String id;
 	private String title;
 	private String body;

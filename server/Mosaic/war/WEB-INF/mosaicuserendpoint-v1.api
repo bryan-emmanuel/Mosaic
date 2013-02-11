@@ -28,8 +28,8 @@
       "path" : "mosaicuser/{id}",
       "httpMethod" : "GET",
       "scopes" : [ ],
-      "audiences" : [ "mosaic-messaging.appspot.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.getMosaicUser",
       "request" : {
         "parameters" : {
@@ -48,8 +48,8 @@
       "path" : "mosaicuser/{id}",
       "httpMethod" : "DELETE",
       "scopes" : [ ],
-      "audiences" : [ "mosaic-messaging.appspot.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.removeMosaicUser",
       "request" : {
         "parameters" : {
@@ -68,8 +68,8 @@
       "path" : "mosaicuser",
       "httpMethod" : "POST",
       "scopes" : [ ],
-      "audiences" : [ "mosaic-messaging.appspot.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.insertMosaicUser",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
@@ -83,8 +83,8 @@
       "path" : "mosaicuser",
       "httpMethod" : "GET",
       "scopes" : [ ],
-      "audiences" : [ "mosaic-messaging.appspot.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.listMosaicUser",
       "request" : {
         "body" : "empty"
@@ -97,8 +97,8 @@
       "path" : "mosaicuser",
       "httpMethod" : "PUT",
       "scopes" : [ ],
-      "audiences" : [ "mosaic-messaging.appspot.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com" ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.updateMosaicUser",
       "request" : {
         "body" : "autoTemplate(backendRequest)",

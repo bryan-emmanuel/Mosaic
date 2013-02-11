@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Mosaic</string>
-    <string name="appengine_app_id">mosaic-messaging.appspot.com</string>
     <string name="menu_settings">Settings</string>
     <string name="preference_account_name">account_name</string>
     <string name="no_accounts">Please add a Google account through Settings</string>

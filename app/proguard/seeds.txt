@@ -405,7 +405,7 @@ com.piusvelte.mosaic.android.R$layout: int main
 com.piusvelte.mosaic.android.R$layout: int signin
 com.piusvelte.mosaic.android.R$menu: int main
 com.piusvelte.mosaic.android.R$string: int app_name
-com.piusvelte.mosaic.android.R$string: int appengine_app_id
+com.piusvelte.mosaic.android.R$string: int client_id
 com.piusvelte.mosaic.android.R$string: int common_google_play_services_enable_button
 com.piusvelte.mosaic.android.R$string: int common_google_play_services_enable_text
 com.piusvelte.mosaic.android.R$string: int common_google_play_services_enable_title

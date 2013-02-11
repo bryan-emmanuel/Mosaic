@@ -24,5 +24,4 @@ interface ILocationService {
 	void getCoordinates();
 	void getNickname();
 	void getMessages();
-	void cancelMessages();
 }

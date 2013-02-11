@@ -6,9 +6,11 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.piusvelte.mosaic.android.Message.Properties;
 import com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint;
 import com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage;
@@ -23,10 +25,12 @@ public class MosaicService {
 	private static final String TAG = "MosaicService";
 	private static MosaicService service;
 	public String accountName;
-	public String appengineAppId;
+	public String appengineWebappClientId;
+	private HttpTransport transport = AndroidHttp.newCompatibleTransport();
+	private JsonFactory jsonFactory = new GsonFactory();
 
 	private MosaicService(String appengineAppId) {
-		this.appengineAppId = appengineAppId;
+		this.appengineWebappClientId = "server:client_id:" + appengineAppId;
 	}
 
 	public static MosaicService getInstance(String appengineAppId) {
@@ -39,38 +43,39 @@ public class MosaicService {
 		return new GetUserTask(callback);
 	}
 
-	class GetUserTask extends AsyncTask<Void, Void, String> {
+	class GetUserTask extends AsyncTask<Void, Void, MosaicUser> {
 
 		LocationService callback;
-
+		Mosaicuserendpoint endpoint;
+		
 		GetUserTask(LocationService callback) {
 			this.callback = callback;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(accountName);
+			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
 		}
 
 		@Override
-		protected String doInBackground(Void... params) {
-			Log.d(TAG, "audience: " + appengineAppId);
-			Log.d(TAG, "accountName: " + accountName);
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineAppId);
-			credential.setSelectedAccountName(accountName);
-			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(new NetHttpTransport(),
-					new JacksonFactory(),
-					credential);
-			Mosaicuserendpoint endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
-			MosaicUser user;
+		protected MosaicUser doInBackground(Void... params) { 
 			try {
-				user = endpoint.getMosaicUser(accountName).execute();
-				return user.getNickname();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				return endpoint.getMosaicUser(accountName).execute();
+			} catch (IOException e) {
+				try {
+					return endpoint.insertMosaicUser(new MosaicUser()).execute();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			}
 			return null;
 		}
-
+		
 		@Override
-		protected void onPostExecute(String result) {
-			callback.setNickname(result);
+		protected void onPostExecute(MosaicUser user) {
+			callback.setMosaicUser(user);
 		}
 	}
 
@@ -91,39 +96,38 @@ public class MosaicService {
 		return new GetMessagesTask(callback, latitude, longitude);
 	}
 
-	class GetMessagesTask extends AsyncTask<Void, Void, String> {
+	class GetMessagesTask extends AsyncTask<Void, Void, List<MosaicMessage>> {
 
 		LocationService callback;
 		String latitude;
 		String longitude;
-		List<MosaicMessage> messages;
+		Mosaicmessageendpoint endpoint;
 
 		GetMessagesTask(LocationService callback, int latitude, int longitude) {
 			this.callback = callback;
 			this.latitude = Long.toString(latitude);
 			this.longitude = Long.toString(longitude);
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId)
+					.setSelectedAccountName(accountName);
+			Mosaicmessageendpoint.Builder endpointBuilder = new Mosaicmessageendpoint.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
 		}
 
 		@Override
-		protected String doInBackground(Void... params) {
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineAppId)
-					.setSelectedAccountName(accountName);
-			Mosaicmessageendpoint.Builder endpointBuilder = new Mosaicmessageendpoint.Builder(new NetHttpTransport(),
-					new JacksonFactory(),
-					credential);
-			Mosaicmessageendpoint endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
-			List<MosaicMessage> messages;
+		protected List<MosaicMessage> doInBackground(Void... params) {
 			try {
-				messages = endpoint.listMosaicMessage().execute().getItems();
+				return endpoint.listMosaicMessage().execute().getItems();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-
+		
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(List<MosaicMessage> messages) {
 			callback.setMessages(messages);
 		}
 

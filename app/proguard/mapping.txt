@@ -2862,15 +2862,69 @@ com.google.api.client.json.JsonToken -> com.google.a.a.d.j:
     com.google.api.client.json.JsonToken[] $VALUES -> m
     com.google.api.client.json.JsonToken[] values() -> values
     com.google.api.client.json.JsonToken valueOf(java.lang.String) -> valueOf
-com.google.api.client.json.jackson.JacksonFactory -> com.google.a.a.d.a.a:
+com.google.api.client.json.gson.GsonFactory -> com.google.a.a.d.a.a:
+    com.google.api.client.json.JsonParser createJsonParser(java.io.InputStream) -> a
+    com.google.api.client.json.JsonParser createJsonParser(java.io.InputStream,java.nio.charset.Charset) -> a
+    com.google.api.client.json.JsonParser createJsonParser(java.io.Reader) -> a
+    com.google.api.client.json.JsonGenerator createJsonGenerator(java.io.OutputStream,java.nio.charset.Charset) -> a
+    com.google.api.client.json.JsonGenerator createJsonGenerator(java.io.Writer) -> a
+com.google.api.client.json.gson.GsonGenerator -> com.google.a.a.d.a.b:
+    com.google.gson.stream.JsonWriter writer -> a
+    com.google.api.client.json.gson.GsonFactory factory -> b
+    void flush() -> a
+    void writeBoolean(boolean) -> a
+    void writeEndArray() -> c
+    void writeEndObject() -> e
+    void writeFieldName(java.lang.String) -> a
+    void writeNull() -> f
+    void writeNumber(int) -> a
+    void writeNumber(long) -> a
+    void writeNumber(java.math.BigInteger) -> a
+    void writeNumber(com.google.common.primitives.UnsignedInteger) -> a
+    void writeNumber(com.google.common.primitives.UnsignedLong) -> a
+    void writeNumber(double) -> a
+    void writeNumber(float) -> a
+    void writeNumber(java.math.BigDecimal) -> a
+    void writeStartArray() -> b
+    void writeStartObject() -> d
+    void writeString(java.lang.String) -> b
+    void enablePrettyPrint() -> g
+com.google.api.client.json.gson.GsonParser -> com.google.a.a.d.a.c:
+    com.google.gson.stream.JsonReader reader -> a
+    com.google.api.client.json.gson.GsonFactory factory -> b
+    java.util.List currentNameStack -> c
+    com.google.api.client.json.JsonToken currentToken -> d
+    java.lang.String currentText -> e
+    void close() -> b
+    java.lang.String getCurrentName() -> e
+    com.google.api.client.json.JsonToken getCurrentToken() -> d
+    com.google.api.client.json.JsonFactory getFactory() -> a
+    byte getByteValue() -> h
+    short getShortValue() -> i
+    int getIntValue() -> j
+    float getFloatValue() -> k
+    java.math.BigInteger getBigIntegerValue() -> n
+    com.google.common.primitives.UnsignedInteger getUnsignedIntegerValue() -> o
+    com.google.common.primitives.UnsignedLong getUnsignedLongValue() -> p
+    java.math.BigDecimal getDecimalValue() -> q
+    double getDoubleValue() -> m
+    long getLongValue() -> l
+    void checkNumber() -> r
+    java.lang.String getText() -> g
+    com.google.api.client.json.JsonToken nextToken() -> c
+    com.google.api.client.json.JsonParser skipChildren() -> f
+com.google.api.client.json.gson.GsonParser$1 -> com.google.a.a.d.a.d:
+    int[] $SwitchMap$com$google$api$client$json$JsonToken -> a
+    int[] $SwitchMap$com$google$gson$stream$JsonToken -> b
+com.google.api.client.json.jackson.JacksonFactory -> com.google.a.a.d.b.a:
     org.codehaus.jackson.JsonFactory factory -> a
     com.google.api.client.json.JsonGenerator createJsonGenerator(java.io.OutputStream,java.nio.charset.Charset) -> a
     com.google.api.client.json.JsonParser createJsonParser(java.io.InputStream) -> a
     com.google.api.client.json.JsonParser createJsonParser(java.io.InputStream,java.nio.charset.Charset) -> a
     com.google.api.client.json.JsonToken convert(org.codehaus.jackson.JsonToken) -> a
-com.google.api.client.json.jackson.JacksonFactory$1 -> com.google.a.a.d.a.b:
+com.google.api.client.json.jackson.JacksonFactory$1 -> com.google.a.a.d.b.b:
     int[] $SwitchMap$org$codehaus$jackson$JsonToken -> a
-com.google.api.client.json.jackson.JacksonGenerator -> com.google.a.a.d.a.c:
+com.google.api.client.json.jackson.JacksonGenerator -> com.google.a.a.d.b.c:
     org.codehaus.jackson.JsonGenerator generator -> a
     com.google.api.client.json.jackson.JacksonFactory factory -> b
     void flush() -> a
@@ -2891,7 +2945,7 @@ com.google.api.client.json.jackson.JacksonGenerator -> com.google.a.a.d.a.c:
     void writeStartObject() -> d
     void writeString(java.lang.String) -> b
     void enablePrettyPrint() -> g
-com.google.api.client.json.jackson.JacksonParser -> com.google.a.a.d.a.d:
+com.google.api.client.json.jackson.JacksonParser -> com.google.a.a.d.b.d:
     org.codehaus.jackson.JsonParser parser -> a
     com.google.api.client.json.jackson.JacksonFactory factory -> b
     com.google.api.client.json.jackson.JacksonFactory getFactory() -> r
@@ -3300,6 +3354,130 @@ com.google.common.primitives.UnsignedLongs -> com.google.b.c.f:
     boolean overflowInParse(long,int,int) -> a
     java.lang.String toString(long) -> a
     java.lang.String toString(long,int) -> a
+com.google.gson.internal.JsonReaderInternalAccess -> com.google.c.a.a:
+    com.google.gson.internal.JsonReaderInternalAccess INSTANCE -> a
+com.google.gson.stream.JsonReader -> com.google.c.b.a:
+    char[] NON_EXECUTE_PREFIX -> a
+    com.google.gson.stream.StringPool stringPool -> b
+    java.io.Reader in -> c
+    boolean lenient -> d
+    char[] buffer -> e
+    int pos -> f
+    int limit -> g
+    int bufferStartLine -> h
+    int bufferStartColumn -> i
+    com.google.gson.stream.JsonScope[] stack -> j
+    int stackSize -> k
+    com.google.gson.stream.JsonToken token -> l
+    java.lang.String name -> m
+    java.lang.String value -> n
+    int valuePos -> o
+    int valueLength -> p
+    boolean skipping -> q
+    void setLenient(boolean) -> a
+    void beginArray() -> a
+    void endArray() -> b
+    void beginObject() -> c
+    void endObject() -> d
+    void expect(com.google.gson.stream.JsonToken) -> a
+    com.google.gson.stream.JsonToken peek() -> e
+    void consumeNonExecutePrefix() -> k
+    com.google.gson.stream.JsonToken advance() -> l
+    java.lang.String nextName() -> f
+    java.lang.String nextString() -> g
+    boolean nextBoolean() -> h
+    void nextNull() -> i
+    void close() -> close
+    void skipValue() -> j
+    void push(com.google.gson.stream.JsonScope) -> a
+    com.google.gson.stream.JsonToken nextInArray(boolean) -> b
+    com.google.gson.stream.JsonToken nextInObject(boolean) -> c
+    com.google.gson.stream.JsonToken objectValue() -> m
+    com.google.gson.stream.JsonToken nextValue() -> n
+    boolean fillBuffer(int) -> a
+    int getLineNumber() -> o
+    int getColumnNumber() -> p
+    int nextNonWhitespace(boolean) -> d
+    void checkLenient() -> q
+    void skipToEndOfLine() -> r
+    boolean skipTo(java.lang.String) -> a
+    java.lang.String nextString(char) -> a
+    java.lang.String nextLiteral(boolean) -> e
+    java.lang.String toString() -> toString
+    char readEscapeCharacter() -> s
+    com.google.gson.stream.JsonToken readLiteral() -> t
+    com.google.gson.stream.JsonToken decodeLiteral() -> u
+    com.google.gson.stream.JsonToken decodeNumber(char[],int,int) -> a
+    java.io.IOException syntaxError(java.lang.String) -> b
+    java.lang.CharSequence getSnippet() -> v
+com.google.gson.stream.JsonReader$1 -> com.google.c.b.b:
+com.google.gson.stream.JsonReader$2 -> com.google.c.b.c:
+    int[] $SwitchMap$com$google$gson$stream$JsonScope -> a
+com.google.gson.stream.JsonScope -> com.google.c.b.d:
+    com.google.gson.stream.JsonScope EMPTY_ARRAY -> a
+    com.google.gson.stream.JsonScope NONEMPTY_ARRAY -> b
+    com.google.gson.stream.JsonScope EMPTY_OBJECT -> c
+    com.google.gson.stream.JsonScope DANGLING_NAME -> d
+    com.google.gson.stream.JsonScope NONEMPTY_OBJECT -> e
+    com.google.gson.stream.JsonScope EMPTY_DOCUMENT -> f
+    com.google.gson.stream.JsonScope NONEMPTY_DOCUMENT -> g
+    com.google.gson.stream.JsonScope CLOSED -> h
+    com.google.gson.stream.JsonScope[] $VALUES -> i
+    com.google.gson.stream.JsonScope[] values() -> values
+    com.google.gson.stream.JsonScope valueOf(java.lang.String) -> valueOf
+com.google.gson.stream.JsonToken -> com.google.c.b.e:
+    com.google.gson.stream.JsonToken BEGIN_ARRAY -> a
+    com.google.gson.stream.JsonToken END_ARRAY -> b
+    com.google.gson.stream.JsonToken BEGIN_OBJECT -> c
+    com.google.gson.stream.JsonToken END_OBJECT -> d
+    com.google.gson.stream.JsonToken NAME -> e
+    com.google.gson.stream.JsonToken STRING -> f
+    com.google.gson.stream.JsonToken NUMBER -> g
+    com.google.gson.stream.JsonToken BOOLEAN -> h
+    com.google.gson.stream.JsonToken NULL -> i
+    com.google.gson.stream.JsonToken END_DOCUMENT -> j
+    com.google.gson.stream.JsonToken[] $VALUES -> k
+    com.google.gson.stream.JsonToken[] values() -> values
+    com.google.gson.stream.JsonToken valueOf(java.lang.String) -> valueOf
+com.google.gson.stream.JsonWriter -> com.google.c.b.f:
+    java.io.Writer out -> a
+    java.util.List stack -> b
+    java.lang.String indent -> c
+    java.lang.String separator -> d
+    boolean lenient -> e
+    boolean htmlSafe -> f
+    java.lang.String deferredName -> g
+    boolean serializeNulls -> h
+    void setIndent(java.lang.String) -> a
+    void setLenient(boolean) -> a
+    com.google.gson.stream.JsonWriter beginArray() -> a
+    com.google.gson.stream.JsonWriter endArray() -> b
+    com.google.gson.stream.JsonWriter beginObject() -> c
+    com.google.gson.stream.JsonWriter endObject() -> d
+    com.google.gson.stream.JsonWriter open(com.google.gson.stream.JsonScope,java.lang.String) -> a
+    com.google.gson.stream.JsonWriter close(com.google.gson.stream.JsonScope,com.google.gson.stream.JsonScope,java.lang.String) -> a
+    com.google.gson.stream.JsonScope peek() -> g
+    void replaceTop(com.google.gson.stream.JsonScope) -> a
+    com.google.gson.stream.JsonWriter name(java.lang.String) -> b
+    void writeDeferredName() -> h
+    com.google.gson.stream.JsonWriter value(java.lang.String) -> c
+    com.google.gson.stream.JsonWriter nullValue() -> e
+    com.google.gson.stream.JsonWriter value(boolean) -> b
+    com.google.gson.stream.JsonWriter value(double) -> a
+    com.google.gson.stream.JsonWriter value(long) -> a
+    com.google.gson.stream.JsonWriter value(java.lang.Number) -> a
+    void flush() -> f
+    void close() -> close
+    void string(java.lang.String) -> d
+    void newline() -> i
+    void beforeName() -> j
+    void beforeValue(boolean) -> c
+com.google.gson.stream.JsonWriter$1 -> com.google.c.b.g:
+    int[] $SwitchMap$com$google$gson$stream$JsonScope -> a
+com.google.gson.stream.MalformedJsonException -> com.google.c.b.h:
+com.google.gson.stream.StringPool -> com.google.c.b.i:
+    java.lang.String[] pool -> a
+    java.lang.String get(char[],int,int) -> a
 com.piusvelte.mosaic.android.CloudEndpointUtils -> com.piusvelte.mosaic.android.a:
     com.google.api.client.googleapis.services.AbstractGoogleClient$Builder updateBuilder(com.google.api.client.googleapis.services.AbstractGoogleClient$Builder) -> a
 com.piusvelte.mosaic.android.CloudEndpointUtils$1 -> com.piusvelte.mosaic.android.b:
@@ -3320,7 +3498,6 @@ com.piusvelte.mosaic.android.ILocationService -> com.piusvelte.mosaic.android.d:
     void getCoordinates() -> a
     void getNickname() -> b
     void getMessages() -> c
-    void cancelMessages() -> d
 com.piusvelte.mosaic.android.ILocationService$Stub -> com.piusvelte.mosaic.android.e:
     com.piusvelte.mosaic.android.ILocationService asInterface(android.os.IBinder) -> b
     android.os.IBinder asBinder() -> asBinder
@@ -3332,7 +3509,6 @@ com.piusvelte.mosaic.android.ILocationService$Stub$Proxy -> com.piusvelte.mosaic
     void getCoordinates() -> a
     void getNickname() -> b
     void getMessages() -> c
-    void cancelMessages() -> d
 com.piusvelte.mosaic.android.IMain -> com.piusvelte.mosaic.android.g:
     void setCoordinates(double,double) -> a
     void setNickname(java.lang.String) -> a
@@ -3357,10 +3533,9 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     java.util.List messages -> c
     long UPDATE_TIME -> f
     float UPDATE_DISTANCE -> g
-    android.os.AsyncTask task -> h
-    java.lang.String[] providers -> i
-    com.piusvelte.mosaic.android.IMain iMain -> j
-    com.piusvelte.mosaic.android.ILocationService$Stub iLocationService -> k
+    java.lang.String[] providers -> h
+    com.piusvelte.mosaic.android.IMain iMain -> i
+    com.piusvelte.mosaic.android.ILocationService$Stub iLocationService -> j
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     void onCreate() -> onCreate
     void loadAccountName() -> a
@@ -3371,6 +3546,7 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     void initLocationUpdates(java.lang.String) -> b
     void setCoordinates(android.location.Location) -> a
     void setMessages(java.util.List) -> a
+    void setMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser) -> a
     void setNickname(java.lang.String) -> a
     void onLocationChanged(android.location.Location) -> onLocationChanged
     void onProviderDisabled(java.lang.String) -> onProviderDisabled
@@ -3379,15 +3555,12 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     com.piusvelte.mosaic.android.IMain access$0(com.piusvelte.mosaic.android.LocationService) -> a
     void access$1(com.piusvelte.mosaic.android.LocationService,com.piusvelte.mosaic.android.IMain) -> a
     com.piusvelte.mosaic.android.MosaicService access$2(com.piusvelte.mosaic.android.LocationService) -> b
-    void access$3(com.piusvelte.mosaic.android.LocationService,android.os.AsyncTask) -> a
-    android.os.AsyncTask access$4(com.piusvelte.mosaic.android.LocationService) -> c
-    void access$5(com.piusvelte.mosaic.android.LocationService) -> d
+    void access$3(com.piusvelte.mosaic.android.LocationService) -> c
 com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.j:
     com.piusvelte.mosaic.android.LocationService this$0 -> a
     void getCoordinates() -> a
     void setCallback(android.os.IBinder) -> a
     void getMessages() -> c
-    void cancelMessages() -> d
     void getNickname() -> b
 com.piusvelte.mosaic.android.Main -> com.piusvelte.mosaic.android.Main:
     android.app.ProgressDialog loadingDialog -> n
@@ -3428,25 +3601,30 @@ com.piusvelte.mosaic.android.Main$1$4 -> com.piusvelte.mosaic.android.o:
 com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.p:
     com.piusvelte.mosaic.android.MosaicService service -> c
     java.lang.String accountName -> a
-    java.lang.String appengineAppId -> b
+    java.lang.String appengineWebappClientId -> b
+    com.google.api.client.http.HttpTransport transport -> d
+    com.google.api.client.json.JsonFactory jsonFactory -> e
     com.piusvelte.mosaic.android.MosaicService getInstance(java.lang.String) -> a
     com.piusvelte.mosaic.android.MosaicService$GetUserTask getUser(com.piusvelte.mosaic.android.LocationService) -> a
     com.piusvelte.mosaic.android.MosaicService$GetMessagesTask getMessages(com.piusvelte.mosaic.android.LocationService,int,int) -> a
+    com.google.api.client.http.HttpTransport access$0(com.piusvelte.mosaic.android.MosaicService) -> a
+    com.google.api.client.json.JsonFactory access$1(com.piusvelte.mosaic.android.MosaicService) -> b
 com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.q:
     com.piusvelte.mosaic.android.LocationService callback -> a
     java.lang.String latitude -> b
     java.lang.String longitude -> c
-    java.util.List messages -> d
+    com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint endpoint -> d
     com.piusvelte.mosaic.android.MosaicService this$0 -> e
-    java.lang.String doInBackground(java.lang.Void[]) -> a
-    void onPostExecute(java.lang.String) -> a
+    java.util.List doInBackground(java.lang.Void[]) -> a
+    void onPostExecute(java.util.List) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.r:
     com.piusvelte.mosaic.android.LocationService callback -> a
-    com.piusvelte.mosaic.android.MosaicService this$0 -> b
-    java.lang.String doInBackground(java.lang.Void[]) -> a
-    void onPostExecute(java.lang.String) -> a
+    com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
+    com.piusvelte.mosaic.android.MosaicService this$0 -> c
+    com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser doInBackground(java.lang.Void[]) -> a
+    void onPostExecute(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.piusvelte.mosaic.android.SignIn -> com.piusvelte.mosaic.android.SignIn:
@@ -3535,6 +3713,7 @@ com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessageCollection
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint -> com.piusvelte.mosaic.android.c.a:
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser getMosaicUser(java.lang.String) -> c
+    com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser insertMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser) -> a
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder -> com.piusvelte.mosaic.android.c.b:
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint build() -> j
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setRootUrl(java.lang.String) -> e
@@ -3546,7 +3725,9 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder -> co
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser -> com.piusvelte.mosaic.android.c.c:
     java.lang.String id -> id
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint this$0 -> c
-com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest -> com.piusvelte.mosaic.android.c.d:
+com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser -> com.piusvelte.mosaic.android.c.d:
+    com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint this$0 -> c
+com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest -> com.piusvelte.mosaic.android.c.e:
     java.lang.String alt -> alt
     java.lang.String fields -> fields
     java.lang.String key -> key

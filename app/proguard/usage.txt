@@ -1652,11 +1652,13 @@ com.google.api.client.json.JsonParser:
     400:404:public final void parseArrayAndClose(java.util.Collection,java.lang.Class,com.google.api.client.json.CustomizeJsonParser)
     419:422:public final java.util.Collection parseArray(java.lang.Class,java.lang.Class,com.google.api.client.json.CustomizeJsonParser)
     436:438:public final void parseArray(java.util.Collection,java.lang.Class,com.google.api.client.json.CustomizeJsonParser)
-com.google.api.client.json.gson.GsonFactory
-com.google.api.client.json.gson.GsonGenerator
+com.google.api.client.json.gson.GsonFactory:
+    63:63:public com.google.api.client.json.JsonParser createJsonParser(java.lang.String)
+com.google.api.client.json.gson.GsonGenerator:
+    55:56:public void close()
+    60:60:public com.google.api.client.json.JsonFactory getFactory()
+    170:171:public void writeNumber(java.lang.String)
 com.google.api.client.json.gson.GsonGenerator$StringNumber
-com.google.api.client.json.gson.GsonParser
-com.google.api.client.json.gson.GsonParser$1
 com.google.api.client.json.jackson.JacksonFactory:
     59:59:public com.google.api.client.json.JsonGenerator createJsonGenerator(java.io.Writer)
     64:65:public com.google.api.client.json.JsonParser createJsonParser(java.io.Reader)
@@ -3356,7 +3358,8 @@ com.google.gson.internal.ConstructorConstructor$8
 com.google.gson.internal.Excluder
 com.google.gson.internal.Excluder$1
 com.google.gson.internal.GsonInternalAccess
-com.google.gson.internal.JsonReaderInternalAccess
+com.google.gson.internal.JsonReaderInternalAccess:
+    public abstract void promoteNameToValue(com.google.gson.stream.JsonReader)
 com.google.gson.internal.LazilyParsedNumber
 com.google.gson.internal.ObjectConstructor
 com.google.gson.internal.Pair
@@ -3430,15 +3433,33 @@ com.google.gson.internal.bind.TypeAdapters$8
 com.google.gson.internal.bind.TypeAdapters$9
 com.google.gson.internal.bind.TypeAdapters$EnumTypeAdapter
 com.google.gson.reflect.TypeToken
-com.google.gson.stream.JsonReader
-com.google.gson.stream.JsonReader$1
-com.google.gson.stream.JsonReader$2
-com.google.gson.stream.JsonScope
-com.google.gson.stream.JsonToken
-com.google.gson.stream.JsonWriter
-com.google.gson.stream.JsonWriter$1
-com.google.gson.stream.MalformedJsonException
-com.google.gson.stream.StringPool
+com.google.gson.stream.JsonReader:
+    private static final java.lang.String TRUE
+    private static final java.lang.String FALSE
+    298:298:public final boolean isLenient()
+    349:350:public boolean hasNext()
+    519:537:public double nextDouble()
+    551:575:public long nextLong()
+    589:613:public int nextInt()
+    190:190:static synthetic com.google.gson.stream.JsonToken access$000(com.google.gson.stream.JsonReader)
+    190:190:static synthetic int access$100(com.google.gson.stream.JsonReader)
+    190:190:static synthetic int access$200(com.google.gson.stream.JsonReader)
+    190:190:static synthetic java.lang.String access$302(com.google.gson.stream.JsonReader,java.lang.String)
+    190:190:static synthetic java.lang.String access$400(com.google.gson.stream.JsonReader)
+    190:190:static synthetic java.lang.String access$402(com.google.gson.stream.JsonReader,java.lang.String)
+    190:190:static synthetic com.google.gson.stream.JsonToken access$002(com.google.gson.stream.JsonReader,com.google.gson.stream.JsonToken)
+com.google.gson.stream.JsonReader$1:
+    1314:1326:public void promoteNameToValue(com.google.gson.stream.JsonReader)
+com.google.gson.stream.JsonWriter:
+    202:202:public boolean isLenient()
+    213:214:public final void setHtmlSafe(boolean)
+    221:221:public final boolean isHtmlSafe()
+    229:230:public final void setSerializeNulls(boolean)
+    237:237:public final boolean getSerializeNulls()
+com.google.gson.stream.MalformedJsonException:
+    private static final long serialVersionUID
+    33:37:public MalformedJsonException(java.lang.String,java.lang.Throwable)
+    39:43:public MalformedJsonException(java.lang.Throwable)
 com.piusvelte.mosaic.android.BuildConfig
 com.piusvelte.mosaic.android.CloudEndpointUtils:
     public static final boolean LOCAL_ANDROID_RUN
@@ -3456,9 +3477,8 @@ com.piusvelte.mosaic.android.ILocationService$Stub:
     static final int TRANSACTION_getCoordinates
     static final int TRANSACTION_getNickname
     static final int TRANSACTION_getMessages
-    static final int TRANSACTION_cancelMessages
 com.piusvelte.mosaic.android.ILocationService$Stub$Proxy:
-    98:98:public java.lang.String getInterfaceDescriptor()
+    91:91:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.IMain$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCoordinates
@@ -3469,17 +3489,16 @@ com.piusvelte.mosaic.android.IMain$Stub$Proxy:
     103:103:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.LocationService:
     private static final java.lang.String TAG
-    122:131:protected void clearMessages()
 com.piusvelte.mosaic.android.Main:
     private static final java.lang.String TAG
-    212:212:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
+    210:210:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
 com.piusvelte.mosaic.android.Manifest
 com.piusvelte.mosaic.android.Manifest$permission
 com.piusvelte.mosaic.android.Message
 com.piusvelte.mosaic.android.Message$Properties
 com.piusvelte.mosaic.android.MosaicService:
     private static final java.lang.String TAG
-    78:79:public static com.piusvelte.mosaic.android.Message messageFrom(org.json.JSONObject)
+    83:84:public static com.piusvelte.mosaic.android.Message messageFrom(org.json.JSONObject)
 com.piusvelte.mosaic.android.R
 com.piusvelte.mosaic.android.R$attr
 com.piusvelte.mosaic.android.R$drawable
@@ -3646,7 +3665,6 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint:
     public static final java.lang.String DEFAULT_SERVICE_PATH
     public static final java.lang.String DEFAULT_BASE_URL
     104:110:public Mosaicuserendpoint(com.google.api.client.http.HttpTransport,com.google.api.client.json.JsonFactory,com.google.api.client.http.HttpRequestInitializer)
-    256:258:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser insertMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser)
     327:329:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$ListMosaicUser listMosaicUser()
     408:410:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$RemoveMosaicUser removeMosaicUser(java.lang.String)
     496:498:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$UpdateMosaicUser updateMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser)
@@ -3679,7 +3697,22 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser
     1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setFields(java.lang.String)
     1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setQuotaUser(java.lang.String)
     1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setOauthToken(java.lang.String)
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser
+com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser:
+    private static final java.lang.String REST_PATH
+    282:282:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setAlt(java.lang.String)
+    287:287:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setFields(java.lang.String)
+    292:292:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setKey(java.lang.String)
+    297:297:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setOauthToken(java.lang.String)
+    302:302:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setPrettyPrint(java.lang.Boolean)
+    307:307:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setQuotaUser(java.lang.String)
+    312:312:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setOauthToken(java.lang.String)
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$ListMosaicUser
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$RemoveMosaicUser
 com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$UpdateMosaicUser

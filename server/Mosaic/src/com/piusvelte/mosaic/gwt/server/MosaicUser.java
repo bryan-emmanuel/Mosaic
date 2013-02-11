@@ -20,12 +20,13 @@
 package com.piusvelte.mosaic.gwt.server;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class MosaicUser {
 	
-	@Id
+	@Id @GeneratedValue
 	private String id;
 	public String getId() {
 		return id;
