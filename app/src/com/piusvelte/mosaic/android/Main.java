@@ -41,7 +41,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Main extends android.support.v4.app.FragmentActivity implements ServiceConnection, OnMapLongClickListener, OnMarkerClickListener {
 
@@ -56,10 +58,44 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		btnNickname = ((Button) findViewById(R.id.nickname));
+		btnNickname.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				final EditText newNickname = new EditText(Main.this);
+				newNickname.setText(btnNickname.getText().toString());
+				new AlertDialog.Builder(Main.this)
+				.setTitle("Change nickname")
+				.setView(newNickname)
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						String nickname = newNickname.getText().toString();
+						if (nickname.length() > 0) {
+							if (!nickname.equals(btnNickname.getText().toString())) {
+								try {
+									iLocationService.changeNickname(nickname);
+								} catch (RemoteException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						} else {
+							//TODO no name
+						}
+					}
+					
+				})
+				.show();
+			}
+			
+		});
 		loadingDialog = new ProgressDialog(this);
 		loadingDialog.setTitle("loading");
 		loadingDialog.setCancelable(true);
-		GCMIntentService.register(getApplicationContext());
+//		GCMIntentService.register(getApplicationContext());
 		GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
 	}
 
@@ -110,7 +146,10 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			if (loadingDialog.isShowing())
 				loadingDialog.dismiss();
 			if (latitude != Integer.MAX_VALUE) {
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
+				Log.d(TAG, "animate camera");
+				if (map != null)
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
+				Log.d(TAG, "getMessages");
 				iLocationService.getMessages();
 			} else {
 				new AlertDialog.Builder(Main.this)

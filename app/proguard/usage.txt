@@ -761,8 +761,14 @@ com.google.android.gcm.GCMRegistrar:
     private static final java.lang.String PROPERTY_REG_ID
     private static final java.lang.String PROPERTY_APP_VERSION
     private static final java.lang.String PROPERTY_ON_SERVER
+    private static com.google.android.gcm.GCMBroadcastReceiver sRetryReceiver
+    74:86:public static void checkDevice(android.content.Context)
+    114:158:public static void checkManifest(android.content.Context)
+    162:185:private static void checkReceiver(android.content.Context,java.util.Set,java.lang.String)
+    202:205:public static varargs void register(android.content.Context,java.lang.String[])
     234:237:public static void unregister(android.content.Context)
     247:252:public static synchronized void onDestroy(android.content.Context)
+    267:278:private static synchronized void setRetryBroadcastReceiver(android.content.Context)
     344:349:public static void setRegisteredOnServer(android.content.Context,boolean)
     355:358:public static boolean isRegisteredOnServer(android.content.Context)
     418:419:private GCMRegistrar()
@@ -3471,14 +3477,16 @@ com.piusvelte.mosaic.android.CloudEndpointUtils:
 com.piusvelte.mosaic.android.CloudEndpointUtils$2
 com.piusvelte.mosaic.android.GCMIntentService:
     private static final java.lang.String PROJECT_ID
+    35:38:public static void register(android.content.Context)
 com.piusvelte.mosaic.android.ILocationService$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCallback
     static final int TRANSACTION_getCoordinates
     static final int TRANSACTION_getNickname
     static final int TRANSACTION_getMessages
+    static final int TRANSACTION_changeNickname
 com.piusvelte.mosaic.android.ILocationService$Stub$Proxy:
-    91:91:public java.lang.String getInterfaceDescriptor()
+    100:100:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.IMain$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCoordinates
@@ -3491,14 +3499,13 @@ com.piusvelte.mosaic.android.LocationService:
     private static final java.lang.String TAG
 com.piusvelte.mosaic.android.Main:
     private static final java.lang.String TAG
-    210:210:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
+    249:249:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
 com.piusvelte.mosaic.android.Manifest
 com.piusvelte.mosaic.android.Manifest$permission
 com.piusvelte.mosaic.android.Message
 com.piusvelte.mosaic.android.Message$Properties
 com.piusvelte.mosaic.android.MosaicService:
     private static final java.lang.String TAG
-    83:84:public static com.piusvelte.mosaic.android.Message messageFrom(org.json.JSONObject)
 com.piusvelte.mosaic.android.R
 com.piusvelte.mosaic.android.R$attr
 com.piusvelte.mosaic.android.R$drawable
@@ -3736,11 +3743,9 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest:
 com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequestInitializer
 com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointScopes
 com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser:
-    67:67:public java.lang.String getEmail()
     75:76:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setEmail(java.lang.String)
     84:84:public java.lang.String getId()
     92:93:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setId(java.lang.String)
-    109:110:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setNickname(java.lang.String)
     118:118:public java.lang.String getUserid()
     126:127:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setUserid(java.lang.String)
 com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUserCollection

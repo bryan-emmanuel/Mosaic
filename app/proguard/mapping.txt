@@ -891,23 +891,17 @@ com.google.android.gcm.GCMBroadcastReceiver -> com.google.android.gcm.GCMBroadca
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     java.lang.String getGCMIntentServiceClassName(android.content.Context) -> a
 com.google.android.gcm.GCMRegistrar -> com.google.android.gcm.b:
-    com.google.android.gcm.GCMBroadcastReceiver sRetryReceiver -> a
-    void checkDevice(android.content.Context) -> a
-    void checkManifest(android.content.Context) -> b
-    void checkReceiver(android.content.Context,java.util.Set,java.lang.String) -> a
-    void register(android.content.Context,java.lang.String[]) -> a
-    void internalRegister(android.content.Context,java.lang.String[]) -> b
-    void internalUnregister(android.content.Context) -> c
-    void setRetryBroadcastReceiver(android.content.Context) -> i
-    java.lang.String getRegistrationId(android.content.Context) -> d
-    boolean isRegistered(android.content.Context) -> e
-    java.lang.String clearRegistrationId(android.content.Context) -> f
+    void internalRegister(android.content.Context,java.lang.String[]) -> a
+    void internalUnregister(android.content.Context) -> a
+    java.lang.String getRegistrationId(android.content.Context) -> b
+    boolean isRegistered(android.content.Context) -> c
+    java.lang.String clearRegistrationId(android.content.Context) -> d
     java.lang.String setRegistrationId(android.content.Context,java.lang.String) -> a
-    int getAppVersion(android.content.Context) -> j
-    void resetBackoff(android.content.Context) -> g
-    int getBackoff(android.content.Context) -> h
+    int getAppVersion(android.content.Context) -> g
+    void resetBackoff(android.content.Context) -> e
+    int getBackoff(android.content.Context) -> f
     void setBackoff(android.content.Context,int) -> a
-    android.content.SharedPreferences getGCMPreferences(android.content.Context) -> k
+    android.content.SharedPreferences getGCMPreferences(android.content.Context) -> h
 com.google.android.gms.R -> com.google.android.gms.a:
 com.google.android.gms.R$string -> com.google.android.gms.b:
     int common_google_play_services_update_text -> common_google_play_services_update_text
@@ -3485,7 +3479,6 @@ com.piusvelte.mosaic.android.CloudEndpointUtils$1 -> com.piusvelte.mosaic.androi
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
 com.piusvelte.mosaic.android.GCMIntentService -> com.piusvelte.mosaic.android.GCMIntentService:
     com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint endpoint -> a
-    void register(android.content.Context) -> a
     void onError(android.content.Context,java.lang.String) -> b
     void onMessage(android.content.Context,android.content.Intent) -> a
     void onRegistered(android.content.Context,java.lang.String) -> c
@@ -3498,6 +3491,7 @@ com.piusvelte.mosaic.android.ILocationService -> com.piusvelte.mosaic.android.d:
     void getCoordinates() -> a
     void getNickname() -> b
     void getMessages() -> c
+    void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.ILocationService$Stub -> com.piusvelte.mosaic.android.e:
     com.piusvelte.mosaic.android.ILocationService asInterface(android.os.IBinder) -> b
     android.os.IBinder asBinder() -> asBinder
@@ -3509,6 +3503,7 @@ com.piusvelte.mosaic.android.ILocationService$Stub$Proxy -> com.piusvelte.mosaic
     void getCoordinates() -> a
     void getNickname() -> b
     void getMessages() -> c
+    void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.IMain -> com.piusvelte.mosaic.android.g:
     void setCoordinates(double,double) -> a
     void setNickname(java.lang.String) -> a
@@ -3538,7 +3533,7 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     com.piusvelte.mosaic.android.ILocationService$Stub iLocationService -> j
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     void onCreate() -> onCreate
-    void loadAccountName() -> a
+    void loadMosaicService() -> a
     void onStart(android.content.Intent,int) -> onStart
     void onDestroy() -> onDestroy
     void start(android.content.Intent) -> a
@@ -3546,7 +3541,6 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     void initLocationUpdates(java.lang.String) -> b
     void setCoordinates(android.location.Location) -> a
     void setMessages(java.util.List) -> a
-    void setMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser) -> a
     void setNickname(java.lang.String) -> a
     void onLocationChanged(android.location.Location) -> onLocationChanged
     void onProviderDisabled(java.lang.String) -> onProviderDisabled
@@ -3562,6 +3556,7 @@ com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.j
     void setCallback(android.os.IBinder) -> a
     void getMessages() -> c
     void getNickname() -> b
+    void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.Main -> com.piusvelte.mosaic.android.Main:
     android.app.ProgressDialog loadingDialog -> n
     com.piusvelte.mosaic.android.ILocationService iLocationService -> o
@@ -3598,18 +3593,26 @@ com.piusvelte.mosaic.android.Main$1$3 -> com.piusvelte.mosaic.android.n:
 com.piusvelte.mosaic.android.Main$1$4 -> com.piusvelte.mosaic.android.o:
     com.piusvelte.mosaic.android.Main$1 this$1 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.p:
+com.piusvelte.mosaic.android.Main$2 -> com.piusvelte.mosaic.android.p:
+    com.piusvelte.mosaic.android.Main this$0 -> a
+    void onClick(android.view.View) -> onClick
+    com.piusvelte.mosaic.android.Main access$0(com.piusvelte.mosaic.android.Main$2) -> a
+com.piusvelte.mosaic.android.Main$2$1 -> com.piusvelte.mosaic.android.q:
+    com.piusvelte.mosaic.android.Main$2 this$1 -> a
+    android.widget.EditText val$newNickname -> b
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.r:
     com.piusvelte.mosaic.android.MosaicService service -> c
-    java.lang.String accountName -> a
-    java.lang.String appengineWebappClientId -> b
+    java.lang.String appengineWebappClientId -> a
     com.google.api.client.http.HttpTransport transport -> d
     com.google.api.client.json.JsonFactory jsonFactory -> e
-    com.piusvelte.mosaic.android.MosaicService getInstance(java.lang.String) -> a
-    com.piusvelte.mosaic.android.MosaicService$GetUserTask getUser(com.piusvelte.mosaic.android.LocationService) -> a
+    com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser user -> b
+    com.piusvelte.mosaic.android.MosaicService getInstance(com.piusvelte.mosaic.android.LocationService,java.lang.String,java.lang.String) -> a
+    void changeNickname(com.piusvelte.mosaic.android.LocationService,java.lang.String) -> a
     com.piusvelte.mosaic.android.MosaicService$GetMessagesTask getMessages(com.piusvelte.mosaic.android.LocationService,int,int) -> a
     com.google.api.client.http.HttpTransport access$0(com.piusvelte.mosaic.android.MosaicService) -> a
     com.google.api.client.json.JsonFactory access$1(com.piusvelte.mosaic.android.MosaicService) -> b
-com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.q:
+com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.s:
     com.piusvelte.mosaic.android.LocationService callback -> a
     java.lang.String latitude -> b
     java.lang.String longitude -> c
@@ -3619,12 +3622,21 @@ com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosa
     void onPostExecute(java.util.List) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.r:
+com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.t:
+    com.piusvelte.mosaic.android.LocationService callback -> a
+    com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
+    java.lang.String accountName -> c
+    com.piusvelte.mosaic.android.MosaicService this$0 -> d
+    java.lang.Void doInBackground(java.lang.Void[]) -> a
+    void onPostExecute(java.lang.Void) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.u:
     com.piusvelte.mosaic.android.LocationService callback -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
     com.piusvelte.mosaic.android.MosaicService this$0 -> c
-    com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser doInBackground(java.lang.Void[]) -> a
-    void onPostExecute(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser) -> a
+    java.lang.Void doInBackground(java.lang.Void[]) -> a
+    void onPostExecute(java.lang.Void) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.piusvelte.mosaic.android.SignIn -> com.piusvelte.mosaic.android.SignIn:
@@ -3744,7 +3756,9 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser -> com.piusvelt
     java.lang.String id -> id
     java.lang.String nickname -> nickname
     java.lang.String userid -> userid
-    java.lang.String getNickname() -> c
+    java.lang.String getEmail() -> c
+    java.lang.String getNickname() -> d
+    com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setNickname(java.lang.String) -> a
 org.codehaus.jackson.JsonEncoding -> a.a.a.a:
     org.codehaus.jackson.JsonEncoding UTF8 -> a
     org.codehaus.jackson.JsonEncoding UTF16_BE -> b

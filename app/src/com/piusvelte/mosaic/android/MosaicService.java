@@ -24,34 +24,45 @@ public class MosaicService {
 
 	private static final String TAG = "MosaicService";
 	private static MosaicService service;
-	public String accountName;
 	public String appengineWebappClientId;
 	private HttpTransport transport = AndroidHttp.newCompatibleTransport();
 	private JsonFactory jsonFactory = new GsonFactory();
+	protected MosaicUser user = null;
 
-	private MosaicService(String appengineAppId) {
+	private MosaicService(LocationService callback, String appengineAppId, String accountName) {
 		this.appengineWebappClientId = "server:client_id:" + appengineAppId;
+		Log.d(TAG, "GetUserTask");
+		new GetUserTask(callback, accountName).execute();
 	}
 
-	public static MosaicService getInstance(String appengineAppId) {
+	public static MosaicService getInstance(LocationService callback, String appengineAppId, String accountName) throws Exception {
+		if (accountName == null)
+			throw new Exception("account name is null");
 		if (service == null)
-			service = new MosaicService(appengineAppId);
+			service = new MosaicService(callback, appengineAppId, accountName);
 		return service;
 	}
-
-	public GetUserTask getUser(LocationService callback) {
-		return new GetUserTask(callback);
+	
+	public void changeNickname(LocationService callback, String nickname) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if ((nickname == null) || (nickname.length() == 0))
+			throw new Exception("nickname cannot be null");
+		else if (user == null)
+			throw new Exception("mosaic user is null");
+		user.setNickname(nickname);
+		new UpdateUserTask(callback).execute();
 	}
-
-	class GetUserTask extends AsyncTask<Void, Void, MosaicUser> {
+	
+	class UpdateUserTask extends AsyncTask<Void, Void, Void> {
 
 		LocationService callback;
 		Mosaicuserendpoint endpoint;
 		
-		GetUserTask(LocationService callback) {
+		UpdateUserTask(LocationService callback) {
 			this.callback = callback;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(accountName);
+			credential.setSelectedAccountName(user.getEmail());
 			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(transport,
 					jsonFactory,
 					credential);
@@ -59,12 +70,12 @@ public class MosaicService {
 		}
 
 		@Override
-		protected MosaicUser doInBackground(Void... params) { 
+		protected Void doInBackground(Void... params) { 
 			try {
-				return endpoint.getMosaicUser(accountName).execute();
+				user = endpoint.getMosaicUser(user.getEmail()).execute();
 			} catch (IOException e) {
 				try {
-					return endpoint.insertMosaicUser(new MosaicUser()).execute();
+					user = endpoint.insertMosaicUser(new MosaicUser()).execute();
 				} catch (IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -74,25 +85,60 @@ public class MosaicService {
 		}
 		
 		@Override
-		protected void onPostExecute(MosaicUser user) {
-			callback.setMosaicUser(user);
+		protected void onPostExecute(Void result) {
 		}
 	}
 
-	public static Message messageFrom(JSONObject msg) throws JSONException {
-		JSONObject usr = msg.getJSONObject("user");
-		return new Message(msg.getString(Properties.id.name()),
-				msg.getString(Properties.body.name()),
-				msg.getString(Properties.latitude.name()),
-				msg.getString(Properties.longitude.name()),
-				msg.getString(Properties.radius.name()),
-				msg.getString(Properties.expiry.name()),
-				msg.getString(Properties.created.name()),
-				usr.getString(Properties.id.name()),
-				usr.getString(Properties.nickname.name()));
+	class GetUserTask extends AsyncTask<Void, Void, Void> {
+
+		LocationService callback;
+		Mosaicuserendpoint endpoint;
+		String accountName;
+		
+		GetUserTask(LocationService callback, String accountName) {
+			this.callback = callback;
+			this.accountName = accountName;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(accountName);
+			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				user = endpoint.getMosaicUser(accountName).execute();
+			} catch (IOException e) {
+				try {
+					user = endpoint.insertMosaicUser(new MosaicUser()).execute();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			if (user != null)
+				callback.setNickname(user.getNickname());
+			else
+				callback.setNickname(null);
+		}
 	}
 
-	public GetMessagesTask getMessages(LocationService callback, int latitude, int longitude) {
+	public GetMessagesTask getMessages(LocationService callback, int latitude, int longitude) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if (latitude == Integer.MAX_VALUE)
+			throw new Exception("invalid latitude");
+		else if (longitude == Integer.MAX_VALUE)
+			throw new Exception("invalid longitude");
+		else if (user == null)
+			throw new Exception("user is null");
 		return new GetMessagesTask(callback, latitude, longitude);
 	}
 
@@ -107,8 +153,10 @@ public class MosaicService {
 			this.callback = callback;
 			this.latitude = Long.toString(latitude);
 			this.longitude = Long.toString(longitude);
+			Log.d(TAG, "GetMessagesTask");
+			Log.d(TAG, "user: " + user.getEmail());
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId)
-					.setSelectedAccountName(accountName);
+					.setSelectedAccountName(user.getEmail());
 			Mosaicmessageendpoint.Builder endpointBuilder = new Mosaicmessageendpoint.Builder(transport,
 					jsonFactory,
 					credential);
@@ -128,6 +176,7 @@ public class MosaicService {
 		
 		@Override
 		protected void onPostExecute(List<MosaicMessage> messages) {
+			Log.d(TAG, "GetMessagesTask.onPostExecute");
 			callback.setMessages(messages);
 		}
 

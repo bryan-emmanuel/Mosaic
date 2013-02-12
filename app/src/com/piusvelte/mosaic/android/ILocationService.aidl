@@ -24,4 +24,5 @@ interface ILocationService {
 	void getCoordinates();
 	void getNickname();
 	void getMessages();
+	void changeNickname(String nickname);
 }
