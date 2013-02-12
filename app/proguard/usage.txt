@@ -3485,7 +3485,14 @@ com.piusvelte.mosaic.android.LocationService:
     private static final java.lang.String TAG
 com.piusvelte.mosaic.android.Main:
     private static final java.lang.String TAG
-    237:237:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
+    public static final java.lang.String EXTRA_TITLE
+    public static final java.lang.String EXTRA_BODY
+    public static final java.lang.String EXTRA_EXPIRY
+    public static final java.lang.String EXTRA_LATITUDE
+    public static final java.lang.String EXTRA_LONGITUDE
+    public static final java.lang.String EXTRA_RANGE
+    private static final int REQUEST_EDIT_MESSAGE
+    244:244:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
 com.piusvelte.mosaic.android.Manifest
 com.piusvelte.mosaic.android.Manifest$permission
 com.piusvelte.mosaic.android.Message

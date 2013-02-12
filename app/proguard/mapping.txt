@@ -3486,6 +3486,7 @@ com.piusvelte.mosaic.android.Main -> com.piusvelte.mosaic.android.Main:
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
     void onMapLongClick(com.google.android.gms.maps.model.LatLng) -> a
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     com.google.android.gms.maps.GoogleMap access$0(com.piusvelte.mosaic.android.Main) -> a
     com.piusvelte.mosaic.android.ILocationService access$1(com.piusvelte.mosaic.android.Main) -> b
     android.widget.Button access$2(com.piusvelte.mosaic.android.Main) -> c
@@ -3516,7 +3517,13 @@ com.piusvelte.mosaic.android.Main$2$1 -> com.piusvelte.mosaic.android.p:
     com.piusvelte.mosaic.android.Main$2 this$1 -> a
     android.widget.EditText val$newNickname -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.q:
+com.piusvelte.mosaic.android.MessageEditor -> com.piusvelte.mosaic.android.q:
+    android.widget.Button btnSave -> a
+    void onCreate(android.os.Bundle) -> onCreate
+com.piusvelte.mosaic.android.MessageEditor$1 -> com.piusvelte.mosaic.android.r:
+    com.piusvelte.mosaic.android.MessageEditor this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.s:
     com.piusvelte.mosaic.android.MosaicService service -> c
     java.lang.String appengineWebappClientId -> a
     com.google.api.client.http.HttpTransport transport -> d
@@ -3527,7 +3534,7 @@ com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.q:
     com.piusvelte.mosaic.android.MosaicService$GetMessagesTask getMessages(com.piusvelte.mosaic.android.LocationService,int,int) -> a
     com.google.api.client.http.HttpTransport access$0(com.piusvelte.mosaic.android.MosaicService) -> a
     com.google.api.client.json.JsonFactory access$1(com.piusvelte.mosaic.android.MosaicService) -> b
-com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.r:
+com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.t:
     com.piusvelte.mosaic.android.LocationService callback -> a
     java.lang.String latitude -> b
     java.lang.String longitude -> c
@@ -3537,7 +3544,7 @@ com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosa
     void onPostExecute(java.util.List) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.s:
+com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.u:
     com.piusvelte.mosaic.android.LocationService callback -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
     java.lang.String accountName -> c
@@ -3546,7 +3553,7 @@ com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.a
     void onPostExecute(java.lang.Void) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.t:
+com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.v:
     com.piusvelte.mosaic.android.LocationService callback -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
     com.piusvelte.mosaic.android.MosaicService this$0 -> c

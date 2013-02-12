@@ -51,6 +51,13 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	private ILocationService iLocationService;
 	private GoogleMap map;
 	private Button btnNickname;
+	public static final String EXTRA_TITLE = "com.piusvelte.mosaic.android.EXTRA_TITLE";
+	public static final String EXTRA_BODY = "com.piusvelte.mosaic.android.EXTRA_BODY";
+	public static final String EXTRA_EXPIRY = "com.piusvelte.mosaic.android.EXTRA_EXPIRY";
+	public static final String EXTRA_LATITUDE = "com.piusvelte.mosaic.android.EXTRA_LATITUDE";
+	public static final String EXTRA_LONGITUDE = "com.piusvelte.mosaic.android.EXTRA_LONGITUDE";
+	public static final String EXTRA_RANGE = "com.piusvelte.mosaic.android.EXTRA_RANGE";
+	private static final int REQUEST_EDIT_MESSAGE = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +247,17 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	@Override
 	public void onMapLongClick(LatLng point) {
 		// TODO Auto-generated method stub
-		//create a new message
+		startActivityForResult(new Intent(this, MessageEditor.class)
+		.putExtra(EXTRA_LATITUDE, (int) (point.latitude * 1E6))
+		.putExtra(EXTRA_LONGITUDE, (int)(point.longitude * 1E6)), REQUEST_EDIT_MESSAGE);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if ((requestCode == REQUEST_EDIT_MESSAGE) && (resultCode == RESULT_OK)) {
+			//TODO save the message
+		}
 	}
 
 }
