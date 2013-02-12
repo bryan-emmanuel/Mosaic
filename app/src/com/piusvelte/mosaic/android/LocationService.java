@@ -130,7 +130,7 @@ public class LocationService extends Service implements LocationListener {
 			try {
 				iMain.clearMessages();
 				for (MosaicMessage message : this.messages)
-					iMain.addMessage(message.getLatitude(), message.getLongitude(), null, message.getBody());
+					iMain.addMessage(message.getLatitude(), message.getLongitude(), message.getTitle(), message.getBody());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

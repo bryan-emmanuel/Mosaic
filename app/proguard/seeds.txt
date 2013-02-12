@@ -65,7 +65,6 @@ com.fasterxml.jackson.core.util.BufferRecycler$ByteBufferType: com.fasterxml.jac
 com.fasterxml.jackson.core.util.BufferRecycler$ByteBufferType: com.fasterxml.jackson.core.util.BufferRecycler$ByteBufferType valueOf(java.lang.String)
 com.fasterxml.jackson.core.util.BufferRecycler$CharBufferType: com.fasterxml.jackson.core.util.BufferRecycler$CharBufferType[] values()
 com.fasterxml.jackson.core.util.BufferRecycler$CharBufferType: com.fasterxml.jackson.core.util.BufferRecycler$CharBufferType valueOf(java.lang.String)
-com.google.android.gcm.GCMBaseIntentService: GCMBaseIntentService(java.lang.String)
 com.google.android.gcm.GCMBroadcastReceiver
 com.google.android.gcm.GCMBroadcastReceiver: GCMBroadcastReceiver()
 com.google.android.gms.R$attr: int cameraTargetLng
@@ -371,8 +370,6 @@ com.google.gson.stream.JsonScope: com.google.gson.stream.JsonScope[] values()
 com.google.gson.stream.JsonScope: com.google.gson.stream.JsonScope valueOf(java.lang.String)
 com.google.gson.stream.JsonToken: com.google.gson.stream.JsonToken[] values()
 com.google.gson.stream.JsonToken: com.google.gson.stream.JsonToken valueOf(java.lang.String)
-com.piusvelte.mosaic.android.GCMIntentService
-com.piusvelte.mosaic.android.GCMIntentService: GCMIntentService()
 com.piusvelte.mosaic.android.LocationService
 com.piusvelte.mosaic.android.LocationService: LocationService()
 com.piusvelte.mosaic.android.Main
@@ -417,6 +414,7 @@ com.piusvelte.mosaic.android.R$string: int common_google_play_services_unknown_i
 com.piusvelte.mosaic.android.R$string: int common_google_play_services_update_button
 com.piusvelte.mosaic.android.R$string: int common_google_play_services_update_text
 com.piusvelte.mosaic.android.R$string: int common_google_play_services_update_title
+com.piusvelte.mosaic.android.R$string: int loading
 com.piusvelte.mosaic.android.R$string: int menu_settings
 com.piusvelte.mosaic.android.R$string: int no_accounts
 com.piusvelte.mosaic.android.R$string: int preference_account_name
@@ -439,17 +437,6 @@ com.piusvelte.mosaic.android.R$styleable: int MapAttrs_useViewLifecycle
 com.piusvelte.mosaic.android.R$styleable: int MapAttrs_zOrderOnTop
 com.piusvelte.mosaic.android.SignIn
 com.piusvelte.mosaic.android.SignIn: SignIn()
-com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$GetDeviceInfo: java.lang.String id
-com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$RemoveDeviceInfo: java.lang.String id
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.String alt
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.String fields
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.String key
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.String oauthToken
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.Boolean prettyPrint
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.String quotaUser
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest: java.lang.String userIp
-com.piusvelte.mosaic.android.deviceinfoendpoint.model.DeviceInfo: java.lang.String deviceRegistrationID
-com.piusvelte.mosaic.android.deviceinfoendpoint.model.DeviceInfoCollection: java.util.List items
 com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$GetMosaicMessage: java.lang.String id
 com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$RemoveMosaicMessage: java.lang.String id
 com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest: java.lang.String alt

@@ -29,7 +29,7 @@
       "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.getMosaicUser",
       "request" : {
         "parameters" : {
@@ -49,7 +49,7 @@
       "httpMethod" : "DELETE",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.removeMosaicUser",
       "request" : {
         "parameters" : {
@@ -69,7 +69,7 @@
       "httpMethod" : "POST",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.insertMosaicUser",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
@@ -84,7 +84,7 @@
       "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.listMosaicUser",
       "request" : {
         "body" : "empty"
@@ -98,7 +98,7 @@
       "httpMethod" : "PUT",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
-      "clientIds" : [ "147772138122.apps.googleusercontent.com", "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicUserEndpoint.updateMosaicUser",
       "request" : {
         "body" : "autoTemplate(backendRequest)",

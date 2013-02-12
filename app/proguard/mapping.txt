@@ -873,35 +873,14 @@ android.support.v4.widget.EdgeEffectCompatIcs -> android.support.v4.d.e:
 com.google.android.gcm.GCMBaseIntentService -> com.google.android.gcm.a:
     android.os.PowerManager$WakeLock sWakeLock -> a
     java.lang.Object LOCK -> b
-    java.lang.String mSenderId -> c
-    int sCounter -> d
-    java.util.Random sRandom -> e
-    int MAX_BACKOFF_MS -> f
-    java.lang.String TOKEN -> g
-    void onMessage(android.content.Context,android.content.Intent) -> a
-    void onDeletedMessages(android.content.Context,int) -> a
-    boolean onRecoverableError(android.content.Context,java.lang.String) -> a
-    void onError(android.content.Context,java.lang.String) -> b
-    void onRegistered(android.content.Context,java.lang.String) -> c
-    void onUnregistered(android.content.Context,java.lang.String) -> d
-    void onHandleIntent(android.content.Intent) -> onHandleIntent
+    int sCounter -> c
+    java.util.Random sRandom -> d
+    int MAX_BACKOFF_MS -> e
+    java.lang.String TOKEN -> f
     void runIntentInService(android.content.Context,android.content.Intent,java.lang.String) -> a
-    void handleRegistration(android.content.Context,android.content.Intent) -> b
 com.google.android.gcm.GCMBroadcastReceiver -> com.google.android.gcm.GCMBroadcastReceiver:
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     java.lang.String getGCMIntentServiceClassName(android.content.Context) -> a
-com.google.android.gcm.GCMRegistrar -> com.google.android.gcm.b:
-    void internalRegister(android.content.Context,java.lang.String[]) -> a
-    void internalUnregister(android.content.Context) -> a
-    java.lang.String getRegistrationId(android.content.Context) -> b
-    boolean isRegistered(android.content.Context) -> c
-    java.lang.String clearRegistrationId(android.content.Context) -> d
-    java.lang.String setRegistrationId(android.content.Context,java.lang.String) -> a
-    int getAppVersion(android.content.Context) -> g
-    void resetBackoff(android.content.Context) -> e
-    int getBackoff(android.content.Context) -> f
-    void setBackoff(android.content.Context,int) -> a
-    android.content.SharedPreferences getGCMPreferences(android.content.Context) -> h
 com.google.android.gms.R -> com.google.android.gms.a:
 com.google.android.gms.R$string -> com.google.android.gms.b:
     int common_google_play_services_update_text -> common_google_play_services_update_text
@@ -2910,56 +2889,6 @@ com.google.api.client.json.gson.GsonParser -> com.google.a.a.d.a.c:
 com.google.api.client.json.gson.GsonParser$1 -> com.google.a.a.d.a.d:
     int[] $SwitchMap$com$google$api$client$json$JsonToken -> a
     int[] $SwitchMap$com$google$gson$stream$JsonToken -> b
-com.google.api.client.json.jackson.JacksonFactory -> com.google.a.a.d.b.a:
-    org.codehaus.jackson.JsonFactory factory -> a
-    com.google.api.client.json.JsonGenerator createJsonGenerator(java.io.OutputStream,java.nio.charset.Charset) -> a
-    com.google.api.client.json.JsonParser createJsonParser(java.io.InputStream) -> a
-    com.google.api.client.json.JsonParser createJsonParser(java.io.InputStream,java.nio.charset.Charset) -> a
-    com.google.api.client.json.JsonToken convert(org.codehaus.jackson.JsonToken) -> a
-com.google.api.client.json.jackson.JacksonFactory$1 -> com.google.a.a.d.b.b:
-    int[] $SwitchMap$org$codehaus$jackson$JsonToken -> a
-com.google.api.client.json.jackson.JacksonGenerator -> com.google.a.a.d.b.c:
-    org.codehaus.jackson.JsonGenerator generator -> a
-    com.google.api.client.json.jackson.JacksonFactory factory -> b
-    void flush() -> a
-    void writeBoolean(boolean) -> a
-    void writeEndArray() -> c
-    void writeEndObject() -> e
-    void writeFieldName(java.lang.String) -> a
-    void writeNull() -> f
-    void writeNumber(int) -> a
-    void writeNumber(long) -> a
-    void writeNumber(java.math.BigInteger) -> a
-    void writeNumber(com.google.common.primitives.UnsignedInteger) -> a
-    void writeNumber(com.google.common.primitives.UnsignedLong) -> a
-    void writeNumber(double) -> a
-    void writeNumber(float) -> a
-    void writeNumber(java.math.BigDecimal) -> a
-    void writeStartArray() -> b
-    void writeStartObject() -> d
-    void writeString(java.lang.String) -> b
-    void enablePrettyPrint() -> g
-com.google.api.client.json.jackson.JacksonParser -> com.google.a.a.d.b.d:
-    org.codehaus.jackson.JsonParser parser -> a
-    com.google.api.client.json.jackson.JacksonFactory factory -> b
-    com.google.api.client.json.jackson.JacksonFactory getFactory() -> r
-    void close() -> b
-    com.google.api.client.json.JsonToken nextToken() -> c
-    java.lang.String getCurrentName() -> e
-    com.google.api.client.json.JsonToken getCurrentToken() -> d
-    com.google.api.client.json.JsonParser skipChildren() -> f
-    java.lang.String getText() -> g
-    byte getByteValue() -> h
-    float getFloatValue() -> k
-    int getIntValue() -> j
-    short getShortValue() -> i
-    java.math.BigInteger getBigIntegerValue() -> n
-    com.google.common.primitives.UnsignedInteger getUnsignedIntegerValue() -> o
-    com.google.common.primitives.UnsignedLong getUnsignedLongValue() -> p
-    java.math.BigDecimal getDecimalValue() -> q
-    double getDoubleValue() -> m
-    long getLongValue() -> l
-    com.google.api.client.json.JsonFactory getFactory() -> a
 com.google.api.client.util.ArrayMap -> com.google.a.a.e.a:
     int size -> a
     java.lang.Object[] data -> b
@@ -3298,7 +3227,6 @@ com.google.common.primitives.UnsignedInteger -> com.google.b.c.c:
     com.google.common.primitives.UnsignedInteger MAX_VALUE -> c
     int value -> d
     com.google.common.primitives.UnsignedInteger asUnsigned(int) -> a
-    com.google.common.primitives.UnsignedInteger valueOf(long) -> a
     com.google.common.primitives.UnsignedInteger valueOf(java.lang.String) -> a
     com.google.common.primitives.UnsignedInteger valueOf(java.lang.String,int) -> a
     int intValue() -> intValue
@@ -3323,14 +3251,12 @@ com.google.common.primitives.UnsignedLong -> com.google.b.c.e:
     com.google.common.primitives.UnsignedLong MAX_VALUE -> c
     long value -> d
     com.google.common.primitives.UnsignedLong asUnsigned(long) -> a
-    com.google.common.primitives.UnsignedLong valueOf(java.math.BigInteger) -> a
     com.google.common.primitives.UnsignedLong valueOf(java.lang.String) -> a
     com.google.common.primitives.UnsignedLong valueOf(java.lang.String,int) -> a
     int intValue() -> intValue
     long longValue() -> longValue
     float floatValue() -> floatValue
     double doubleValue() -> doubleValue
-    java.math.BigInteger bigIntegerValue() -> a
     int compareTo(com.google.common.primitives.UnsignedLong) -> a
     int hashCode() -> hashCode
     boolean equals(java.lang.Object) -> equals
@@ -3477,26 +3403,17 @@ com.piusvelte.mosaic.android.CloudEndpointUtils -> com.piusvelte.mosaic.android.
 com.piusvelte.mosaic.android.CloudEndpointUtils$1 -> com.piusvelte.mosaic.android.b:
     boolean val$enableGZip -> a
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
-com.piusvelte.mosaic.android.GCMIntentService -> com.piusvelte.mosaic.android.GCMIntentService:
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint endpoint -> a
-    void onError(android.content.Context,java.lang.String) -> b
-    void onMessage(android.content.Context,android.content.Intent) -> a
-    void onRegistered(android.content.Context,java.lang.String) -> c
-    void onUnregistered(android.content.Context,java.lang.String) -> d
-com.piusvelte.mosaic.android.GCMIntentService$1 -> com.piusvelte.mosaic.android.c:
-    com.piusvelte.mosaic.android.GCMIntentService this$0 -> a
-    void initialize(com.google.api.client.http.HttpRequest) -> a
-com.piusvelte.mosaic.android.ILocationService -> com.piusvelte.mosaic.android.d:
+com.piusvelte.mosaic.android.ILocationService -> com.piusvelte.mosaic.android.c:
     void setCallback(android.os.IBinder) -> a
     void getCoordinates() -> a
     void getNickname() -> b
     void getMessages() -> c
     void changeNickname(java.lang.String) -> a
-com.piusvelte.mosaic.android.ILocationService$Stub -> com.piusvelte.mosaic.android.e:
+com.piusvelte.mosaic.android.ILocationService$Stub -> com.piusvelte.mosaic.android.d:
     com.piusvelte.mosaic.android.ILocationService asInterface(android.os.IBinder) -> b
     android.os.IBinder asBinder() -> asBinder
     boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
-com.piusvelte.mosaic.android.ILocationService$Stub$Proxy -> com.piusvelte.mosaic.android.f:
+com.piusvelte.mosaic.android.ILocationService$Stub$Proxy -> com.piusvelte.mosaic.android.e:
     android.os.IBinder mRemote -> a
     android.os.IBinder asBinder() -> asBinder
     void setCallback(android.os.IBinder) -> a
@@ -3504,16 +3421,16 @@ com.piusvelte.mosaic.android.ILocationService$Stub$Proxy -> com.piusvelte.mosaic
     void getNickname() -> b
     void getMessages() -> c
     void changeNickname(java.lang.String) -> a
-com.piusvelte.mosaic.android.IMain -> com.piusvelte.mosaic.android.g:
+com.piusvelte.mosaic.android.IMain -> com.piusvelte.mosaic.android.f:
     void setCoordinates(double,double) -> a
     void setNickname(java.lang.String) -> a
     void addMessage(double,double,java.lang.String,java.lang.String) -> a
     void clearMessages() -> a
-com.piusvelte.mosaic.android.IMain$Stub -> com.piusvelte.mosaic.android.h:
+com.piusvelte.mosaic.android.IMain$Stub -> com.piusvelte.mosaic.android.g:
     com.piusvelte.mosaic.android.IMain asInterface(android.os.IBinder) -> a
     android.os.IBinder asBinder() -> asBinder
     boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
-com.piusvelte.mosaic.android.IMain$Stub$Proxy -> com.piusvelte.mosaic.android.i:
+com.piusvelte.mosaic.android.IMain$Stub$Proxy -> com.piusvelte.mosaic.android.h:
     android.os.IBinder mRemote -> a
     android.os.IBinder asBinder() -> asBinder
     void setCoordinates(double,double) -> a
@@ -3550,7 +3467,7 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
     void access$1(com.piusvelte.mosaic.android.LocationService,com.piusvelte.mosaic.android.IMain) -> a
     com.piusvelte.mosaic.android.MosaicService access$2(com.piusvelte.mosaic.android.LocationService) -> b
     void access$3(com.piusvelte.mosaic.android.LocationService) -> c
-com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.j:
+com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.i:
     com.piusvelte.mosaic.android.LocationService this$0 -> a
     void getCoordinates() -> a
     void setCallback(android.os.IBinder) -> a
@@ -3558,11 +3475,10 @@ com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.j
     void getNickname() -> b
     void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.Main -> com.piusvelte.mosaic.android.Main:
-    android.app.ProgressDialog loadingDialog -> n
-    com.piusvelte.mosaic.android.ILocationService iLocationService -> o
-    com.google.android.gms.maps.GoogleMap map -> p
-    android.widget.Button btnNickname -> q
-    com.piusvelte.mosaic.android.IMain$Stub iMain -> r
+    com.piusvelte.mosaic.android.ILocationService iLocationService -> n
+    com.google.android.gms.maps.GoogleMap map -> o
+    android.widget.Button btnNickname -> p
+    com.piusvelte.mosaic.android.IMain$Stub iMain -> q
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     void onResume() -> onResume
@@ -3570,38 +3486,37 @@ com.piusvelte.mosaic.android.Main -> com.piusvelte.mosaic.android.Main:
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
     void onMapLongClick(com.google.android.gms.maps.model.LatLng) -> a
-    android.app.ProgressDialog access$0(com.piusvelte.mosaic.android.Main) -> a
-    com.google.android.gms.maps.GoogleMap access$1(com.piusvelte.mosaic.android.Main) -> b
-    com.piusvelte.mosaic.android.ILocationService access$2(com.piusvelte.mosaic.android.Main) -> c
-    android.widget.Button access$3(com.piusvelte.mosaic.android.Main) -> d
-com.piusvelte.mosaic.android.Main$1 -> com.piusvelte.mosaic.android.k:
+    com.google.android.gms.maps.GoogleMap access$0(com.piusvelte.mosaic.android.Main) -> a
+    com.piusvelte.mosaic.android.ILocationService access$1(com.piusvelte.mosaic.android.Main) -> b
+    android.widget.Button access$2(com.piusvelte.mosaic.android.Main) -> c
+com.piusvelte.mosaic.android.Main$1 -> com.piusvelte.mosaic.android.j:
     com.piusvelte.mosaic.android.Main this$0 -> a
     void setCoordinates(double,double) -> a
     void setNickname(java.lang.String) -> a
     void clearMessages() -> a
     void addMessage(double,double,java.lang.String,java.lang.String) -> a
     com.piusvelte.mosaic.android.Main access$0(com.piusvelte.mosaic.android.Main$1) -> a
-com.piusvelte.mosaic.android.Main$1$1 -> com.piusvelte.mosaic.android.l:
+com.piusvelte.mosaic.android.Main$1$1 -> com.piusvelte.mosaic.android.k:
     com.piusvelte.mosaic.android.Main$1 this$1 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.Main$1$2 -> com.piusvelte.mosaic.android.m:
+com.piusvelte.mosaic.android.Main$1$2 -> com.piusvelte.mosaic.android.l:
     com.piusvelte.mosaic.android.Main$1 this$1 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.Main$1$3 -> com.piusvelte.mosaic.android.n:
+com.piusvelte.mosaic.android.Main$1$3 -> com.piusvelte.mosaic.android.m:
     com.piusvelte.mosaic.android.Main$1 this$1 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.Main$1$4 -> com.piusvelte.mosaic.android.o:
+com.piusvelte.mosaic.android.Main$1$4 -> com.piusvelte.mosaic.android.n:
     com.piusvelte.mosaic.android.Main$1 this$1 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.Main$2 -> com.piusvelte.mosaic.android.p:
+com.piusvelte.mosaic.android.Main$2 -> com.piusvelte.mosaic.android.o:
     com.piusvelte.mosaic.android.Main this$0 -> a
     void onClick(android.view.View) -> onClick
     com.piusvelte.mosaic.android.Main access$0(com.piusvelte.mosaic.android.Main$2) -> a
-com.piusvelte.mosaic.android.Main$2$1 -> com.piusvelte.mosaic.android.q:
+com.piusvelte.mosaic.android.Main$2$1 -> com.piusvelte.mosaic.android.p:
     com.piusvelte.mosaic.android.Main$2 this$1 -> a
     android.widget.EditText val$newNickname -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.r:
+com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.q:
     com.piusvelte.mosaic.android.MosaicService service -> c
     java.lang.String appengineWebappClientId -> a
     com.google.api.client.http.HttpTransport transport -> d
@@ -3612,7 +3527,7 @@ com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.r:
     com.piusvelte.mosaic.android.MosaicService$GetMessagesTask getMessages(com.piusvelte.mosaic.android.LocationService,int,int) -> a
     com.google.api.client.http.HttpTransport access$0(com.piusvelte.mosaic.android.MosaicService) -> a
     com.google.api.client.json.JsonFactory access$1(com.piusvelte.mosaic.android.MosaicService) -> b
-com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.s:
+com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.r:
     com.piusvelte.mosaic.android.LocationService callback -> a
     java.lang.String latitude -> b
     java.lang.String longitude -> c
@@ -3622,7 +3537,7 @@ com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosa
     void onPostExecute(java.util.List) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.t:
+com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.s:
     com.piusvelte.mosaic.android.LocationService callback -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
     java.lang.String accountName -> c
@@ -3631,7 +3546,7 @@ com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.a
     void onPostExecute(java.lang.Void) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.u:
+com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.t:
     com.piusvelte.mosaic.android.LocationService callback -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint endpoint -> b
     com.piusvelte.mosaic.android.MosaicService this$0 -> c
@@ -3647,38 +3562,10 @@ com.piusvelte.mosaic.android.SignIn -> com.piusvelte.mosaic.android.SignIn:
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> onListItemClick
     void loadAccountList() -> a
     java.lang.String[] getAccountNames() -> b
-com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint -> com.piusvelte.mosaic.android.a.a:
-    void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$InsertDeviceInfo insertDeviceInfo(com.piusvelte.mosaic.android.deviceinfoendpoint.model.DeviceInfo) -> a
-com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$Builder -> com.piusvelte.mosaic.android.a.b:
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint build() -> j
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$Builder setRootUrl(java.lang.String) -> e
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$Builder setServicePath(java.lang.String) -> f
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$Builder setGoogleClientRequestInitializer(com.google.api.client.googleapis.services.GoogleClientRequestInitializer) -> c
-    com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setRootUrl(java.lang.String) -> c
-    com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setGoogleClientRequestInitializer(com.google.api.client.googleapis.services.GoogleClientRequestInitializer) -> b
-    com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setServicePath(java.lang.String) -> d
-com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint$InsertDeviceInfo -> com.piusvelte.mosaic.android.a.c:
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint this$0 -> c
-com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest -> com.piusvelte.mosaic.android.a.d:
-    java.lang.String alt -> alt
-    java.lang.String fields -> fields
-    java.lang.String key -> key
-    java.lang.String oauthToken -> oauthToken
-    java.lang.Boolean prettyPrint -> prettyPrint
-    java.lang.String quotaUser -> quotaUser
-    java.lang.String userIp -> userIp
-    com.piusvelte.mosaic.android.deviceinfoendpoint.Deviceinfoendpoint getAbstractGoogleClient() -> f
-    com.piusvelte.mosaic.android.deviceinfoendpoint.DeviceinfoendpointRequest setDisableGZipContent(boolean) -> c
-    com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest setDisableGZipContent(boolean) -> b
-    com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient getAbstractGoogleClient() -> a_
-com.piusvelte.mosaic.android.deviceinfoendpoint.model.DeviceInfo -> com.piusvelte.mosaic.android.a.a.a:
-    java.lang.String deviceRegistrationID -> deviceRegistrationID
-    com.piusvelte.mosaic.android.deviceinfoendpoint.model.DeviceInfo setDeviceRegistrationID(java.lang.String) -> a
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint -> com.piusvelte.mosaic.android.b.a:
+com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint -> com.piusvelte.mosaic.android.a.a:
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
     com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage listMosaicMessage() -> h
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder -> com.piusvelte.mosaic.android.b.b:
+com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder -> com.piusvelte.mosaic.android.a.b:
     com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint build() -> j
     com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder setRootUrl(java.lang.String) -> e
     com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder setServicePath(java.lang.String) -> f
@@ -3686,9 +3573,9 @@ com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setRootUrl(java.lang.String) -> c
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setGoogleClientRequestInitializer(com.google.api.client.googleapis.services.GoogleClientRequestInitializer) -> b
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setServicePath(java.lang.String) -> d
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage -> com.piusvelte.mosaic.android.b.c:
+com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage -> com.piusvelte.mosaic.android.a.c:
     com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint this$0 -> c
-com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest -> com.piusvelte.mosaic.android.b.d:
+com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest -> com.piusvelte.mosaic.android.a.d:
     java.lang.String alt -> alt
     java.lang.String fields -> fields
     java.lang.String key -> key
@@ -3700,7 +3587,7 @@ com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest 
     com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setDisableGZipContent(boolean) -> c
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest setDisableGZipContent(boolean) -> b
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient getAbstractGoogleClient() -> a_
-com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage -> com.piusvelte.mosaic.android.b.a.a:
+com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage -> com.piusvelte.mosaic.android.a.a.a:
     java.lang.String body -> body
     java.lang.Long created -> created
     java.lang.Long expiry -> expiry
@@ -3719,14 +3606,15 @@ com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage -> com.pi
     java.lang.String getBody() -> c
     java.lang.Integer getLatitude() -> d
     java.lang.Integer getLongitude() -> f
-com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessageCollection -> com.piusvelte.mosaic.android.b.a.b:
+    java.lang.String getTitle() -> h
+com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessageCollection -> com.piusvelte.mosaic.android.a.a.b:
     java.util.List items -> items
     java.util.List getItems() -> c
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint -> com.piusvelte.mosaic.android.c.a:
+com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint -> com.piusvelte.mosaic.android.b.a:
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser getMosaicUser(java.lang.String) -> c
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser insertMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser) -> a
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder -> com.piusvelte.mosaic.android.c.b:
+com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder -> com.piusvelte.mosaic.android.b.b:
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint build() -> j
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setRootUrl(java.lang.String) -> e
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setServicePath(java.lang.String) -> f
@@ -3734,12 +3622,12 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder -> co
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setRootUrl(java.lang.String) -> c
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setGoogleClientRequestInitializer(com.google.api.client.googleapis.services.GoogleClientRequestInitializer) -> b
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setServicePath(java.lang.String) -> d
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser -> com.piusvelte.mosaic.android.c.c:
+com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser -> com.piusvelte.mosaic.android.b.c:
     java.lang.String id -> id
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint this$0 -> c
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser -> com.piusvelte.mosaic.android.c.d:
+com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser -> com.piusvelte.mosaic.android.b.d:
     com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint this$0 -> c
-com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest -> com.piusvelte.mosaic.android.c.e:
+com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest -> com.piusvelte.mosaic.android.b.e:
     java.lang.String alt -> alt
     java.lang.String fields -> fields
     java.lang.String key -> key
@@ -3751,7 +3639,7 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest -> com
     com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setDisableGZipContent(boolean) -> c
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest setDisableGZipContent(boolean) -> b
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient getAbstractGoogleClient() -> a_
-com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser -> com.piusvelte.mosaic.android.c.a.a:
+com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser -> com.piusvelte.mosaic.android.b.a.a:
     java.lang.String email -> email
     java.lang.String id -> id
     java.lang.String nickname -> nickname
@@ -3759,951 +3647,3 @@ com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser -> com.piusvelt
     java.lang.String getEmail() -> c
     java.lang.String getNickname() -> d
     com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setNickname(java.lang.String) -> a
-org.codehaus.jackson.JsonEncoding -> a.a.a.a:
-    org.codehaus.jackson.JsonEncoding UTF8 -> a
-    org.codehaus.jackson.JsonEncoding UTF16_BE -> b
-    org.codehaus.jackson.JsonEncoding UTF16_LE -> c
-    org.codehaus.jackson.JsonEncoding UTF32_BE -> d
-    org.codehaus.jackson.JsonEncoding UTF32_LE -> e
-    java.lang.String _javaName -> f
-    boolean _bigEndian -> g
-    org.codehaus.jackson.JsonEncoding[] $VALUES -> h
-    org.codehaus.jackson.JsonEncoding[] values() -> values
-    org.codehaus.jackson.JsonEncoding valueOf(java.lang.String) -> valueOf
-    java.lang.String getJavaName() -> a
-    boolean isBigEndian() -> b
-org.codehaus.jackson.JsonFactory -> a.a.a.b:
-    int DEFAULT_PARSER_FEATURE_FLAGS -> a
-    int DEFAULT_GENERATOR_FEATURE_FLAGS -> b
-    java.lang.ThreadLocal _recyclerRef -> c
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer _rootCharSymbols -> d
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer _rootByteSymbols -> e
-    org.codehaus.jackson.ObjectCodec _objectCodec -> f
-    int _parserFeatures -> g
-    int _generatorFeatures -> h
-    org.codehaus.jackson.io.CharacterEscapes _characterEscapes -> i
-    org.codehaus.jackson.io.InputDecorator _inputDecorator -> j
-    org.codehaus.jackson.io.OutputDecorator _outputDecorator -> k
-    org.codehaus.jackson.JsonFactory configure(org.codehaus.jackson.JsonGenerator$Feature,boolean) -> a
-    org.codehaus.jackson.JsonFactory enable(org.codehaus.jackson.JsonGenerator$Feature) -> a
-    org.codehaus.jackson.JsonFactory disable(org.codehaus.jackson.JsonGenerator$Feature) -> b
-    org.codehaus.jackson.JsonParser createJsonParser(java.io.InputStream) -> a
-    org.codehaus.jackson.JsonGenerator createJsonGenerator(java.io.OutputStream,org.codehaus.jackson.JsonEncoding) -> a
-    org.codehaus.jackson.JsonParser _createJsonParser(java.io.InputStream,org.codehaus.jackson.io.IOContext) -> a
-    org.codehaus.jackson.JsonGenerator _createJsonGenerator(java.io.Writer,org.codehaus.jackson.io.IOContext) -> a
-    org.codehaus.jackson.JsonGenerator _createUTF8JsonGenerator(java.io.OutputStream,org.codehaus.jackson.io.IOContext) -> a
-    java.io.Writer _createWriter(java.io.OutputStream,org.codehaus.jackson.JsonEncoding,org.codehaus.jackson.io.IOContext) -> a
-    org.codehaus.jackson.io.IOContext _createContext(java.lang.Object,boolean) -> a
-    org.codehaus.jackson.util.BufferRecycler _getBufferRecycler() -> a
-org.codehaus.jackson.JsonGenerationException -> a.a.a.c:
-org.codehaus.jackson.JsonGenerator -> a.a.a.d:
-    org.codehaus.jackson.PrettyPrinter _cfgPrettyPrinter -> a
-    org.codehaus.jackson.JsonGenerator setPrettyPrinter(org.codehaus.jackson.PrettyPrinter) -> a
-    org.codehaus.jackson.JsonGenerator useDefaultPrettyPrinter() -> a
-    org.codehaus.jackson.JsonGenerator setHighestNonEscapedChar(int) -> a
-    org.codehaus.jackson.JsonGenerator setCharacterEscapes(org.codehaus.jackson.io.CharacterEscapes) -> a
-    void writeStartArray() -> b
-    void writeEndArray() -> c
-    void writeStartObject() -> d
-    void writeEndObject() -> e
-    void writeFieldName(java.lang.String) -> a
-    void writeString(java.lang.String) -> b
-    void writeRaw(java.lang.String) -> c
-    void writeRaw(char[],int,int) -> a
-    void writeRaw(char) -> a
-    void writeNumber(int) -> b
-    void writeNumber(long) -> a
-    void writeNumber(java.math.BigInteger) -> a
-    void writeNumber(double) -> a
-    void writeNumber(float) -> a
-    void writeNumber(java.math.BigDecimal) -> a
-    void writeBoolean(boolean) -> a
-    void writeNull() -> f
-    void flush() -> g
-org.codehaus.jackson.JsonGenerator$Feature -> a.a.a.e:
-    org.codehaus.jackson.JsonGenerator$Feature AUTO_CLOSE_TARGET -> a
-    org.codehaus.jackson.JsonGenerator$Feature AUTO_CLOSE_JSON_CONTENT -> b
-    org.codehaus.jackson.JsonGenerator$Feature QUOTE_FIELD_NAMES -> c
-    org.codehaus.jackson.JsonGenerator$Feature QUOTE_NON_NUMERIC_NUMBERS -> d
-    org.codehaus.jackson.JsonGenerator$Feature WRITE_NUMBERS_AS_STRINGS -> e
-    org.codehaus.jackson.JsonGenerator$Feature FLUSH_PASSED_TO_STREAM -> f
-    org.codehaus.jackson.JsonGenerator$Feature ESCAPE_NON_ASCII -> g
-    boolean _defaultState -> h
-    int _mask -> i
-    org.codehaus.jackson.JsonGenerator$Feature[] $VALUES -> j
-    org.codehaus.jackson.JsonGenerator$Feature[] values() -> values
-    org.codehaus.jackson.JsonGenerator$Feature valueOf(java.lang.String) -> valueOf
-    int collectDefaults() -> a
-    boolean enabledByDefault() -> b
-    int getMask() -> c
-org.codehaus.jackson.JsonLocation -> a.a.a.f:
-    org.codehaus.jackson.JsonLocation NA -> a
-    long _totalBytes -> b
-    long _totalChars -> c
-    int _lineNr -> d
-    int _columnNr -> e
-    java.lang.Object _sourceRef -> f
-    long getByteOffset() -> a
-    java.lang.String toString() -> toString
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-org.codehaus.jackson.JsonParseException -> a.a.a.g:
-org.codehaus.jackson.JsonParser -> a.a.a.h:
-    int _features -> a
-    org.codehaus.jackson.JsonToken _currToken -> b
-    void close() -> close
-    boolean isEnabled(org.codehaus.jackson.JsonParser$Feature) -> a
-    org.codehaus.jackson.JsonToken nextToken() -> a
-    org.codehaus.jackson.JsonParser skipChildren() -> b
-    org.codehaus.jackson.JsonToken getCurrentToken() -> c
-    java.lang.String getCurrentName() -> d
-    org.codehaus.jackson.JsonLocation getCurrentLocation() -> e
-    java.lang.String getText() -> f
-    byte getByteValue() -> g
-    short getShortValue() -> h
-    int getIntValue() -> i
-    long getLongValue() -> j
-    java.math.BigInteger getBigIntegerValue() -> k
-    float getFloatValue() -> l
-    double getDoubleValue() -> m
-    java.math.BigDecimal getDecimalValue() -> n
-    org.codehaus.jackson.JsonParseException _constructError(java.lang.String) -> a
-org.codehaus.jackson.JsonParser$Feature -> a.a.a.i:
-    org.codehaus.jackson.JsonParser$Feature AUTO_CLOSE_SOURCE -> a
-    org.codehaus.jackson.JsonParser$Feature ALLOW_COMMENTS -> b
-    org.codehaus.jackson.JsonParser$Feature ALLOW_UNQUOTED_FIELD_NAMES -> c
-    org.codehaus.jackson.JsonParser$Feature ALLOW_SINGLE_QUOTES -> d
-    org.codehaus.jackson.JsonParser$Feature ALLOW_UNQUOTED_CONTROL_CHARS -> e
-    org.codehaus.jackson.JsonParser$Feature ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER -> f
-    org.codehaus.jackson.JsonParser$Feature ALLOW_NUMERIC_LEADING_ZEROS -> g
-    org.codehaus.jackson.JsonParser$Feature ALLOW_NON_NUMERIC_NUMBERS -> h
-    org.codehaus.jackson.JsonParser$Feature INTERN_FIELD_NAMES -> i
-    org.codehaus.jackson.JsonParser$Feature CANONICALIZE_FIELD_NAMES -> j
-    boolean _defaultState -> k
-    org.codehaus.jackson.JsonParser$Feature[] $VALUES -> l
-    org.codehaus.jackson.JsonParser$Feature[] values() -> values
-    org.codehaus.jackson.JsonParser$Feature valueOf(java.lang.String) -> valueOf
-    int collectDefaults() -> a
-    boolean enabledByDefault() -> b
-    boolean enabledIn(int) -> a
-    int getMask() -> c
-org.codehaus.jackson.JsonProcessingException -> a.a.a.j:
-    org.codehaus.jackson.JsonLocation mLocation -> a
-    org.codehaus.jackson.JsonLocation getLocation() -> a
-    java.lang.String getMessage() -> getMessage
-    java.lang.String toString() -> toString
-org.codehaus.jackson.JsonStreamContext -> a.a.a.k:
-    int _type -> a
-    int _index -> b
-    boolean inArray() -> a
-    boolean inRoot() -> b
-    boolean inObject() -> c
-    java.lang.String getTypeDesc() -> d
-    int getEntryCount() -> e
-    int getCurrentIndex() -> f
-org.codehaus.jackson.JsonToken -> a.a.a.l:
-    org.codehaus.jackson.JsonToken NOT_AVAILABLE -> a
-    org.codehaus.jackson.JsonToken START_OBJECT -> b
-    org.codehaus.jackson.JsonToken END_OBJECT -> c
-    org.codehaus.jackson.JsonToken START_ARRAY -> d
-    org.codehaus.jackson.JsonToken END_ARRAY -> e
-    org.codehaus.jackson.JsonToken FIELD_NAME -> f
-    org.codehaus.jackson.JsonToken VALUE_EMBEDDED_OBJECT -> g
-    org.codehaus.jackson.JsonToken VALUE_STRING -> h
-    org.codehaus.jackson.JsonToken VALUE_NUMBER_INT -> i
-    org.codehaus.jackson.JsonToken VALUE_NUMBER_FLOAT -> j
-    org.codehaus.jackson.JsonToken VALUE_TRUE -> k
-    org.codehaus.jackson.JsonToken VALUE_FALSE -> l
-    org.codehaus.jackson.JsonToken VALUE_NULL -> m
-    java.lang.String _serialized -> n
-    char[] _serializedChars -> o
-    byte[] _serializedBytes -> p
-    org.codehaus.jackson.JsonToken[] $VALUES -> q
-    org.codehaus.jackson.JsonToken[] values() -> values
-    org.codehaus.jackson.JsonToken valueOf(java.lang.String) -> valueOf
-    java.lang.String asString() -> a
-org.codehaus.jackson.ObjectCodec -> a.a.a.m:
-org.codehaus.jackson.PrettyPrinter -> a.a.a.n:
-    void writeRootValueSeparator(org.codehaus.jackson.JsonGenerator) -> a
-    void writeStartObject(org.codehaus.jackson.JsonGenerator) -> b
-    void writeEndObject(org.codehaus.jackson.JsonGenerator,int) -> a
-    void writeObjectEntrySeparator(org.codehaus.jackson.JsonGenerator) -> c
-    void writeObjectFieldValueSeparator(org.codehaus.jackson.JsonGenerator) -> d
-    void writeStartArray(org.codehaus.jackson.JsonGenerator) -> e
-    void writeEndArray(org.codehaus.jackson.JsonGenerator,int) -> b
-    void writeArrayValueSeparator(org.codehaus.jackson.JsonGenerator) -> f
-    void beforeArrayValues(org.codehaus.jackson.JsonGenerator) -> g
-    void beforeObjectEntries(org.codehaus.jackson.JsonGenerator) -> h
-org.codehaus.jackson.SerializableString -> a.a.a.o:
-    java.lang.String getValue() -> a
-    byte[] asUnquotedUTF8() -> b
-org.codehaus.jackson.impl.ByteSourceBootstrapper -> a.a.a.a.a:
-    org.codehaus.jackson.io.IOContext _context -> a
-    java.io.InputStream _in -> b
-    byte[] _inputBuffer -> c
-    int _inputPtr -> g
-    int _inputEnd -> h
-    boolean _bufferRecyclable -> i
-    int _inputProcessed -> d
-    boolean _bigEndian -> e
-    int _bytesPerChar -> f
-    org.codehaus.jackson.JsonEncoding detectEncoding() -> a
-    java.io.Reader constructReader() -> b
-    org.codehaus.jackson.JsonParser constructParser(int,org.codehaus.jackson.ObjectCodec,org.codehaus.jackson.sym.BytesToNameCanonicalizer,org.codehaus.jackson.sym.CharsToNameCanonicalizer) -> a
-    boolean handleBOM(int) -> b
-    boolean checkUTF32(int) -> c
-    boolean checkUTF16(int) -> d
-    void reportWeirdUCS4(java.lang.String) -> a
-    boolean ensureLoaded(int) -> a
-org.codehaus.jackson.impl.ByteSourceBootstrapper$1 -> a.a.a.a.b:
-    int[] $SwitchMap$org$codehaus$jackson$JsonEncoding -> a
-org.codehaus.jackson.impl.Indenter -> a.a.a.a.c:
-    void writeIndentation(org.codehaus.jackson.JsonGenerator,int) -> a
-    boolean isInline() -> a
-org.codehaus.jackson.impl.JsonGeneratorBase -> a.a.a.a.d:
-    org.codehaus.jackson.ObjectCodec _objectCodec -> b
-    int _features -> c
-    boolean _cfgNumbersAsStrings -> d
-    org.codehaus.jackson.impl.JsonWriteContext _writeContext -> e
-    boolean _closed -> f
-    boolean isEnabled(org.codehaus.jackson.JsonGenerator$Feature) -> a
-    org.codehaus.jackson.JsonGenerator useDefaultPrettyPrinter() -> a
-    org.codehaus.jackson.impl.JsonWriteContext getOutputContext() -> h
-    void writeStartArray() -> b
-    void _writeStartArray() -> i
-    void writeEndArray() -> c
-    void _writeEndArray() -> j
-    void writeStartObject() -> d
-    void _writeStartObject() -> k
-    void writeEndObject() -> e
-    void _writeEndObject() -> l
-    void close() -> close
-    void _verifyValueWrite(java.lang.String) -> d
-    void _reportError(java.lang.String) -> e
-    void _cantHappen() -> m
-org.codehaus.jackson.impl.JsonParserBase -> a.a.a.a.e:
-    org.codehaus.jackson.io.IOContext _ioContext -> c
-    boolean _closed -> d
-    int _inputPtr -> e
-    int _inputEnd -> f
-    long _currInputProcessed -> g
-    int _currInputRow -> h
-    int _currInputRowStart -> i
-    long _tokenInputTotal -> j
-    int _tokenInputRow -> k
-    int _tokenInputCol -> l
-    org.codehaus.jackson.impl.JsonReadContext _parsingContext -> m
-    org.codehaus.jackson.JsonToken _nextToken -> n
-    org.codehaus.jackson.util.TextBuffer _textBuffer -> o
-    char[] _nameCopyBuffer -> p
-    boolean _nameCopied -> q
-    org.codehaus.jackson.util.ByteArrayBuilder _byteArrayBuilder -> r
-    byte[] _binaryValue -> s
-    java.math.BigInteger BI_MIN_INT -> t
-    java.math.BigInteger BI_MAX_INT -> u
-    java.math.BigInteger BI_MIN_LONG -> v
-    java.math.BigInteger BI_MAX_LONG -> w
-    java.math.BigDecimal BD_MIN_LONG -> x
-    java.math.BigDecimal BD_MAX_LONG -> y
-    java.math.BigDecimal BD_MIN_INT -> z
-    java.math.BigDecimal BD_MAX_INT -> A
-    int _numTypesValid -> B
-    int _numberInt -> C
-    long _numberLong -> D
-    double _numberDouble -> E
-    java.math.BigInteger _numberBigInt -> F
-    java.math.BigDecimal _numberBigDecimal -> G
-    boolean _numberNegative -> H
-    int _intLength -> I
-    int _fractLength -> J
-    int _expLength -> K
-    java.lang.String getCurrentName() -> d
-    void close() -> close
-    org.codehaus.jackson.JsonLocation getCurrentLocation() -> e
-    void loadMoreGuaranteed() -> o
-    boolean loadMore() -> p
-    void _closeInput() -> q
-    void _releaseBuffers() -> r
-    void _handleEOF() -> s
-    void _reportMismatchedEndMarker(int,char) -> a
-    org.codehaus.jackson.JsonToken reset(boolean,int,int,int) -> a
-    org.codehaus.jackson.JsonToken resetInt(boolean,int) -> a
-    org.codehaus.jackson.JsonToken resetFloat(boolean,int,int,int) -> b
-    org.codehaus.jackson.JsonToken resetAsNaN(java.lang.String,double) -> a
-    int getIntValue() -> i
-    long getLongValue() -> j
-    java.math.BigInteger getBigIntegerValue() -> k
-    float getFloatValue() -> l
-    double getDoubleValue() -> m
-    java.math.BigDecimal getDecimalValue() -> n
-    void _parseNumericValue(int) -> a
-    void _parseSlowFloatValue(int) -> d
-    void _parseSlowIntValue(int,char[],int,int) -> a
-    void convertNumberToInt() -> t
-    void convertNumberToLong() -> u
-    void convertNumberToBigInteger() -> v
-    void convertNumberToDouble() -> w
-    void convertNumberToBigDecimal() -> x
-    void reportUnexpectedNumberChar(int,java.lang.String) -> a
-    void reportInvalidNumber(java.lang.String) -> b
-    void reportOverflowInt() -> y
-    void reportOverflowLong() -> z
-    char _decodeEscaped() -> A
-org.codehaus.jackson.impl.JsonParserMinimalBase -> a.a.a.a.f:
-    org.codehaus.jackson.JsonToken nextToken() -> a
-    org.codehaus.jackson.JsonParser skipChildren() -> b
-    void _handleEOF() -> s
-    java.lang.String getText() -> f
-    void _reportUnexpectedChar(int,java.lang.String) -> b
-    void _reportInvalidEOF() -> B
-    void _reportInvalidEOF(java.lang.String) -> c
-    void _reportInvalidEOFInValue() -> C
-    void _throwInvalidSpace(int) -> b
-    void _throwUnquotedSpace(int,java.lang.String) -> c
-    char _handleUnrecognizedCharacterEscape(char) -> a
-    java.lang.String _getCharDesc(int) -> c
-    void _reportError(java.lang.String) -> d
-    void _wrapError(java.lang.String,java.lang.Throwable) -> a
-    void _throwInternal() -> D
-    org.codehaus.jackson.JsonParseException _constructError(java.lang.String,java.lang.Throwable) -> b
-org.codehaus.jackson.impl.JsonParserMinimalBase$1 -> a.a.a.a.g:
-    int[] $SwitchMap$org$codehaus$jackson$JsonToken -> a
-org.codehaus.jackson.impl.JsonReadContext -> a.a.a.a.h:
-    org.codehaus.jackson.impl.JsonReadContext _parent -> c
-    int _lineNr -> d
-    int _columnNr -> e
-    java.lang.String _currentName -> f
-    org.codehaus.jackson.impl.JsonReadContext _child -> g
-    void reset(int,int,int) -> a
-    org.codehaus.jackson.impl.JsonReadContext createRootContext() -> g
-    org.codehaus.jackson.impl.JsonReadContext createChildArrayContext(int,int) -> a
-    org.codehaus.jackson.impl.JsonReadContext createChildObjectContext(int,int) -> b
-    java.lang.String getCurrentName() -> h
-    org.codehaus.jackson.impl.JsonReadContext getParent() -> i
-    org.codehaus.jackson.JsonLocation getStartLocation(java.lang.Object) -> a
-    boolean expectComma() -> j
-    void setCurrentName(java.lang.String) -> a
-    java.lang.String toString() -> toString
-org.codehaus.jackson.impl.JsonWriteContext -> a.a.a.a.i:
-    org.codehaus.jackson.impl.JsonWriteContext _parent -> c
-    java.lang.String _currentName -> d
-    org.codehaus.jackson.impl.JsonWriteContext _child -> e
-    org.codehaus.jackson.impl.JsonWriteContext createRootContext() -> g
-    org.codehaus.jackson.impl.JsonWriteContext reset(int) -> a
-    org.codehaus.jackson.impl.JsonWriteContext createChildArrayContext() -> h
-    org.codehaus.jackson.impl.JsonWriteContext createChildObjectContext() -> i
-    org.codehaus.jackson.impl.JsonWriteContext getParent() -> j
-    int writeFieldName(java.lang.String) -> a
-    int writeValue() -> k
-    void appendDesc(java.lang.StringBuilder) -> a
-    java.lang.String toString() -> toString
-org.codehaus.jackson.impl.ReaderBasedParser -> a.a.a.a.j:
-    java.io.Reader _reader -> L
-    char[] _inputBuffer -> M
-    org.codehaus.jackson.ObjectCodec _objectCodec -> N
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer _symbols -> O
-    boolean _tokenIncomplete -> P
-    boolean loadMore() -> p
-    char getNextChar(java.lang.String) -> e
-    void _closeInput() -> q
-    void _releaseBuffers() -> r
-    java.lang.String getText() -> f
-    java.lang.String _getText2(org.codehaus.jackson.JsonToken) -> a
-    org.codehaus.jackson.JsonToken nextToken() -> a
-    org.codehaus.jackson.JsonToken _nextAfterName() -> L
-    void close() -> close
-    org.codehaus.jackson.JsonToken parseNumberText(int) -> d
-    org.codehaus.jackson.JsonToken parseNumberText2(boolean) -> a
-    char _verifyNoLeadingZeroes() -> M
-    org.codehaus.jackson.JsonToken _handleInvalidNumberStart(int,boolean) -> a
-    java.lang.String _parseFieldName(int) -> e
-    java.lang.String _parseFieldName2(int,int,int) -> a
-    java.lang.String _handleUnusualFieldName(int) -> f
-    java.lang.String _parseApostropheFieldName() -> E
-    org.codehaus.jackson.JsonToken _handleUnexpectedValue(int) -> g
-    org.codehaus.jackson.JsonToken _handleApostropheValue() -> F
-    java.lang.String _parseUnusualFieldName2(int,int,int[]) -> a
-    void _finishString() -> G
-    void _finishString2() -> H
-    void _skipString() -> I
-    void _skipCR() -> J
-    void _skipLF() -> K
-    int _skipWS() -> N
-    int _skipWSOrEnd() -> O
-    void _skipComment() -> P
-    void _skipCComment() -> Q
-    void _skipCppComment() -> R
-    char _decodeEscaped() -> A
-    void _matchToken(java.lang.String,int) -> a
-    void _reportInvalidToken(java.lang.String,java.lang.String) -> a
-org.codehaus.jackson.impl.ReaderBasedParser$1 -> a.a.a.a.k:
-    int[] $SwitchMap$org$codehaus$jackson$JsonToken -> a
-org.codehaus.jackson.impl.Utf8Generator -> a.a.a.a.l:
-    byte[] HEX_CHARS -> g
-    byte[] NULL_BYTES -> u
-    byte[] TRUE_BYTES -> v
-    byte[] FALSE_BYTES -> w
-    int[] sOutputEscapes -> h
-    org.codehaus.jackson.io.IOContext _ioContext -> i
-    java.io.OutputStream _outputStream -> j
-    int[] _outputEscapes -> k
-    int _maximumNonEscapedChar -> l
-    org.codehaus.jackson.io.CharacterEscapes _characterEscapes -> m
-    byte[] _outputBuffer -> n
-    int _outputTail -> o
-    int _outputEnd -> p
-    int _outputMaxContiguous -> q
-    char[] _charBuffer -> r
-    int _charBufferLength -> s
-    boolean _bufferRecyclable -> t
-    org.codehaus.jackson.JsonGenerator setHighestNonEscapedChar(int) -> a
-    org.codehaus.jackson.JsonGenerator setCharacterEscapes(org.codehaus.jackson.io.CharacterEscapes) -> a
-    void writeFieldName(java.lang.String) -> a
-    void writeStartArray() -> b
-    void writeEndArray() -> c
-    void writeStartObject() -> d
-    void writeEndObject() -> e
-    void _writeFieldName(java.lang.String) -> f
-    void _writePPFieldName(java.lang.String,boolean) -> a
-    void writeString(java.lang.String) -> b
-    void _writeLongString(java.lang.String) -> g
-    void _writeLongString(char[],int,int) -> b
-    void writeRaw(java.lang.String) -> c
-    void writeRaw(char[],int,int) -> a
-    void writeRaw(char) -> a
-    void _writeSegmentedRaw(char[],int,int) -> c
-    void writeNumber(int) -> b
-    void _writeQuotedInt(int) -> c
-    void writeNumber(long) -> a
-    void _writeQuotedLong(long) -> b
-    void writeNumber(java.math.BigInteger) -> a
-    void writeNumber(double) -> a
-    void writeNumber(float) -> a
-    void writeNumber(java.math.BigDecimal) -> a
-    void _writeQuotedRaw(java.lang.Object) -> a
-    void writeBoolean(boolean) -> a
-    void writeNull() -> f
-    void _verifyValueWrite(java.lang.String) -> d
-    void _verifyPrettyValueWrite(java.lang.String,int) -> a
-    void flush() -> g
-    void close() -> close
-    void _releaseBuffers() -> n
-    void _writeStringSegments(java.lang.String) -> h
-    void _writeStringSegments(char[],int,int) -> d
-    void _writeStringSegment(char[],int,int) -> e
-    void _writeStringSegment2(char[],int,int) -> f
-    void _writeStringSegmentASCII2(char[],int,int) -> g
-    void _writeCustomStringSegment2(char[],int,int) -> h
-    int _writeCustomEscape(byte[],int,org.codehaus.jackson.SerializableString,int) -> a
-    int _handleLongCustomEscape(byte[],int,int,byte[],int) -> a
-    int _outputRawMultiByteChar(int,char[],int,int) -> a
-    void _outputSurrogates(int,int) -> a
-    int _outputMultiByteChar(int,int) -> c
-    int _decodeSurrogate(int,int) -> b
-    void _writeNull() -> p
-    int _writeGenericEscape(int,int) -> d
-    void _flushBuffer() -> o
-org.codehaus.jackson.impl.Utf8StreamParser -> a.a.a.a.m:
-    int[] sInputCodesUtf8 -> S
-    int[] sInputCodesLatin1 -> T
-    org.codehaus.jackson.ObjectCodec _objectCodec -> L
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer _symbols -> M
-    int[] _quadBuffer -> N
-    boolean _tokenIncomplete -> O
-    int _quad1 -> U
-    java.io.InputStream _inputStream -> P
-    byte[] _inputBuffer -> Q
-    boolean _bufferRecyclable -> R
-    boolean loadMore() -> p
-    void _closeInput() -> q
-    void _releaseBuffers() -> r
-    java.lang.String getText() -> f
-    java.lang.String _getText2(org.codehaus.jackson.JsonToken) -> a
-    org.codehaus.jackson.JsonToken nextToken() -> a
-    org.codehaus.jackson.JsonToken _nextTokenNotInObject(int) -> m
-    org.codehaus.jackson.JsonToken _nextAfterName() -> L
-    void close() -> close
-    org.codehaus.jackson.JsonToken parseNumberText(int) -> d
-    org.codehaus.jackson.JsonToken _parserNumber2(char[],int,boolean,int) -> a
-    int _verifyNoLeadingZeroes() -> M
-    org.codehaus.jackson.JsonToken _parseFloatText(char[],int,int,boolean,int) -> a
-    org.codehaus.jackson.sym.Name _parseFieldName(int) -> e
-    org.codehaus.jackson.sym.Name parseMediumFieldName(int,int[]) -> a
-    org.codehaus.jackson.sym.Name parseLongFieldName(int) -> f
-    org.codehaus.jackson.sym.Name slowParseFieldName() -> E
-    org.codehaus.jackson.sym.Name parseFieldName(int,int,int) -> a
-    org.codehaus.jackson.sym.Name parseFieldName(int,int,int,int) -> a
-    org.codehaus.jackson.sym.Name parseEscapedFieldName(int[],int,int,int,int) -> a
-    org.codehaus.jackson.sym.Name _handleUnusualFieldName(int) -> g
-    org.codehaus.jackson.sym.Name _parseApostropheFieldName() -> F
-    org.codehaus.jackson.sym.Name findName(int,int) -> b
-    org.codehaus.jackson.sym.Name findName(int,int,int) -> b
-    org.codehaus.jackson.sym.Name findName(int[],int,int,int) -> a
-    org.codehaus.jackson.sym.Name addName(int[],int,int) -> a
-    void _finishString() -> G
-    void _finishString2(char[],int) -> a
-    void _skipString() -> H
-    org.codehaus.jackson.JsonToken _handleUnexpectedValue(int) -> h
-    org.codehaus.jackson.JsonToken _handleApostropheValue() -> I
-    org.codehaus.jackson.JsonToken _handleInvalidNumberStart(int,boolean) -> a
-    void _matchToken(java.lang.String,int) -> a
-    void _reportInvalidToken(java.lang.String,java.lang.String) -> a
-    int _skipWS() -> N
-    int _skipWSOrEnd() -> O
-    void _skipComment() -> P
-    void _skipCComment() -> Q
-    void _skipCppComment() -> R
-    char _decodeEscaped() -> A
-    int _decodeCharForError(int) -> i
-    int _decodeUtf8_2(int) -> n
-    int _decodeUtf8_3(int) -> o
-    int _decodeUtf8_3fast(int) -> p
-    int _decodeUtf8_4(int) -> q
-    void _skipUtf8_2(int) -> r
-    void _skipUtf8_3(int) -> s
-    void _skipUtf8_4(int) -> t
-    void _skipCR() -> J
-    void _skipLF() -> K
-    int nextByte() -> S
-    void _reportInvalidChar(int) -> j
-    void _reportInvalidInitial(int) -> k
-    void _reportInvalidOther(int) -> l
-    void _reportInvalidOther(int,int) -> a
-    int[] growArrayBy(int[],int) -> a
-org.codehaus.jackson.impl.Utf8StreamParser$1 -> a.a.a.a.n:
-    int[] $SwitchMap$org$codehaus$jackson$JsonToken -> a
-org.codehaus.jackson.impl.WriterBasedGenerator -> a.a.a.a.o:
-    char[] HEX_CHARS -> g
-    int[] sOutputEscapes -> h
-    org.codehaus.jackson.io.IOContext _ioContext -> i
-    java.io.Writer _writer -> j
-    int[] _outputEscapes -> k
-    int _maximumNonEscapedChar -> l
-    org.codehaus.jackson.io.CharacterEscapes _characterEscapes -> m
-    org.codehaus.jackson.SerializableString _currentEscape -> n
-    char[] _outputBuffer -> o
-    int _outputHead -> p
-    int _outputTail -> q
-    int _outputEnd -> r
-    char[] _entityBuffer -> s
-    org.codehaus.jackson.JsonGenerator setHighestNonEscapedChar(int) -> a
-    org.codehaus.jackson.JsonGenerator setCharacterEscapes(org.codehaus.jackson.io.CharacterEscapes) -> a
-    void writeFieldName(java.lang.String) -> a
-    void writeStartArray() -> b
-    void writeEndArray() -> c
-    void writeStartObject() -> d
-    void writeEndObject() -> e
-    void _writeFieldName(java.lang.String,boolean) -> a
-    void _writePPFieldName(java.lang.String,boolean) -> b
-    void writeString(java.lang.String) -> b
-    void writeRaw(java.lang.String) -> c
-    void writeRaw(char[],int,int) -> a
-    void writeRaw(char) -> a
-    void writeRawLong(java.lang.String) -> f
-    void writeNumber(int) -> b
-    void _writeQuotedInt(int) -> c
-    void writeNumber(long) -> a
-    void _writeQuotedLong(long) -> b
-    void writeNumber(java.math.BigInteger) -> a
-    void writeNumber(double) -> a
-    void writeNumber(float) -> a
-    void writeNumber(java.math.BigDecimal) -> a
-    void _writeQuotedRaw(java.lang.Object) -> a
-    void writeBoolean(boolean) -> a
-    void writeNull() -> f
-    void _verifyValueWrite(java.lang.String) -> d
-    void _verifyPrettyValueWrite(java.lang.String,int) -> a
-    void flush() -> g
-    void close() -> close
-    void _releaseBuffers() -> n
-    void _writeString(java.lang.String) -> g
-    void _writeString2(int) -> d
-    void _writeLongString(java.lang.String) -> h
-    void _writeSegment(int) -> e
-    void _writeStringASCII(int,int) -> a
-    void _writeSegmentASCII(int,int) -> b
-    void _writeStringCustom(int) -> f
-    void _writeSegmentCustom(int) -> g
-    void _writeNull() -> p
-    void _prependOrWriteCharacterEscape(char,int) -> a
-    int _prependOrWriteCharacterEscape(char[],int,int,char,int) -> a
-    char[] _allocateEntityBuffer() -> q
-    void _flushBuffer() -> o
-org.codehaus.jackson.io.BaseReader -> a.a.a.b.a:
-    org.codehaus.jackson.io.IOContext _context -> a
-    java.io.InputStream _in -> b
-    byte[] _buffer -> c
-    int _ptr -> d
-    int _length -> e
-    char[] _tmpBuf -> f
-    void close() -> close
-    int read() -> read
-    void freeBuffers() -> a
-    void reportBounds(char[],int,int) -> a
-    void reportStrangeStream() -> b
-org.codehaus.jackson.io.CharacterEscapes -> a.a.a.b.b:
-    int[] getEscapeCodesForAscii() -> a
-    org.codehaus.jackson.SerializableString getEscapeSequence(int) -> a
-org.codehaus.jackson.io.IOContext -> a.a.a.b.c:
-    java.lang.Object _sourceRef -> a
-    org.codehaus.jackson.JsonEncoding _encoding -> b
-    boolean _managedResource -> c
-    org.codehaus.jackson.util.BufferRecycler _bufferRecycler -> d
-    byte[] _readIOBuffer -> e
-    byte[] _writeEncodingBuffer -> f
-    char[] _tokenCBuffer -> g
-    char[] _concatCBuffer -> h
-    char[] _nameCopyBuffer -> i
-    void setEncoding(org.codehaus.jackson.JsonEncoding) -> a
-    java.lang.Object getSourceReference() -> a
-    org.codehaus.jackson.JsonEncoding getEncoding() -> b
-    boolean isResourceManaged() -> c
-    org.codehaus.jackson.util.TextBuffer constructTextBuffer() -> d
-    byte[] allocReadIOBuffer() -> e
-    byte[] allocWriteEncodingBuffer() -> f
-    char[] allocTokenBuffer() -> g
-    char[] allocConcatBuffer() -> h
-    void releaseReadIOBuffer(byte[]) -> a
-    void releaseWriteEncodingBuffer(byte[]) -> b
-    void releaseTokenBuffer(char[]) -> a
-    void releaseConcatBuffer(char[]) -> b
-    void releaseNameCopyBuffer(char[]) -> c
-org.codehaus.jackson.io.InputDecorator -> a.a.a.b.d:
-    java.io.InputStream decorate(org.codehaus.jackson.io.IOContext,java.io.InputStream) -> a
-org.codehaus.jackson.io.MergedStream -> a.a.a.b.e:
-    org.codehaus.jackson.io.IOContext _context -> a
-    java.io.InputStream _in -> b
-    byte[] _buffer -> c
-    int _ptr -> d
-    int _end -> e
-    int available() -> available
-    void close() -> close
-    void mark(int) -> mark
-    boolean markSupported() -> markSupported
-    int read() -> read
-    int read(byte[]) -> read
-    int read(byte[],int,int) -> read
-    void reset() -> reset
-    long skip(long) -> skip
-    void freeMergedBuffer() -> a
-org.codehaus.jackson.io.NumberInput -> a.a.a.b.f:
-    java.lang.String MIN_LONG_STR_NO_SIGN -> a
-    java.lang.String MAX_LONG_STR -> b
-    int parseInt(char[],int,int) -> a
-    long parseLong(char[],int,int) -> b
-    boolean inLongRange(char[],int,int,boolean) -> a
-    double parseDouble(java.lang.String) -> a
-org.codehaus.jackson.io.NumberOutput -> a.a.a.b.g:
-    int MILLION -> g
-    int BILLION -> h
-    long TEN_BILLION_L -> i
-    long THOUSAND_L -> j
-    long MIN_INT_AS_LONG -> k
-    long MAX_INT_AS_LONG -> l
-    java.lang.String SMALLEST_LONG -> a
-    char[] LEADING_TRIPLETS -> b
-    char[] FULL_TRIPLETS -> c
-    byte[] FULL_TRIPLETS_B -> d
-    java.lang.String[] sSmallIntStrs -> e
-    java.lang.String[] sSmallIntStrs2 -> f
-    int outputInt(int,char[],int) -> a
-    int outputInt(int,byte[],int) -> a
-    int outputLong(long,char[],int) -> a
-    int outputLong(long,byte[],int) -> a
-    int outputLeadingTriplet(int,char[],int) -> b
-    int outputLeadingTriplet(int,byte[],int) -> b
-    int outputFullTriplet(int,char[],int) -> c
-    int outputFullTriplet(int,byte[],int) -> c
-    int calcLongStrLength(long) -> a
-org.codehaus.jackson.io.OutputDecorator -> a.a.a.b.h:
-    java.io.OutputStream decorate(org.codehaus.jackson.io.IOContext,java.io.OutputStream) -> a
-    java.io.Writer decorate(org.codehaus.jackson.io.IOContext,java.io.Writer) -> a
-org.codehaus.jackson.io.UTF32Reader -> a.a.a.b.i:
-    boolean mBigEndian -> g
-    char mSurrogate -> h
-    int mCharCount -> i
-    int mByteCount -> j
-    int read(char[],int,int) -> read
-    void reportUnexpectedEOF(int,int) -> a
-    void reportInvalid(int,int,java.lang.String) -> a
-    boolean loadMore(int) -> a
-    int read() -> read
-    void close() -> close
-org.codehaus.jackson.io.UTF8Writer -> a.a.a.b.j:
-    org.codehaus.jackson.io.IOContext _context -> a
-    java.io.OutputStream _out -> b
-    byte[] _outBuffer -> c
-    int _outBufferEnd -> d
-    int _outPtr -> e
-    int _surrogate -> f
-    java.io.Writer append(char) -> append
-    void close() -> close
-    void flush() -> flush
-    void write(char[]) -> write
-    void write(char[],int,int) -> write
-    void write(int) -> write
-    void write(java.lang.String) -> write
-    void write(java.lang.String,int,int) -> write
-    int convertSurrogate(int) -> a
-    void throwIllegal(int) -> b
-    java.lang.Appendable append(char) -> append
-org.codehaus.jackson.sym.BytesToNameCanonicalizer -> a.a.a.c.a:
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer _parent -> a
-    java.util.concurrent.atomic.AtomicReference _tableInfo -> b
-    int _hashSeed -> l
-    boolean _intern -> c
-    int _count -> d
-    int _longestCollisionList -> e
-    int _mainHashMask -> f
-    int[] _mainHash -> g
-    org.codehaus.jackson.sym.Name[] _mainNames -> h
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer$Bucket[] _collList -> i
-    int _collCount -> j
-    int _collEnd -> k
-    boolean _needRehash -> m
-    boolean _mainHashShared -> n
-    boolean _mainNamesShared -> o
-    boolean _collListShared -> p
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer$TableInfo initTableInfo(int) -> e
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer createRoot() -> a
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer createRoot(int) -> a
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer makeChild(boolean,boolean) -> a
-    void release() -> b
-    void mergeChild(org.codehaus.jackson.sym.BytesToNameCanonicalizer$TableInfo) -> a
-    boolean maybeDirty() -> c
-    org.codehaus.jackson.sym.Name getEmptyName() -> d
-    org.codehaus.jackson.sym.Name findName(int) -> b
-    org.codehaus.jackson.sym.Name findName(int,int) -> a
-    org.codehaus.jackson.sym.Name findName(int[],int) -> a
-    org.codehaus.jackson.sym.Name addName(java.lang.String,int[],int) -> a
-    int calcHash(int) -> c
-    int calcHash(int,int) -> b
-    int calcHash(int[],int) -> b
-    void _addSymbol(int,org.codehaus.jackson.sym.Name) -> a
-    void rehash() -> e
-    void nukeSymbols() -> f
-    int findBestBucket() -> g
-    void unshareMain() -> h
-    void unshareCollision() -> i
-    void unshareNames() -> j
-    void expandCollision() -> k
-    org.codehaus.jackson.sym.Name constructName(int,java.lang.String,int[],int) -> a
-    void reportTooManyCollisions(int) -> d
-org.codehaus.jackson.sym.BytesToNameCanonicalizer$Bucket -> a.a.a.c.b:
-    org.codehaus.jackson.sym.Name _name -> a
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer$Bucket _next -> b
-    int _length -> c
-    int length() -> a
-    org.codehaus.jackson.sym.Name find(int,int,int) -> a
-    org.codehaus.jackson.sym.Name find(int,int[],int) -> a
-org.codehaus.jackson.sym.BytesToNameCanonicalizer$TableInfo -> a.a.a.c.c:
-    int count -> a
-    int mainHashMask -> b
-    int[] mainHash -> c
-    org.codehaus.jackson.sym.Name[] mainNames -> d
-    org.codehaus.jackson.sym.BytesToNameCanonicalizer$Bucket[] collList -> e
-    int collCount -> f
-    int collEnd -> g
-    int longestCollisionList -> h
-org.codehaus.jackson.sym.CharsToNameCanonicalizer -> a.a.a.c.d:
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer sBootstrapSymbolTable -> a
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer _parent -> b
-    int _hashSeed -> l
-    boolean _intern -> c
-    boolean _canonicalize -> d
-    java.lang.String[] _symbols -> e
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer$Bucket[] _buckets -> f
-    int _size -> g
-    int _sizeThreshold -> h
-    int _indexMask -> i
-    int _longestCollisionList -> j
-    boolean _dirty -> k
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer createRoot() -> a
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer createRoot(int) -> a
-    void initTables(int) -> d
-    int _thresholdSize(int) -> e
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer makeChild(boolean,boolean) -> a
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer makeOrphan(int) -> f
-    void mergeChild(org.codehaus.jackson.sym.CharsToNameCanonicalizer) -> a
-    void release() -> b
-    int size() -> c
-    boolean maybeDirty() -> d
-    java.lang.String findSymbol(char[],int,int,int) -> a
-    int _hashToIndex(int) -> b
-    int calcHash(char[],int,int) -> a
-    int calcHash(java.lang.String) -> a
-    void copyArrays() -> e
-    void rehash() -> f
-    void reportTooManyCollisions(int) -> c
-org.codehaus.jackson.sym.CharsToNameCanonicalizer$Bucket -> a.a.a.c.e:
-    java.lang.String _symbol -> a
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer$Bucket _next -> b
-    int _length -> c
-    java.lang.String getSymbol() -> a
-    org.codehaus.jackson.sym.CharsToNameCanonicalizer$Bucket getNext() -> b
-    int length() -> c
-    java.lang.String find(char[],int,int) -> a
-org.codehaus.jackson.sym.Name -> a.a.a.c.f:
-    java.lang.String _name -> a
-    int _hashCode -> b
-    java.lang.String getName() -> a
-    boolean equals(int) -> a
-    boolean equals(int,int) -> a
-    boolean equals(int[],int) -> a
-    java.lang.String toString() -> toString
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-org.codehaus.jackson.sym.Name1 -> a.a.a.c.g:
-    org.codehaus.jackson.sym.Name1 sEmptyName -> c
-    int mQuad -> d
-    org.codehaus.jackson.sym.Name1 getEmptyName() -> b
-    boolean equals(int) -> a
-    boolean equals(int,int) -> a
-    boolean equals(int[],int) -> a
-org.codehaus.jackson.sym.Name2 -> a.a.a.c.h:
-    int mQuad1 -> c
-    int mQuad2 -> d
-    boolean equals(int) -> a
-    boolean equals(int,int) -> a
-    boolean equals(int[],int) -> a
-org.codehaus.jackson.sym.Name3 -> a.a.a.c.i:
-    int mQuad1 -> c
-    int mQuad2 -> d
-    int mQuad3 -> e
-    boolean equals(int) -> a
-    boolean equals(int,int) -> a
-    boolean equals(int[],int) -> a
-org.codehaus.jackson.sym.NameN -> a.a.a.c.j:
-    int[] mQuads -> c
-    int mQuadLen -> d
-    boolean equals(int) -> a
-    boolean equals(int,int) -> a
-    boolean equals(int[],int) -> a
-org.codehaus.jackson.util.BufferRecycler -> a.a.a.d.a:
-    byte[][] _byteBuffers -> a
-    char[][] _charBuffers -> b
-    byte[] allocByteBuffer(org.codehaus.jackson.util.BufferRecycler$ByteBufferType) -> a
-    void releaseByteBuffer(org.codehaus.jackson.util.BufferRecycler$ByteBufferType,byte[]) -> a
-    char[] allocCharBuffer(org.codehaus.jackson.util.BufferRecycler$CharBufferType) -> a
-    char[] allocCharBuffer(org.codehaus.jackson.util.BufferRecycler$CharBufferType,int) -> a
-    void releaseCharBuffer(org.codehaus.jackson.util.BufferRecycler$CharBufferType,char[]) -> a
-    byte[] balloc(int) -> a
-    char[] calloc(int) -> b
-org.codehaus.jackson.util.BufferRecycler$ByteBufferType -> a.a.a.d.b:
-    org.codehaus.jackson.util.BufferRecycler$ByteBufferType READ_IO_BUFFER -> a
-    org.codehaus.jackson.util.BufferRecycler$ByteBufferType WRITE_ENCODING_BUFFER -> b
-    org.codehaus.jackson.util.BufferRecycler$ByteBufferType WRITE_CONCAT_BUFFER -> c
-    int size -> d
-    org.codehaus.jackson.util.BufferRecycler$ByteBufferType[] $VALUES -> e
-    org.codehaus.jackson.util.BufferRecycler$ByteBufferType[] values() -> values
-    org.codehaus.jackson.util.BufferRecycler$ByteBufferType valueOf(java.lang.String) -> valueOf
-    int access$000(org.codehaus.jackson.util.BufferRecycler$ByteBufferType) -> a
-org.codehaus.jackson.util.BufferRecycler$CharBufferType -> a.a.a.d.c:
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType TOKEN_BUFFER -> a
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType CONCAT_BUFFER -> b
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType TEXT_BUFFER -> c
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType NAME_COPY_BUFFER -> d
-    int size -> e
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType[] $VALUES -> f
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType[] values() -> values
-    org.codehaus.jackson.util.BufferRecycler$CharBufferType valueOf(java.lang.String) -> valueOf
-    int access$100(org.codehaus.jackson.util.BufferRecycler$CharBufferType) -> a
-org.codehaus.jackson.util.ByteArrayBuilder -> a.a.a.d.d:
-    byte[] NO_BYTES -> a
-    java.util.LinkedList _pastBlocks -> b
-    int _pastLen -> c
-    byte[] _currBlock -> d
-    int _currBlockPtr -> e
-    void append(int) -> a
-    void write(byte[]) -> write
-    void write(byte[],int,int) -> write
-    void write(int) -> write
-    void close() -> close
-    void flush() -> flush
-    void _allocMore() -> a
-org.codehaus.jackson.util.CharTypes -> a.a.a.d.e:
-    char[] HEX_CHARS -> h
-    byte[] HEX_BYTES -> i
-    int[] sInputCodes -> a
-    int[] sInputCodesUtf8 -> b
-    int[] sInputCodesJsNames -> c
-    int[] sInputCodesUtf8JsNames -> d
-    int[] sInputCodesComment -> e
-    int[] sOutputEscapes128 -> f
-    int[] sHexValues -> g
-    int[] getInputCodeLatin1() -> a
-    int[] getInputCodeUtf8() -> b
-    int[] getInputCodeLatin1JsNames() -> c
-    int[] getInputCodeUtf8JsNames() -> d
-    int[] getInputCodeComment() -> e
-    int[] get7BitOutputEscapes() -> f
-    int charToHex(int) -> a
-    void appendQuoted(java.lang.StringBuilder,java.lang.String) -> a
-    char[] copyHexChars() -> g
-    byte[] copyHexBytes() -> h
-org.codehaus.jackson.util.DefaultPrettyPrinter -> a.a.a.d.f:
-    org.codehaus.jackson.impl.Indenter _arrayIndenter -> a
-    org.codehaus.jackson.impl.Indenter _objectIndenter -> b
-    boolean _spacesInObjectEntries -> c
-    int _nesting -> d
-    void writeRootValueSeparator(org.codehaus.jackson.JsonGenerator) -> a
-    void writeStartObject(org.codehaus.jackson.JsonGenerator) -> b
-    void beforeObjectEntries(org.codehaus.jackson.JsonGenerator) -> h
-    void writeObjectFieldValueSeparator(org.codehaus.jackson.JsonGenerator) -> d
-    void writeObjectEntrySeparator(org.codehaus.jackson.JsonGenerator) -> c
-    void writeEndObject(org.codehaus.jackson.JsonGenerator,int) -> a
-    void writeStartArray(org.codehaus.jackson.JsonGenerator) -> e
-    void beforeArrayValues(org.codehaus.jackson.JsonGenerator) -> g
-    void writeArrayValueSeparator(org.codehaus.jackson.JsonGenerator) -> f
-    void writeEndArray(org.codehaus.jackson.JsonGenerator,int) -> b
-org.codehaus.jackson.util.DefaultPrettyPrinter$FixedSpaceIndenter -> a.a.a.d.g:
-    void writeIndentation(org.codehaus.jackson.JsonGenerator,int) -> a
-    boolean isInline() -> a
-org.codehaus.jackson.util.DefaultPrettyPrinter$Lf2SpacesIndenter -> a.a.a.d.h:
-    java.lang.String SYSTEM_LINE_SEPARATOR -> a
-    char[] SPACES -> b
-    boolean isInline() -> a
-    void writeIndentation(org.codehaus.jackson.JsonGenerator,int) -> a
-org.codehaus.jackson.util.InternCache -> a.a.a.d.i:
-    org.codehaus.jackson.util.InternCache instance -> a
-    boolean removeEldestEntry(java.util.Map$Entry) -> removeEldestEntry
-    java.lang.String intern(java.lang.String) -> a
-org.codehaus.jackson.util.TextBuffer -> a.a.a.d.j:
-    char[] NO_CHARS -> a
-    org.codehaus.jackson.util.BufferRecycler _allocator -> b
-    char[] _inputBuffer -> c
-    int _inputStart -> d
-    int _inputLen -> e
-    java.util.ArrayList _segments -> f
-    boolean _hasSegments -> g
-    int _segmentSize -> h
-    char[] _currentSegment -> i
-    int _currentSize -> j
-    java.lang.String _resultString -> k
-    char[] _resultArray -> l
-    void releaseBuffers() -> a
-    void resetWithEmpty() -> b
-    void resetWithShared(char[],int,int) -> a
-    void resetWithCopy(char[],int,int) -> b
-    void resetWithString(java.lang.String) -> a
-    char[] findBuffer(int) -> b
-    void clearSegments() -> o
-    int size() -> c
-    int getTextOffset() -> d
-    char[] getTextBuffer() -> e
-    java.lang.String contentsAsString() -> f
-    char[] contentsAsArray() -> g
-    java.math.BigDecimal contentsAsDecimal() -> h
-    double contentsAsDouble() -> i
-    void append(char[],int,int) -> c
-    char[] getCurrentSegment() -> j
-    char[] emptyAndGetCurrentSegment() -> k
-    int getCurrentSegmentSize() -> l
-    void setCurrentLength(int) -> a
-    char[] finishCurrentSegment() -> m
-    char[] expandCurrentSegment() -> n
-    java.lang.String toString() -> toString
-    void unshare(int) -> c
-    void expand(int) -> d
-    char[] buildResultArray() -> p
-    char[] _charArray(int) -> e

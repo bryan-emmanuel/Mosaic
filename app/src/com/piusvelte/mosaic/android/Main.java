@@ -48,7 +48,6 @@ import android.widget.EditText;
 public class Main extends android.support.v4.app.FragmentActivity implements ServiceConnection, OnMapLongClickListener, OnMarkerClickListener {
 
 	private static final String TAG = "Main";
-	private ProgressDialog loadingDialog;
 	private ILocationService iLocationService;
 	private GoogleMap map;
 	private Button btnNickname;
@@ -92,9 +91,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			}
 			
 		});
-		loadingDialog = new ProgressDialog(this);
-		loadingDialog.setTitle("loading");
-		loadingDialog.setCancelable(true);
 //		GCMIntentService.register(getApplicationContext());
 		GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
 	}
@@ -116,15 +112,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			map.setMyLocationEnabled(true);
 		map.setOnMapLongClickListener(this);
 		//map.setOnMarkerClickListener(this);
-		loadingDialog.show();
 		bindService(new Intent(this, LocationService.class), this, BIND_AUTO_CREATE);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (loadingDialog.isShowing())
-			loadingDialog.dismiss();
 		if (iLocationService != null) {
 			try {
 				iLocationService.setCallback(null);
@@ -143,8 +136,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				throws RemoteException {
 			// TODO Auto-generated method stub
 			Log.d(TAG, "setCoordinates: " + latitude + ", " + longitude);
-			if (loadingDialog.isShowing())
-				loadingDialog.dismiss();
 			if (latitude != Integer.MAX_VALUE) {
 				Log.d(TAG, "animate camera");
 				if (map != null)
@@ -177,14 +168,10 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void setNickname(String nickname) throws RemoteException {
-			Log.d(TAG, "setNickname: " + nickname);
 			if (nickname != null) {
-				loadingDialog.setMessage("location");
 				iLocationService.getCoordinates();
 				btnNickname.setText(nickname);
 			} else {
-				if (loadingDialog.isShowing())
-					loadingDialog.dismiss();
 				new AlertDialog.Builder(Main.this)
 				.setTitle("Sign in")
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -215,11 +202,13 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		}
 
 		@Override
-		public void addMessage(double latitude, double longitude, String nick, String body)
+		public void addMessage(double latitude, double longitude, String title, String body)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			if (map != null)
-				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nick).snippet(body));
+			if (map != null) {
+				//TODO need to get the marker
+				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title).snippet(body));
+			}
 		}
 	};
 
@@ -229,7 +218,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		iLocationService = ILocationService.Stub.asInterface(service);
 		try {
 			iLocationService.setCallback(iMain);
-			loadingDialog.setMessage("account");
 			iLocationService.getNickname();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -244,7 +232,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	}
 
 	@Override
-	public boolean onMarkerClick(Marker arg0) {
+	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
 		return false;
 	}

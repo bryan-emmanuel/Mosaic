@@ -1,11 +1,11 @@
 {
   "files": [
     {
-      "path": "mosaic-messaging-mosaicuserendpoint-v1-20130211193657-java-1.13.2-beta-sources.jar", 
+      "path": "mosaic-messaging-mosaicuserendpoint-v1-20130212201532-java-1.13.2-beta-sources.jar", 
       "type": "source"
     }, 
     {
-      "path": "mosaic-messaging-mosaicuserendpoint-v1-20130211193657-java-1.13.2-beta.jar.properties", 
+      "path": "mosaic-messaging-mosaicuserendpoint-v1-20130212201532-java-1.13.2-beta.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -690,7 +690,7 @@
     }
   ], 
   "language_version": "1.13.2-beta", 
-  "revision": 20130211193657, 
+  "revision": 20130212201532, 
   "id": "mosaicuserendpoint:v1", 
   "name": "mosaicuserendpoint"
 }

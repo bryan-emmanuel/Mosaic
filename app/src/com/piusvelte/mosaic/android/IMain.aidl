@@ -22,6 +22,6 @@ package com.piusvelte.mosaic.android;
 interface IMain {
 	void setCoordinates(double latitude, double longitude);
 	void setNickname(String nickname);
-	void addMessage(double latitude, double longitude, String nick, String body);
+	void addMessage(double latitude, double longitude, String title, String body);
 	void clearMessages();
 }
