@@ -1452,18 +1452,27 @@ com.google.android.gms.maps.CameraUpdateFactory -> com.google.android.gms.maps.b
     com.google.android.gms.maps.CameraUpdate newLatLngZoom(com.google.android.gms.maps.model.LatLng,float) -> a
 com.google.android.gms.maps.GoogleMap -> com.google.android.gms.maps.c:
     com.google.android.gms.maps.internal.IGoogleMapDelegate cE -> a
+    com.google.android.gms.maps.UiSettings cF -> b
     com.google.android.gms.maps.internal.IGoogleMapDelegate ab() -> a
     void animateCamera(com.google.android.gms.maps.CameraUpdate) -> a
     com.google.android.gms.maps.model.Marker addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
     void clear() -> b
     void setMyLocationEnabled(boolean) -> a
+    com.google.android.gms.maps.UiSettings getUiSettings() -> c
     void setOnMapLongClickListener(com.google.android.gms.maps.GoogleMap$OnMapLongClickListener) -> a
-com.google.android.gms.maps.GoogleMap$5 -> com.google.android.gms.maps.d:
+    void setOnMarkerClickListener(com.google.android.gms.maps.GoogleMap$OnMarkerClickListener) -> a
+com.google.android.gms.maps.GoogleMap$4 -> com.google.android.gms.maps.d:
+    com.google.android.gms.maps.GoogleMap$OnMarkerClickListener K -> a
+    com.google.android.gms.maps.GoogleMap G -> b
+    boolean f(com.google.android.gms.internal.s) -> a
+com.google.android.gms.maps.GoogleMap$5 -> com.google.android.gms.maps.e:
     com.google.android.gms.maps.GoogleMap$OnMapLongClickListener L -> a
     com.google.android.gms.maps.GoogleMap G -> b
     void onMapLongClick(com.google.android.gms.maps.model.LatLng) -> a
-com.google.android.gms.maps.GoogleMap$OnMapLongClickListener -> com.google.android.gms.maps.e:
+com.google.android.gms.maps.GoogleMap$OnMapLongClickListener -> com.google.android.gms.maps.f:
     void onMapLongClick(com.google.android.gms.maps.model.LatLng) -> a
+com.google.android.gms.maps.GoogleMap$OnMarkerClickListener -> com.google.android.gms.maps.g:
+    boolean onMarkerClick(com.google.android.gms.maps.model.Marker) -> a
 com.google.android.gms.maps.GoogleMapOptions -> com.google.android.gms.maps.GoogleMapOptions:
     com.google.android.gms.maps.GoogleMapOptionsCreator CREATOR -> a
     int Q -> b
@@ -1501,13 +1510,13 @@ com.google.android.gms.maps.GoogleMapOptions -> com.google.android.gms.maps.Goog
     int getMapType() -> j
     com.google.android.gms.maps.model.CameraPosition getCamera() -> k
     com.google.android.gms.maps.GoogleMapOptions createFromAttributes(android.content.Context,android.util.AttributeSet) -> a
-com.google.android.gms.maps.GoogleMapOptionsCreator -> com.google.android.gms.maps.f:
+com.google.android.gms.maps.GoogleMapOptionsCreator -> com.google.android.gms.maps.h:
     com.google.android.gms.maps.GoogleMapOptions createFromParcel(android.os.Parcel) -> a
     com.google.android.gms.maps.GoogleMapOptions[] newArray(int) -> a
     void a(com.google.android.gms.maps.GoogleMapOptions,android.os.Parcel,int) -> a
     java.lang.Object[] newArray(int) -> newArray
     java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.maps.MapsInitializer -> com.google.android.gms.maps.g:
+com.google.android.gms.maps.MapsInitializer -> com.google.android.gms.maps.i:
     void initialize(android.content.Context) -> a
 com.google.android.gms.maps.SupportMapFragment -> com.google.android.gms.maps.SupportMapFragment:
     com.google.android.gms.maps.SupportMapFragment$b aJ -> P
@@ -1524,7 +1533,7 @@ com.google.android.gms.maps.SupportMapFragment -> com.google.android.gms.maps.Su
     void onDestroy() -> k
     void onLowMemory() -> onLowMemory
     void onSaveInstanceState(android.os.Bundle) -> f
-com.google.android.gms.maps.SupportMapFragment$a -> com.google.android.gms.maps.h:
+com.google.android.gms.maps.SupportMapFragment$a -> com.google.android.gms.maps.j:
     android.support.v4.app.Fragment ag -> a
     com.google.android.gms.maps.internal.IMapFragmentDelegate ah -> b
     void onInflate(android.app.Activity,android.os.Bundle,android.os.Bundle) -> a
@@ -1537,7 +1546,7 @@ com.google.android.gms.maps.SupportMapFragment$a -> com.google.android.gms.maps.
     void onLowMemory() -> e
     void onSaveInstanceState(android.os.Bundle) -> b
     com.google.android.gms.maps.internal.IMapFragmentDelegate g() -> f
-com.google.android.gms.maps.SupportMapFragment$b -> com.google.android.gms.maps.i:
+com.google.android.gms.maps.SupportMapFragment$b -> com.google.android.gms.maps.k:
     android.support.v4.app.Fragment ag -> b
     com.google.android.gms.internal.ag f -> a
     android.app.Activity g -> c
@@ -1545,6 +1554,12 @@ com.google.android.gms.maps.SupportMapFragment$b -> com.google.android.gms.maps.
     void a() -> g
     void setActivity(android.app.Activity) -> a
     void a(com.google.android.gms.maps.SupportMapFragment$b,android.app.Activity) -> a
+com.google.android.gms.maps.UiSettings -> com.google.android.gms.maps.l:
+    com.google.android.gms.maps.internal.IUiSettingsDelegate aL -> a
+    void setZoomControlsEnabled(boolean) -> a
+    void setMyLocationButtonEnabled(boolean) -> b
+    void setScrollGesturesEnabled(boolean) -> c
+    void setZoomGesturesEnabled(boolean) -> d
 com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate -> com.google.android.gms.maps.a.a:
     com.google.android.gms.internal.f zoomIn() -> a
     com.google.android.gms.internal.f zoomOut() -> b
@@ -1870,6 +1885,7 @@ com.google.android.gms.maps.model.LatLngCreator -> com.google.android.gms.maps.m
     java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.google.android.gms.maps.model.Marker -> com.google.android.gms.maps.model.h:
     com.google.android.gms.internal.s bH -> a
+    java.lang.String getId() -> a
     boolean equals(java.lang.Object) -> equals
     int hashCode() -> hashCode
 com.google.android.gms.maps.model.MarkerOptions -> com.google.android.gms.maps.model.MarkerOptions:
@@ -3405,8 +3421,6 @@ com.piusvelte.mosaic.android.CloudEndpointUtils$1 -> com.piusvelte.mosaic.androi
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
 com.piusvelte.mosaic.android.ILocationService -> com.piusvelte.mosaic.android.c:
     void setCallback(android.os.IBinder) -> a
-    void getNickname() -> a
-    void getMessages() -> b
     void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.ILocationService$Stub -> com.piusvelte.mosaic.android.d:
     com.piusvelte.mosaic.android.ILocationService asInterface(android.os.IBinder) -> b
@@ -3416,8 +3430,6 @@ com.piusvelte.mosaic.android.ILocationService$Stub$Proxy -> com.piusvelte.mosaic
     android.os.IBinder mRemote -> a
     android.os.IBinder asBinder() -> asBinder
     void setCallback(android.os.IBinder) -> a
-    void getNickname() -> a
-    void getMessages() -> b
     void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.IMain -> com.piusvelte.mosaic.android.f:
     void setCoordinates(double,double) -> a
@@ -3468,25 +3480,27 @@ com.piusvelte.mosaic.android.LocationService -> com.piusvelte.mosaic.android.Loc
 com.piusvelte.mosaic.android.LocationService$1 -> com.piusvelte.mosaic.android.i:
     com.piusvelte.mosaic.android.LocationService this$0 -> a
     void setCallback(android.os.IBinder) -> a
-    void getMessages() -> b
-    void getNickname() -> a
     void changeNickname(java.lang.String) -> a
 com.piusvelte.mosaic.android.Main -> com.piusvelte.mosaic.android.Main:
     com.piusvelte.mosaic.android.ILocationService iLocationService -> n
     com.google.android.gms.maps.GoogleMap map -> o
     android.widget.Button btnNickname -> p
-    com.piusvelte.mosaic.android.IMain$Stub iMain -> q
+    java.util.ArrayList markerIds -> q
+    int markerIndex -> r
+    com.piusvelte.mosaic.android.IMain$Stub iMain -> s
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     void onResume() -> onResume
     void onPause() -> onPause
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
+    boolean onMarkerClick(com.google.android.gms.maps.model.Marker) -> a
     void onMapLongClick(com.google.android.gms.maps.model.LatLng) -> a
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     com.google.android.gms.maps.GoogleMap access$0(com.piusvelte.mosaic.android.Main) -> a
-    com.piusvelte.mosaic.android.ILocationService access$1(com.piusvelte.mosaic.android.Main) -> b
-    android.widget.Button access$2(com.piusvelte.mosaic.android.Main) -> c
+    android.widget.Button access$1(com.piusvelte.mosaic.android.Main) -> b
+    java.util.ArrayList access$2(com.piusvelte.mosaic.android.Main) -> c
+    com.piusvelte.mosaic.android.ILocationService access$3(com.piusvelte.mosaic.android.Main) -> d
 com.piusvelte.mosaic.android.Main$1 -> com.piusvelte.mosaic.android.j:
     com.piusvelte.mosaic.android.Main this$0 -> a
     void setCoordinates(double,double) -> a

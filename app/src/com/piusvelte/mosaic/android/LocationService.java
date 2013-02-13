@@ -125,6 +125,13 @@ public class LocationService extends Service implements LocationListener {
 					e.printStackTrace();
 				}
 			}
+			Log.d(TAG, "getMessages");
+			try {
+				mosaicService.getMessages(LocationService.this, latitude, longitude).execute();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -165,27 +172,12 @@ public class LocationService extends Service implements LocationListener {
 		public void setCallback(IBinder mainBinder)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			iMain = IMain.Stub.asInterface(mainBinder);
-		}
-
-		@Override
-		public void getMessages() throws RemoteException {
-			// TODO Auto-generated method stub
-			Log.d(TAG, "getMessages");
-			try {
-				mosaicService.getMessages(LocationService.this, latitude, longitude).execute();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public void getNickname() throws RemoteException {
-			Log.d(TAG, "getNickname");
-			// TODO Auto-generated method stub
-			if ((mosaicService != null) && (mosaicService.user != null))
-				iMain.setNickname(mosaicService.user.getNickname());
+			if (mainBinder != null) {
+				iMain = IMain.Stub.asInterface(mainBinder);
+				if ((mosaicService != null) && (mosaicService.user != null))
+					iMain.setNickname(mosaicService.user.getNickname());
+			} else
+				iMain = null;
 		}
 
 		@Override

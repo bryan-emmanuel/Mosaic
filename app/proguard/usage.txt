@@ -822,8 +822,6 @@ com.google.android.gms.internal.al$a:
     public al$a()
 com.google.android.gms.internal.am$a:
     public am$a()
-com.google.android.gms.internal.an$a:
-    public an$a()
 com.google.android.gms.internal.ap:
     private ap()
 com.google.android.gms.internal.aq
@@ -909,7 +907,6 @@ com.google.android.gms.maps.GoogleMap:
     public static final int MAP_TYPE_SATELLITE
     public static final int MAP_TYPE_TERRAIN
     public static final int MAP_TYPE_HYBRID
-    private com.google.android.gms.maps.UiSettings cF
     public final com.google.android.gms.maps.model.CameraPosition getCameraPosition()
     public final float getMaxZoomLevel()
     public final float getMinZoomLevel()
@@ -930,11 +927,9 @@ com.google.android.gms.maps.GoogleMap:
     public final boolean isMyLocationEnabled()
     public final android.location.Location getMyLocation()
     public final void setLocationSource(com.google.android.gms.maps.LocationSource)
-    public final com.google.android.gms.maps.UiSettings getUiSettings()
     public final com.google.android.gms.maps.Projection getProjection()
     public final void setOnCameraChangeListener(com.google.android.gms.maps.GoogleMap$OnCameraChangeListener)
     public final void setOnMapClickListener(com.google.android.gms.maps.GoogleMap$OnMapClickListener)
-    public final void setOnMarkerClickListener(com.google.android.gms.maps.GoogleMap$OnMarkerClickListener)
     public final void setOnMarkerDragListener(com.google.android.gms.maps.GoogleMap$OnMarkerDragListener)
     public final void setOnInfoWindowClickListener(com.google.android.gms.maps.GoogleMap$OnInfoWindowClickListener)
     public final void setInfoWindowAdapter(com.google.android.gms.maps.GoogleMap$InfoWindowAdapter)
@@ -942,7 +937,6 @@ com.google.android.gms.maps.GoogleMap$1
 com.google.android.gms.maps.GoogleMap$2
 com.google.android.gms.maps.GoogleMap$2$1
 com.google.android.gms.maps.GoogleMap$3
-com.google.android.gms.maps.GoogleMap$4
 com.google.android.gms.maps.GoogleMap$6
 com.google.android.gms.maps.GoogleMap$7
 com.google.android.gms.maps.GoogleMap$8
@@ -951,7 +945,6 @@ com.google.android.gms.maps.GoogleMap$InfoWindowAdapter
 com.google.android.gms.maps.GoogleMap$OnCameraChangeListener
 com.google.android.gms.maps.GoogleMap$OnInfoWindowClickListener
 com.google.android.gms.maps.GoogleMap$OnMapClickListener
-com.google.android.gms.maps.GoogleMap$OnMarkerClickListener
 com.google.android.gms.maps.GoogleMap$OnMarkerDragListener
 com.google.android.gms.maps.GoogleMap$a
 com.google.android.gms.maps.GoogleMapOptions:
@@ -980,7 +973,18 @@ com.google.android.gms.maps.SupportMapFragment:
     public static com.google.android.gms.maps.SupportMapFragment newInstance()
     public static com.google.android.gms.maps.SupportMapFragment newInstance(com.google.android.gms.maps.GoogleMapOptions)
     public void setArguments(android.os.Bundle)
-com.google.android.gms.maps.UiSettings
+com.google.android.gms.maps.UiSettings:
+    public void setCompassEnabled(boolean)
+    public void setTiltGesturesEnabled(boolean)
+    public void setRotateGesturesEnabled(boolean)
+    public void setAllGesturesEnabled(boolean)
+    public boolean isZoomControlsEnabled()
+    public boolean isCompassEnabled()
+    public boolean isMyLocationButtonEnabled()
+    public boolean isScrollGesturesEnabled()
+    public boolean isZoomGesturesEnabled()
+    public boolean isTiltGesturesEnabled()
+    public boolean isRotateGesturesEnabled()
 com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate$a:
     public ICameraUpdateFactoryDelegate$a()
 com.google.android.gms.maps.internal.IGoogleMapDelegate$a:
@@ -1055,7 +1059,6 @@ com.google.android.gms.maps.model.LatLngCreator:
     public static final int CONTENT_DESCRIPTION
 com.google.android.gms.maps.model.Marker:
     public void remove()
-    public java.lang.String getId()
     public void setPosition(com.google.android.gms.maps.model.LatLng)
     public com.google.android.gms.maps.model.LatLng getPosition()
     public void setTitle(java.lang.String)
@@ -3467,11 +3470,9 @@ com.piusvelte.mosaic.android.CloudEndpointUtils$2
 com.piusvelte.mosaic.android.ILocationService$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCallback
-    static final int TRANSACTION_getNickname
-    static final int TRANSACTION_getMessages
     static final int TRANSACTION_changeNickname
 com.piusvelte.mosaic.android.ILocationService$Stub$Proxy:
-    93:93:public java.lang.String getInterfaceDescriptor()
+    79:79:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.IMain$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCoordinates
@@ -3491,7 +3492,7 @@ com.piusvelte.mosaic.android.Main:
     public static final java.lang.String EXTRA_LONGITUDE
     public static final java.lang.String EXTRA_RANGE
     private static final int REQUEST_EDIT_MESSAGE
-    243:243:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
+    private static final int INVALID_MESSAGE
 com.piusvelte.mosaic.android.Manifest
 com.piusvelte.mosaic.android.Manifest$permission
 com.piusvelte.mosaic.android.Message

@@ -19,12 +19,15 @@
  */
 package com.piusvelte.mosaic.android;
 
+import java.util.ArrayList;
+
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,6 +60,9 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	public static final String EXTRA_LONGITUDE = "com.piusvelte.mosaic.android.EXTRA_LONGITUDE";
 	public static final String EXTRA_RANGE = "com.piusvelte.mosaic.android.EXTRA_RANGE";
 	private static final int REQUEST_EDIT_MESSAGE = 0;
+	private ArrayList<String> markerIds = new ArrayList<String>();
+	private static final int INVALID_MESSAGE = -1;
+	private int markerIndex = INVALID_MESSAGE;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +120,14 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		if (map == null)
 			map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
 			.getMap();
-		if (map != null)
-			map.setMyLocationEnabled(true);
+		map.setMyLocationEnabled(true);
 		map.setOnMapLongClickListener(this);
-		//map.setOnMarkerClickListener(this);
+		UiSettings uiSettings = map.getUiSettings();
+		uiSettings.setMyLocationButtonEnabled(false);
+		uiSettings.setScrollGesturesEnabled(false);
+		uiSettings.setZoomControlsEnabled(false);
+		uiSettings.setZoomGesturesEnabled(false);
+		map.setOnMarkerClickListener(this);
 		bindService(new Intent(this, LocationService.class), this, BIND_AUTO_CREATE);
 	}
 
@@ -145,9 +155,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			if (latitude != Integer.MAX_VALUE) {
 				Log.d(TAG, "animate camera");
 				if (map != null)
-					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16F));
-				Log.d(TAG, "getMessages");
-				iLocationService.getMessages();
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 20F));
 			} else {
 				new AlertDialog.Builder(Main.this)
 				.setTitle("GPS Settings")
@@ -175,9 +183,10 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void setNickname(String nickname) throws RemoteException {
 			Log.d(TAG, "setNickname: " + nickname);
-			if (nickname != null)
+			if (nickname != null) {
+				btnNickname.setEnabled(true);
 				btnNickname.setText(nickname);
-			else {
+			} else {
 				new AlertDialog.Builder(Main.this)
 				.setTitle("Sign in")
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -203,18 +212,15 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void clearMessages() throws RemoteException {
 			// TODO Auto-generated method stub
-			if (map != null)
-				map.clear();
+			map.clear();
+			markerIds.clear();
 		}
 
 		@Override
 		public void addMessage(double latitude, double longitude, String title, String body)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			if (map != null) {
-				//TODO need to get the marker
-				map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title).snippet(body));
-			}
+			markerIds.add(map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title).snippet(body)).getId());
 		}
 	};
 
@@ -224,7 +230,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		iLocationService = ILocationService.Stub.asInterface(service);
 		try {
 			iLocationService.setCallback(iMain);
-			iLocationService.getNickname();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -240,6 +245,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
+		markerIndex = markerIds.indexOf(marker.getId());
 		return false;
 	}
 
