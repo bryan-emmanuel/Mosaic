@@ -133,6 +133,8 @@ public class MosaicService {
 				try {
 					user = endpoint.insertMosaicUser(new MosaicUser()).execute();
 				} catch (IOException e2) {
+					user = new MosaicUser();
+					user.setNickname(null);
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
@@ -142,10 +144,7 @@ public class MosaicService {
 		
 		@Override
 		protected void onPostExecute(Void result) {
-			if (user != null)
-				callback.setNickname(user.getNickname());
-			else
-				callback.setNickname(null);
+			callback.setNickname(user.getNickname());
 		}
 	}
 

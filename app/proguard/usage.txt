@@ -3467,12 +3467,11 @@ com.piusvelte.mosaic.android.CloudEndpointUtils$2
 com.piusvelte.mosaic.android.ILocationService$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCallback
-    static final int TRANSACTION_getCoordinates
     static final int TRANSACTION_getNickname
     static final int TRANSACTION_getMessages
     static final int TRANSACTION_changeNickname
 com.piusvelte.mosaic.android.ILocationService$Stub$Proxy:
-    100:100:public java.lang.String getInterfaceDescriptor()
+    93:93:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.IMain$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCoordinates
@@ -3492,7 +3491,7 @@ com.piusvelte.mosaic.android.Main:
     public static final java.lang.String EXTRA_LONGITUDE
     public static final java.lang.String EXTRA_RANGE
     private static final int REQUEST_EDIT_MESSAGE
-    244:244:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
+    243:243:public boolean onMarkerClick(com.google.android.gms.maps.model.Marker)
 com.piusvelte.mosaic.android.Manifest
 com.piusvelte.mosaic.android.Manifest$permission
 com.piusvelte.mosaic.android.Message

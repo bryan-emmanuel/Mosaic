@@ -34,7 +34,6 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -175,10 +174,10 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void setNickname(String nickname) throws RemoteException {
-			if (nickname != null) {
-				iLocationService.getCoordinates();
+			Log.d(TAG, "setNickname: " + nickname);
+			if (nickname != null)
 				btnNickname.setText(nickname);
-			} else {
+			else {
 				new AlertDialog.Builder(Main.this)
 				.setTitle("Sign in")
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -249,7 +248,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		// TODO Auto-generated method stub
 		startActivityForResult(new Intent(this, MessageEditor.class)
 		.putExtra(EXTRA_LATITUDE, (int) (point.latitude * 1E6))
-		.putExtra(EXTRA_LONGITUDE, (int)(point.longitude * 1E6)), REQUEST_EDIT_MESSAGE);
+		.putExtra(EXTRA_LONGITUDE, (int) (point.longitude * 1E6)), REQUEST_EDIT_MESSAGE);
 	}
 
 	@Override

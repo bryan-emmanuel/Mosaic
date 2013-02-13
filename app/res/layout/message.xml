@@ -27,23 +27,41 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:singleLine="true"
-        android:hint="@string/title" />
+        android:hint="@string/title"
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/save"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:layout_alignParentBottom="true" />
-    
+        android:layout_alignParentBottom="true"
+        android:text="@string/save" />
+
+    <TextView
+        android:id="@+id/lbl_range"
+        android:text="@string/range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/save"
+        android:layout_alignParentLeft="true" />
+
+    <SeekBar
+        android:id="@+id/range"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0"
+        android:layout_toRightOf="@id/lbl_range"
+        android:layout_above="@id/save"
+        android:layout_alignParentRight="true" />
+
     <EditText
         android:id="@+id/body"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:hint="@string/message"
-        android:layout_below="@id/title"
         android:layout_above="@id/save"
-        android:gravity="top" />
+        android:layout_below="@id/title"
+        android:gravity="top"
+        android:hint="@string/message" />
 
 </RelativeLayout>

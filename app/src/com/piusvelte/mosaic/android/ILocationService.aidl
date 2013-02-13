@@ -21,7 +21,6 @@ package com.piusvelte.mosaic.android;
 
 interface ILocationService {
 	void setCallback(in IBinder mainBinder);
-	void getCoordinates();
 	void getNickname();
 	void getMessages();
 	void changeNickname(String nickname);

@@ -40,7 +40,7 @@ public class LocationService extends Service implements LocationListener {
 
 	private static final String TAG = "LocationService";
 	private MosaicService mosaicService = null;
-	private LocationManager locationManager;
+	private LocationManager locationManager = null;
 	protected int latitude = Integer.MAX_VALUE;
 	protected int longitude = Integer.MAX_VALUE;
 	protected List<MosaicMessage> messages = new ArrayList<MosaicMessage>();
@@ -57,12 +57,17 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		for (String provider : providers) {
-			if (locationManager.isProviderEnabled(provider))
-				initLocationUpdates(provider);
-		}
 		loadMosaicService();
+	}
+	
+	private void initLocationManager() {
+		if (locationManager == null) {
+			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			for (String provider : providers) {
+				if (locationManager.isProviderEnabled(provider))
+					initLocationUpdates(provider);
+			}
+		}
 	}
 
 	private void loadMosaicService() {
@@ -70,6 +75,7 @@ public class LocationService extends Service implements LocationListener {
 		if (mosaicService == null) {
 			SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 			if (sharedPreferences.contains(getString(R.string.preference_account_name))) {
+				Log.d(TAG, "has account name");
 				try {
 					mosaicService = MosaicService.getInstance(this, getString(R.string.client_id), sharedPreferences.getString(getString(R.string.preference_account_name), null));
 				} catch (Exception e) {
@@ -90,7 +96,8 @@ public class LocationService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		locationManager.removeUpdates(this);
+		if (locationManager != null)
+			locationManager.removeUpdates(this);
 	}
 
 	private void start(Intent intent) {
@@ -107,7 +114,6 @@ public class LocationService extends Service implements LocationListener {
 	}
 
 	private void setCoordinates(Location location) {
-		Log.d(TAG, "setCoordinates");
 		if (location != null) {
 			latitude = (int) (location.getLatitude() * 1E6);
 			longitude = (int) (location.getLongitude() * 1E6);
@@ -139,6 +145,8 @@ public class LocationService extends Service implements LocationListener {
 	}
 
 	protected void setNickname(String nickname) {
+		Log.d(TAG, "setNickname: " + nickname);
+		initLocationManager();
 		if (iMain != null) {
 			try {
 				iMain.setNickname(nickname);
@@ -152,12 +160,6 @@ public class LocationService extends Service implements LocationListener {
 	private IMain iMain;
 
 	private ILocationService.Stub iLocationService = new ILocationService.Stub() {
-
-		@Override
-		public void getCoordinates() throws RemoteException {
-			// TODO Auto-generated method stub
-			iMain.setCoordinates(latitude, longitude);
-		}
 
 		@Override
 		public void setCallback(IBinder mainBinder)
@@ -180,11 +182,10 @@ public class LocationService extends Service implements LocationListener {
 
 		@Override
 		public void getNickname() throws RemoteException {
+			Log.d(TAG, "getNickname");
 			// TODO Auto-generated method stub
 			if ((mosaicService != null) && (mosaicService.user != null))
 				iMain.setNickname(mosaicService.user.getNickname());
-			else
-				loadMosaicService();
 		}
 
 		@Override

@@ -9,5 +9,6 @@
     <string name="save">Save</string>
     <string name="title">Title</string>
     <string name="message">Message</string>
+    <string name="range">Range</string>
 
 </resources>

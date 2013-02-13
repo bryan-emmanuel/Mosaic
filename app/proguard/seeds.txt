@@ -376,6 +376,8 @@ com.piusvelte.mosaic.android.Main
 com.piusvelte.mosaic.android.Main: Main()
 com.piusvelte.mosaic.android.Message$Properties: com.piusvelte.mosaic.android.Message$Properties[] values()
 com.piusvelte.mosaic.android.Message$Properties: com.piusvelte.mosaic.android.Message$Properties valueOf(java.lang.String)
+com.piusvelte.mosaic.android.MessageEditor
+com.piusvelte.mosaic.android.MessageEditor: MessageEditor()
 com.piusvelte.mosaic.android.R$attr: int cameraBearing
 com.piusvelte.mosaic.android.R$attr: int cameraTargetLat
 com.piusvelte.mosaic.android.R$attr: int cameraTargetLng
@@ -392,11 +394,13 @@ com.piusvelte.mosaic.android.R$attr: int useViewLifecycle
 com.piusvelte.mosaic.android.R$attr: int zOrderOnTop
 com.piusvelte.mosaic.android.R$drawable: int ic_launcher
 com.piusvelte.mosaic.android.R$id: int body
+com.piusvelte.mosaic.android.R$id: int lbl_range
 com.piusvelte.mosaic.android.R$id: int map
 com.piusvelte.mosaic.android.R$id: int menu_settings
 com.piusvelte.mosaic.android.R$id: int nickname
 com.piusvelte.mosaic.android.R$id: int none
 com.piusvelte.mosaic.android.R$id: int normal
+com.piusvelte.mosaic.android.R$id: int range
 com.piusvelte.mosaic.android.R$id: int satellite
 com.piusvelte.mosaic.android.R$id: int save
 com.piusvelte.mosaic.android.R$id: int terrain
@@ -423,6 +427,7 @@ com.piusvelte.mosaic.android.R$string: int menu_settings
 com.piusvelte.mosaic.android.R$string: int message
 com.piusvelte.mosaic.android.R$string: int no_accounts
 com.piusvelte.mosaic.android.R$string: int preference_account_name
+com.piusvelte.mosaic.android.R$string: int range
 com.piusvelte.mosaic.android.R$string: int save
 com.piusvelte.mosaic.android.R$string: int title
 com.piusvelte.mosaic.android.R$style: int AppBaseTheme
