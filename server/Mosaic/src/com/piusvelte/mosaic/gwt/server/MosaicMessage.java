@@ -19,9 +19,13 @@
  */
 package com.piusvelte.mosaic.gwt.server;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class MosaicMessage {
@@ -42,7 +46,14 @@ public class MosaicMessage {
 	private int visits;
 	private int reports;
 	private boolean flagged;
+	// select from MosaicMessage as MosaicMessage where :visitor in visitors
+	private List<String> visitors;
+	private String mosaicUserId;
 	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="mosaicUserId",referencedColumnName="id")
+	private MosaicUser mosaicUser;
+
 	public MosaicMessage() {
 	}
 
@@ -164,6 +175,30 @@ public class MosaicMessage {
 
 	public void setFlagged(boolean flagged) {
 		this.flagged = flagged;
+	}
+
+	public MosaicUser getMosaicUser() {
+		return mosaicUser;
+	}
+
+	public void setMosaicUser(MosaicUser mosaicUser) {
+		this.mosaicUser = mosaicUser;
+	}
+
+	public String getMosaicUserId() {
+		return mosaicUserId;
+	}
+
+	public void setMosaicUserId(String mosaicUserId) {
+		this.mosaicUserId = mosaicUserId;
+	}
+
+	public List<String> getVisitors() {
+		return visitors;
+	}
+
+	public void setVisitors(List<String> visitors) {
+		this.visitors = visitors;
 	}
 	
 }

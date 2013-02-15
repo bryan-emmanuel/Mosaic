@@ -150,6 +150,12 @@
           "minlongitude" : {
             "type" : "integer"
           },
+          "mosaicUser" : {
+            "$ref" : "MosaicUser"
+          },
+          "mosaicUserId" : {
+            "type" : "string"
+          },
           "radius" : {
             "type" : "integer"
           },
@@ -159,8 +165,32 @@
           "title" : {
             "type" : "string"
           },
+          "visitors" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
           "visits" : {
             "type" : "integer"
+          }
+        }
+      },
+      "MosaicUser" : {
+        "id" : "MosaicUser",
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "nickname" : {
+            "type" : "string"
+          },
+          "userid" : {
+            "type" : "string"
           }
         }
       },

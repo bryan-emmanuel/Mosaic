@@ -40,97 +40,115 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private String body;
+  private java.lang.String body;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key @JsonString
-  private Long created;
+  private java.lang.Long created;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key @JsonString
-  private Long expiry;
+  private java.lang.Long expiry;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Boolean flagged;
+  private java.lang.Boolean flagged;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private String id;
+  private java.lang.String id;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer latitude;
+  private java.lang.Integer latitude;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer longitude;
+  private java.lang.Integer longitude;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer maxlatitude;
+  private java.lang.Integer maxlatitude;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer maxlongitude;
+  private java.lang.Integer maxlongitude;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer minlatitude;
+  private java.lang.Integer minlatitude;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer minlongitude;
+  private java.lang.Integer minlongitude;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer radius;
+  private MosaicUser mosaicUser;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer reports;
+  private java.lang.String mosaicUserId;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private String title;
+  private java.lang.Integer radius;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer visits;
+  private java.lang.Integer reports;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.String title;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.util.List<java.lang.String> visitors;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.Integer visits;
 
   /**
 
    * The value returned may be {@code null}.
    */
-  public String getBody() {
+  public java.lang.String getBody() {
     return body;
   }
 
@@ -138,7 +156,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setBody(String body) {
+  public MosaicMessage setBody(java.lang.String body) {
     this.body = body;
     return this;
   }
@@ -147,7 +165,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Long getCreated() {
+  public java.lang.Long getCreated() {
     return created;
   }
 
@@ -155,7 +173,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setCreated(Long created) {
+  public MosaicMessage setCreated(java.lang.Long created) {
     this.created = created;
     return this;
   }
@@ -164,7 +182,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Long getExpiry() {
+  public java.lang.Long getExpiry() {
     return expiry;
   }
 
@@ -172,7 +190,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setExpiry(Long expiry) {
+  public MosaicMessage setExpiry(java.lang.Long expiry) {
     this.expiry = expiry;
     return this;
   }
@@ -181,7 +199,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Boolean getFlagged() {
+  public java.lang.Boolean getFlagged() {
     return flagged;
   }
 
@@ -189,7 +207,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setFlagged(Boolean flagged) {
+  public MosaicMessage setFlagged(java.lang.Boolean flagged) {
     this.flagged = flagged;
     return this;
   }
@@ -198,7 +216,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public String getId() {
+  public java.lang.String getId() {
     return id;
   }
 
@@ -206,7 +224,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setId(String id) {
+  public MosaicMessage setId(java.lang.String id) {
     this.id = id;
     return this;
   }
@@ -215,7 +233,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getLatitude() {
+  public java.lang.Integer getLatitude() {
     return latitude;
   }
 
@@ -223,7 +241,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setLatitude(Integer latitude) {
+  public MosaicMessage setLatitude(java.lang.Integer latitude) {
     this.latitude = latitude;
     return this;
   }
@@ -232,7 +250,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getLongitude() {
+  public java.lang.Integer getLongitude() {
     return longitude;
   }
 
@@ -240,7 +258,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setLongitude(Integer longitude) {
+  public MosaicMessage setLongitude(java.lang.Integer longitude) {
     this.longitude = longitude;
     return this;
   }
@@ -249,7 +267,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getMaxlatitude() {
+  public java.lang.Integer getMaxlatitude() {
     return maxlatitude;
   }
 
@@ -257,7 +275,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setMaxlatitude(Integer maxlatitude) {
+  public MosaicMessage setMaxlatitude(java.lang.Integer maxlatitude) {
     this.maxlatitude = maxlatitude;
     return this;
   }
@@ -266,7 +284,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getMaxlongitude() {
+  public java.lang.Integer getMaxlongitude() {
     return maxlongitude;
   }
 
@@ -274,7 +292,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setMaxlongitude(Integer maxlongitude) {
+  public MosaicMessage setMaxlongitude(java.lang.Integer maxlongitude) {
     this.maxlongitude = maxlongitude;
     return this;
   }
@@ -283,7 +301,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getMinlatitude() {
+  public java.lang.Integer getMinlatitude() {
     return minlatitude;
   }
 
@@ -291,7 +309,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setMinlatitude(Integer minlatitude) {
+  public MosaicMessage setMinlatitude(java.lang.Integer minlatitude) {
     this.minlatitude = minlatitude;
     return this;
   }
@@ -300,7 +318,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getMinlongitude() {
+  public java.lang.Integer getMinlongitude() {
     return minlongitude;
   }
 
@@ -308,7 +326,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setMinlongitude(Integer minlongitude) {
+  public MosaicMessage setMinlongitude(java.lang.Integer minlongitude) {
     this.minlongitude = minlongitude;
     return this;
   }
@@ -317,7 +335,41 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getRadius() {
+  public MosaicUser getMosaicUser() {
+    return mosaicUser;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicMessage setMosaicUser(MosaicUser mosaicUser) {
+    this.mosaicUser = mosaicUser;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public java.lang.String getMosaicUserId() {
+    return mosaicUserId;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicMessage setMosaicUserId(java.lang.String mosaicUserId) {
+    this.mosaicUserId = mosaicUserId;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public java.lang.Integer getRadius() {
     return radius;
   }
 
@@ -325,7 +377,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setRadius(Integer radius) {
+  public MosaicMessage setRadius(java.lang.Integer radius) {
     this.radius = radius;
     return this;
   }
@@ -334,7 +386,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getReports() {
+  public java.lang.Integer getReports() {
     return reports;
   }
 
@@ -342,7 +394,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setReports(Integer reports) {
+  public MosaicMessage setReports(java.lang.Integer reports) {
     this.reports = reports;
     return this;
   }
@@ -351,7 +403,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public String getTitle() {
+  public java.lang.String getTitle() {
     return title;
   }
 
@@ -359,7 +411,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setTitle(String title) {
+  public MosaicMessage setTitle(java.lang.String title) {
     this.title = title;
     return this;
   }
@@ -368,7 +420,24 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getVisits() {
+  public java.util.List<java.lang.String> getVisitors() {
+    return visitors;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicMessage setVisitors(java.util.List<java.lang.String> visitors) {
+    this.visitors = visitors;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public java.lang.Integer getVisits() {
     return visits;
   }
 
@@ -376,7 +445,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setVisits(Integer visits) {
+  public MosaicMessage setVisits(java.lang.Integer visits) {
     this.visits = visits;
     return this;
   }

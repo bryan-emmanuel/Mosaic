@@ -151,9 +151,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void setCoordinates(double latitude, double longitude)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			Log.d(TAG, "setCoordinates: " + latitude + ", " + longitude);
 			if (latitude != Integer.MAX_VALUE) {
-				Log.d(TAG, "animate camera");
 				if (map != null)
 					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 20F));
 			} else {
@@ -182,7 +180,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void setNickname(String nickname) throws RemoteException {
-			Log.d(TAG, "setNickname: " + nickname);
 			if (nickname != null) {
 				btnNickname.setEnabled(true);
 				btnNickname.setText(nickname);

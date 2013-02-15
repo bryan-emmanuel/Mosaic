@@ -11,8 +11,8 @@
  */
 /*
  * This file was generated.
- *  with google-apis-code-generator 1.2.0 (build: 2013-02-04 18:45:58 UTC)
- *  on 2013-02-12 at 20:15:32 UTC 
+ *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
+ *  on 2013-02-15 at 02:52:17 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicuserendpoint;
@@ -154,7 +154,7 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
    * @param id
    * @return the request
    */
-  public GetMosaicUser getMosaicUser(String id) throws java.io.IOException {
+  public GetMosaicUser getMosaicUser(java.lang.String id) throws java.io.IOException {
     GetMosaicUser result = new GetMosaicUser(id);
     initialize(result);
     return result;
@@ -175,7 +175,7 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
      * @param id
      * @since 1.13
      */
-    protected GetMosaicUser(String id) {
+    protected GetMosaicUser(java.lang.String id) {
       super(Mosaicuserendpoint.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser.class);
       this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
     }
@@ -191,51 +191,51 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public GetMosaicUser setAlt(String alt) {
+    public GetMosaicUser setAlt(java.lang.String alt) {
       return (GetMosaicUser) super.setAlt(alt);
     }
 
     @Override
-    public GetMosaicUser setFields(String fields) {
+    public GetMosaicUser setFields(java.lang.String fields) {
       return (GetMosaicUser) super.setFields(fields);
     }
 
     @Override
-    public GetMosaicUser setKey(String key) {
+    public GetMosaicUser setKey(java.lang.String key) {
       return (GetMosaicUser) super.setKey(key);
     }
 
     @Override
-    public GetMosaicUser setOauthToken(String oauthToken) {
+    public GetMosaicUser setOauthToken(java.lang.String oauthToken) {
       return (GetMosaicUser) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public GetMosaicUser setPrettyPrint(Boolean prettyPrint) {
+    public GetMosaicUser setPrettyPrint(java.lang.Boolean prettyPrint) {
       return (GetMosaicUser) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public GetMosaicUser setQuotaUser(String quotaUser) {
+    public GetMosaicUser setQuotaUser(java.lang.String quotaUser) {
       return (GetMosaicUser) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public GetMosaicUser setUserIp(String userIp) {
+    public GetMosaicUser setUserIp(java.lang.String userIp) {
       return (GetMosaicUser) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private String id;
+    private java.lang.String id;
 
     /**
 
      */
-    public String getId() {
+    public java.lang.String getId() {
       return id;
     }
 
-    public GetMosaicUser setId(String id) {
+    public GetMosaicUser setId(java.lang.String id) {
       this.id = id;
       return this;
     }
@@ -278,37 +278,37 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public InsertMosaicUser setAlt(String alt) {
+    public InsertMosaicUser setAlt(java.lang.String alt) {
       return (InsertMosaicUser) super.setAlt(alt);
     }
 
     @Override
-    public InsertMosaicUser setFields(String fields) {
+    public InsertMosaicUser setFields(java.lang.String fields) {
       return (InsertMosaicUser) super.setFields(fields);
     }
 
     @Override
-    public InsertMosaicUser setKey(String key) {
+    public InsertMosaicUser setKey(java.lang.String key) {
       return (InsertMosaicUser) super.setKey(key);
     }
 
     @Override
-    public InsertMosaicUser setOauthToken(String oauthToken) {
+    public InsertMosaicUser setOauthToken(java.lang.String oauthToken) {
       return (InsertMosaicUser) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public InsertMosaicUser setPrettyPrint(Boolean prettyPrint) {
+    public InsertMosaicUser setPrettyPrint(java.lang.Boolean prettyPrint) {
       return (InsertMosaicUser) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public InsertMosaicUser setQuotaUser(String quotaUser) {
+    public InsertMosaicUser setQuotaUser(java.lang.String quotaUser) {
       return (InsertMosaicUser) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public InsertMosaicUser setUserIp(String userIp) {
+    public InsertMosaicUser setUserIp(java.lang.String userIp) {
       return (InsertMosaicUser) super.setUserIp(userIp);
     }
 
@@ -358,37 +358,37 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public ListMosaicUser setAlt(String alt) {
+    public ListMosaicUser setAlt(java.lang.String alt) {
       return (ListMosaicUser) super.setAlt(alt);
     }
 
     @Override
-    public ListMosaicUser setFields(String fields) {
+    public ListMosaicUser setFields(java.lang.String fields) {
       return (ListMosaicUser) super.setFields(fields);
     }
 
     @Override
-    public ListMosaicUser setKey(String key) {
+    public ListMosaicUser setKey(java.lang.String key) {
       return (ListMosaicUser) super.setKey(key);
     }
 
     @Override
-    public ListMosaicUser setOauthToken(String oauthToken) {
+    public ListMosaicUser setOauthToken(java.lang.String oauthToken) {
       return (ListMosaicUser) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public ListMosaicUser setPrettyPrint(Boolean prettyPrint) {
+    public ListMosaicUser setPrettyPrint(java.lang.Boolean prettyPrint) {
       return (ListMosaicUser) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public ListMosaicUser setQuotaUser(String quotaUser) {
+    public ListMosaicUser setQuotaUser(java.lang.String quotaUser) {
       return (ListMosaicUser) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public ListMosaicUser setUserIp(String userIp) {
+    public ListMosaicUser setUserIp(java.lang.String userIp) {
       return (ListMosaicUser) super.setUserIp(userIp);
     }
 
@@ -404,7 +404,7 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
    * @param id
    * @return the request
    */
-  public RemoveMosaicUser removeMosaicUser(String id) throws java.io.IOException {
+  public RemoveMosaicUser removeMosaicUser(java.lang.String id) throws java.io.IOException {
     RemoveMosaicUser result = new RemoveMosaicUser(id);
     initialize(result);
     return result;
@@ -425,57 +425,57 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
      * @param id
      * @since 1.13
      */
-    protected RemoveMosaicUser(String id) {
+    protected RemoveMosaicUser(java.lang.String id) {
       super(Mosaicuserendpoint.this, "DELETE", REST_PATH, null, com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser.class);
       this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
     }
 
     @Override
-    public RemoveMosaicUser setAlt(String alt) {
+    public RemoveMosaicUser setAlt(java.lang.String alt) {
       return (RemoveMosaicUser) super.setAlt(alt);
     }
 
     @Override
-    public RemoveMosaicUser setFields(String fields) {
+    public RemoveMosaicUser setFields(java.lang.String fields) {
       return (RemoveMosaicUser) super.setFields(fields);
     }
 
     @Override
-    public RemoveMosaicUser setKey(String key) {
+    public RemoveMosaicUser setKey(java.lang.String key) {
       return (RemoveMosaicUser) super.setKey(key);
     }
 
     @Override
-    public RemoveMosaicUser setOauthToken(String oauthToken) {
+    public RemoveMosaicUser setOauthToken(java.lang.String oauthToken) {
       return (RemoveMosaicUser) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public RemoveMosaicUser setPrettyPrint(Boolean prettyPrint) {
+    public RemoveMosaicUser setPrettyPrint(java.lang.Boolean prettyPrint) {
       return (RemoveMosaicUser) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public RemoveMosaicUser setQuotaUser(String quotaUser) {
+    public RemoveMosaicUser setQuotaUser(java.lang.String quotaUser) {
       return (RemoveMosaicUser) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public RemoveMosaicUser setUserIp(String userIp) {
+    public RemoveMosaicUser setUserIp(java.lang.String userIp) {
       return (RemoveMosaicUser) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private String id;
+    private java.lang.String id;
 
     /**
 
      */
-    public String getId() {
+    public java.lang.String getId() {
       return id;
     }
 
-    public RemoveMosaicUser setId(String id) {
+    public RemoveMosaicUser setId(java.lang.String id) {
       this.id = id;
       return this;
     }
@@ -518,37 +518,37 @@ public class Mosaicuserendpoint extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public UpdateMosaicUser setAlt(String alt) {
+    public UpdateMosaicUser setAlt(java.lang.String alt) {
       return (UpdateMosaicUser) super.setAlt(alt);
     }
 
     @Override
-    public UpdateMosaicUser setFields(String fields) {
+    public UpdateMosaicUser setFields(java.lang.String fields) {
       return (UpdateMosaicUser) super.setFields(fields);
     }
 
     @Override
-    public UpdateMosaicUser setKey(String key) {
+    public UpdateMosaicUser setKey(java.lang.String key) {
       return (UpdateMosaicUser) super.setKey(key);
     }
 
     @Override
-    public UpdateMosaicUser setOauthToken(String oauthToken) {
+    public UpdateMosaicUser setOauthToken(java.lang.String oauthToken) {
       return (UpdateMosaicUser) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public UpdateMosaicUser setPrettyPrint(Boolean prettyPrint) {
+    public UpdateMosaicUser setPrettyPrint(java.lang.Boolean prettyPrint) {
       return (UpdateMosaicUser) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public UpdateMosaicUser setQuotaUser(String quotaUser) {
+    public UpdateMosaicUser setQuotaUser(java.lang.String quotaUser) {
       return (UpdateMosaicUser) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public UpdateMosaicUser setUserIp(String userIp) {
+    public UpdateMosaicUser setUserIp(java.lang.String userIp) {
       return (UpdateMosaicUser) super.setUserIp(userIp);
     }
 

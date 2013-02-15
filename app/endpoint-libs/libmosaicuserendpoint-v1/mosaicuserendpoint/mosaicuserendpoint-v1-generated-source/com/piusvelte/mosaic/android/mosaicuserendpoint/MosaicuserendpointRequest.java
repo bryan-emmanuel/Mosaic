@@ -11,8 +11,8 @@
  */
 /*
  * This file was generated.
- *  with google-apis-code-generator 1.2.0 (build: 2013-02-04 18:45:58 UTC)
- *  on 2013-02-12 at 20:15:32 UTC 
+ *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
+ *  on 2013-02-15 at 02:52:17 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicuserendpoint;
@@ -56,34 +56,34 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
 
   /** Data format for the response. */
   @com.google.api.client.util.Key
-  private String alt;
+  private java.lang.String alt;
 
   /**
    * Data format for the response.    [default: json]
    */
-  public String getAlt() {
+  public java.lang.String getAlt() {
     return alt;
   }
 
   /** Data format for the response. */
-  public MosaicuserendpointRequest<T> setAlt(String alt) {
+  public MosaicuserendpointRequest<T> setAlt(java.lang.String alt) {
     this.alt = alt;
     return this;
   }
 
   /** Selector specifying which fields to include in a partial response. */
   @com.google.api.client.util.Key
-  private String fields;
+  private java.lang.String fields;
 
   /**
    * Selector specifying which fields to include in a partial response.
    */
-  public String getFields() {
+  public java.lang.String getFields() {
     return fields;
   }
 
   /** Selector specifying which fields to include in a partial response. */
-  public MosaicuserendpointRequest<T> setFields(String fields) {
+  public MosaicuserendpointRequest<T> setFields(java.lang.String fields) {
     this.fields = fields;
     return this;
   }
@@ -93,13 +93,13 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
  * reports. Required unless you provide an OAuth 2.0 token.
  */
   @com.google.api.client.util.Key
-  private String key;
+  private java.lang.String key;
 
   /**
    * API key. Your API key identifies your project and provides you with API access, quota, and
    * reports. Required unless you provide an OAuth 2.0 token.
    */
-  public String getKey() {
+  public java.lang.String getKey() {
     return key;
   }
 
@@ -107,41 +107,41 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
  * API key. Your API key identifies your project and provides you with API access, quota, and
  * reports. Required unless you provide an OAuth 2.0 token.
  */
-  public MosaicuserendpointRequest<T> setKey(String key) {
+  public MosaicuserendpointRequest<T> setKey(java.lang.String key) {
     this.key = key;
     return this;
   }
 
   /** OAuth 2.0 token for the current user. */
   @com.google.api.client.util.Key("oauth_token")
-  private String oauthToken;
+  private java.lang.String oauthToken;
 
   /**
    * OAuth 2.0 token for the current user.
    */
-  public String getOauthToken() {
+  public java.lang.String getOauthToken() {
     return oauthToken;
   }
 
   /** OAuth 2.0 token for the current user. */
-  public MosaicuserendpointRequest<T> setOauthToken(String oauthToken) {
+  public MosaicuserendpointRequest<T> setOauthToken(java.lang.String oauthToken) {
     this.oauthToken = oauthToken;
     return this;
   }
 
   /** Returns response with indentations and line breaks. */
   @com.google.api.client.util.Key
-  private Boolean prettyPrint;
+  private java.lang.Boolean prettyPrint;
 
   /**
    * Returns response with indentations and line breaks.    [default: true]
    */
-  public Boolean getPrettyPrint() {
+  public java.lang.Boolean getPrettyPrint() {
     return prettyPrint;
   }
 
   /** Returns response with indentations and line breaks. */
-  public MosaicuserendpointRequest<T> setPrettyPrint(Boolean prettyPrint) {
+  public MosaicuserendpointRequest<T> setPrettyPrint(java.lang.Boolean prettyPrint) {
     this.prettyPrint = prettyPrint;
     return this;
   }
@@ -151,13 +151,13 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
  * assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
  */
   @com.google.api.client.util.Key
-  private String quotaUser;
+  private java.lang.String quotaUser;
 
   /**
    * Available to use for quota purposes for server-side applications. Can be any arbitrary string
    * assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
    */
-  public String getQuotaUser() {
+  public java.lang.String getQuotaUser() {
     return quotaUser;
   }
 
@@ -165,7 +165,7 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
  * Available to use for quota purposes for server-side applications. Can be any arbitrary string
  * assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
  */
-  public MosaicuserendpointRequest<T> setQuotaUser(String quotaUser) {
+  public MosaicuserendpointRequest<T> setQuotaUser(java.lang.String quotaUser) {
     this.quotaUser = quotaUser;
     return this;
   }
@@ -175,13 +175,13 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
  * limits.
  */
   @com.google.api.client.util.Key
-  private String userIp;
+  private java.lang.String userIp;
 
   /**
    * IP address of the site where the request originates. Use this if you want to enforce per-user
    * limits.
    */
-  public String getUserIp() {
+  public java.lang.String getUserIp() {
     return userIp;
   }
 
@@ -189,7 +189,7 @@ public abstract class MosaicuserendpointRequest<T> extends AbstractGoogleJsonCli
  * IP address of the site where the request originates. Use this if you want to enforce per-user
  * limits.
  */
-  public MosaicuserendpointRequest<T> setUserIp(String userIp) {
+  public MosaicuserendpointRequest<T> setUserIp(java.lang.String userIp) {
     this.userIp = userIp;
     return this;
   }

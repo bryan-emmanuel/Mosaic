@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/ODRXO7zDJb9MMXUPkC5eKOoYeFY\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/mBeFw7LZrURddq2zOIzIjHJhJUI\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessageendpoint:v1",
  "name": "mosaicmessageendpoint",
@@ -107,6 +107,12 @@
      "type": "integer",
      "format": "int32"
     },
+    "mosaicUser": {
+     "$ref": "MosaicUser"
+    },
+    "mosaicUserId": {
+     "type": "string"
+    },
     "radius": {
      "type": "integer",
      "format": "int32"
@@ -117,6 +123,12 @@
     },
     "title": {
      "type": "string"
+    },
+    "visitors": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     },
     "visits": {
      "type": "integer",
@@ -133,6 +145,24 @@
      "items": {
       "$ref": "MosaicMessage"
      }
+    }
+   }
+  },
+  "MosaicUser": {
+   "id": "MosaicUser",
+   "type": "object",
+   "properties": {
+    "email": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "nickname": {
+     "type": "string"
+    },
+    "userid": {
+     "type": "string"
     }
    }
   }

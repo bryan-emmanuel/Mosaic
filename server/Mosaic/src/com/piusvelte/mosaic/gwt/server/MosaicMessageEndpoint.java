@@ -34,9 +34,9 @@ import javax.persistence.Query;
 
 @Api(name = "mosaicmessageendpoint",
 clientIds = {Ids.WEB_CLIENT_ID,
-Ids.ANDROID_CLIENT_ID},
-audiences = {Ids.ANDROID_AUDIENCE}
-)
+		Ids.ANDROID_CLIENT_ID},
+		audiences = {Ids.ANDROID_AUDIENCE}
+		)
 public class MosaicMessageEndpoint {
 
 	/**
@@ -70,7 +70,6 @@ public class MosaicMessageEndpoint {
 	 *
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
-	 * @throws OAuthRequestException 
 	 */
 	public MosaicMessage getMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
 		if (user != null) {
@@ -92,7 +91,6 @@ public class MosaicMessageEndpoint {
 	 *
 	 * @param mosaicmessage the entity to be inserted.
 	 * @return The inserted entity.
-	 * @throws OAuthRequestException 
 	 */
 	public MosaicMessage insertMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
@@ -113,7 +111,6 @@ public class MosaicMessageEndpoint {
 	 *
 	 * @param mosaicmessage the entity to be updated.
 	 * @return The updated entity.
-	 * @throws OAuthRequestException 
 	 */
 	public MosaicMessage updateMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
@@ -134,7 +131,6 @@ public class MosaicMessageEndpoint {
 	 *
 	 * @param id the primary key of the entity to be deleted.
 	 * @return The deleted entity.
-	 * @throws OAuthRequestException 
 	 */
 	public MosaicMessage removeMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
 		if (user != null) {
