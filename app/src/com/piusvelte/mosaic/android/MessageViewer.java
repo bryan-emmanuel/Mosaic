@@ -19,8 +19,32 @@
  */
 package com.piusvelte.mosaic.android;
 
-interface ILocationService {
-	void setCallback(in IBinder mainBinder);
-	void changeNickname(String nickname);
-	void insertMessage(String title, String body, int latitude, int longitude, int radius, long expiry);
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
+
+public class MessageViewer extends Activity {
+	
+	private Button btnReport;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.messageview);
+		btnReport = (Button) findViewById(R.id.report);
+		btnReport.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				//TODO pack the intent
+				setResult(RESULT_OK);
+				finish();
+			}
+			
+		});
+		setResult(RESULT_CANCELED);
+	}
+
 }

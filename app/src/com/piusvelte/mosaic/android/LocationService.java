@@ -190,6 +190,19 @@ public class LocationService extends Service implements LocationListener {
 				e.printStackTrace();
 			}
 		}
+
+		@Override
+		public void insertMessage(String title, String body, int latitude,
+				int longitude, int radius, long expiry) throws RemoteException {
+			// TODO Auto-generated method stub
+			MosaicMessage message = new MosaicMessage();
+			message.setTitle(title);
+			message.setBody(body);
+			message.setLatitude(latitude);
+			message.setLongitude(longitude);
+			message.setRadius(radius);
+			message.setMosaicUserId(mosaicService.user.getId());
+		}
 	};
 
 	@Override

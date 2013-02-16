@@ -37,29 +37,55 @@
         android:layout_alignParentBottom="true"
         android:text="@string/save" />
 
-    <TextView
-        android:id="@+id/lbl_range"
-        android:text="@string/range"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/save"
-        android:layout_alignParentLeft="true" />
-
-    <SeekBar
-        android:id="@+id/range"
+    <RelativeLayout
+        android:id="@+id/expiry_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="0"
-        android:layout_toRightOf="@id/lbl_range"
-        android:layout_above="@id/save"
-        android:layout_alignParentRight="true" />
+        android:layout_above="@id/save" >
+
+        <CheckBox
+            android:id="@+id/expires"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/expires" />
+
+        <DatePicker
+            android:id="@+id/expiry"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/expires" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/radius_wrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/expiry_wrapper" >
+
+        <TextView
+            android:id="@+id/lbl_radius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/radius" />
+
+        <SeekBar
+            android:id="@+id/radius"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/lbl_radius"
+            android:max="100"
+            android:progress="0" />
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/body"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/save"
+        android:layout_above="@id/radius_wrapper"
         android:layout_below="@id/title"
         android:gravity="top"
         android:hint="@string/message" />

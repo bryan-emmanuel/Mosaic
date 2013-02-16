@@ -19,34 +19,64 @@
  */
 package com.piusvelte.mosaic.android;
 
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.DatePicker;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
-public class MessageEditor extends Activity {
+public class MessageEditor extends Activity implements OnCheckedChangeListener {
 	
 	private Button btnSave;
-	private SeekBar sbRange;
+	private CheckBox expires;
+	private DatePicker expiry;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.message);
+		setContentView(R.layout.messageedit);
+		expires = (CheckBox) findViewById(R.id.expires);
+		expires.setOnCheckedChangeListener(this);
+		expiry = (DatePicker) findViewById(R.id.expiry);
+		expiry.setEnabled(false);
 		btnSave = (Button) findViewById(R.id.save);
 		btnSave.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				//TODO pack the intent
-				setResult(RESULT_OK);
+				Intent i = getIntent();
+				i.putExtra(Main.EXTRA_TITLE, ((TextView) findViewById(R.id.title)).getText().toString());
+				i.putExtra(Main.EXTRA_BODY, ((TextView) findViewById(R.id.body)).getText().toString());
+				i.putExtra(Main.EXTRA_RADIUS, ((SeekBar) findViewById(R.id.radius)).getProgress());
+				if (expires.isChecked()) {
+					Calendar c = Calendar.getInstance();
+					c.set(Calendar.DAY_OF_MONTH, expiry.getDayOfMonth());
+					c.set(Calendar.MONTH, expiry.getMonth());
+					c.set(Calendar.YEAR, expiry.getYear());
+					i.putExtra(Main.EXTRA_EXPIRY, c.getTimeInMillis());
+				} else
+					i.putExtra(Main.EXTRA_EXPIRY, -1L);
+				setResult(RESULT_OK, i);
 				finish();
 			}
 			
 		});
-		sbRange = (SeekBar) findViewById(R.id.range);
 		setResult(RESULT_CANCELED);
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if (isChecked)
+			expiry.setMinDate(System.currentTimeMillis());
+		expiry.setEnabled(isChecked);
 	}
 
 }

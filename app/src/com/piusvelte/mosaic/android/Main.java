@@ -58,8 +58,9 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	public static final String EXTRA_EXPIRY = "com.piusvelte.mosaic.android.EXTRA_EXPIRY";
 	public static final String EXTRA_LATITUDE = "com.piusvelte.mosaic.android.EXTRA_LATITUDE";
 	public static final String EXTRA_LONGITUDE = "com.piusvelte.mosaic.android.EXTRA_LONGITUDE";
-	public static final String EXTRA_RANGE = "com.piusvelte.mosaic.android.EXTRA_RANGE";
+	public static final String EXTRA_RADIUS = "com.piusvelte.mosaic.android.EXTRA_RADIUS";
 	private static final int REQUEST_EDIT_MESSAGE = 0;
+	private static final int REQUEST_VIEW_MESSAGE = 0;
 	private ArrayList<String> markerIds = new ArrayList<String>();
 	private static final int INVALID_MESSAGE = -1;
 	private int markerIndex = INVALID_MESSAGE;
@@ -103,7 +104,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			}
 			
 		});
-//		GCMIntentService.register(getApplicationContext());
 		GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
 	}
 
@@ -243,6 +243,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	public boolean onMarkerClick(Marker marker) {
 		// TODO Auto-generated method stub
 		markerIndex = markerIds.indexOf(marker.getId());
+		
 		return false;
 	}
 
@@ -259,6 +260,8 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		super.onActivityResult(requestCode, resultCode, data);
 		if ((requestCode == REQUEST_EDIT_MESSAGE) && (resultCode == RESULT_OK)) {
 			//TODO save the message
+		} else if ((requestCode == REQUEST_VIEW_MESSAGE) && (resultCode == RESULT_OK)) {
+			//TODO report the message
 		}
 	}
 

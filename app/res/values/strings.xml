@@ -9,6 +9,8 @@
     <string name="save">Save</string>
     <string name="title">Title</string>
     <string name="message">Message</string>
-    <string name="range">Range</string>
+    <string name="radius">Radius</string>
+    <string name="report">Report</string>
+    <string name="expires">Expires</string>
 
 </resources>
