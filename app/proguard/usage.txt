@@ -1058,12 +1058,9 @@ com.google.android.gms.maps.model.LatLngBoundsCreator:
 com.google.android.gms.maps.model.LatLngCreator:
     public static final int CONTENT_DESCRIPTION
 com.google.android.gms.maps.model.Marker:
-    public void remove()
     public void setPosition(com.google.android.gms.maps.model.LatLng)
     public com.google.android.gms.maps.model.LatLng getPosition()
-    public void setTitle(java.lang.String)
     public java.lang.String getTitle()
-    public void setSnippet(java.lang.String)
     public java.lang.String getSnippet()
     public void setDraggable(boolean)
     public boolean isDraggable()
@@ -3471,32 +3468,36 @@ com.piusvelte.mosaic.android.ILocationService$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCallback
     static final int TRANSACTION_changeNickname
+    static final int TRANSACTION_insertMessage
+    static final int TRANSACTION_updateMessage
+    static final int TRANSACTION_getMessage
+    static final int TRANSACTION_reportMessage
+    static final int TRANSACTION_deleteMessage
 com.piusvelte.mosaic.android.ILocationService$Stub$Proxy:
-    79:79:public java.lang.String getInterfaceDescriptor()
+    142:142:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.IMain$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_setCoordinates
     static final int TRANSACTION_setNickname
     static final int TRANSACTION_addMessage
     static final int TRANSACTION_clearMessages
+    static final int TRANSACTION_viewMessage
+    static final int TRANSACTION_editMessage
+    static final int TRANSACTION_updateMarker
 com.piusvelte.mosaic.android.IMain$Stub$Proxy:
-    103:103:public java.lang.String getInterfaceDescriptor()
+    154:154:public java.lang.String getInterfaceDescriptor()
 com.piusvelte.mosaic.android.LocationService:
     private static final java.lang.String TAG
 com.piusvelte.mosaic.android.Main:
     private static final java.lang.String TAG
-    public static final java.lang.String EXTRA_TITLE
-    public static final java.lang.String EXTRA_BODY
-    public static final java.lang.String EXTRA_EXPIRY
-    public static final java.lang.String EXTRA_LATITUDE
-    public static final java.lang.String EXTRA_LONGITUDE
-    public static final java.lang.String EXTRA_RANGE
-    private static final int REQUEST_EDIT_MESSAGE
-    private static final int INVALID_MESSAGE
+    private static final int REQUEST_INSERT_MESSAGE
+    private static final int REQUEST_UPDATE_MESSAGE
+    private static final int REQUEST_VIEW_MESSAGE
 com.piusvelte.mosaic.android.Manifest
 com.piusvelte.mosaic.android.Manifest$permission
 com.piusvelte.mosaic.android.Message
 com.piusvelte.mosaic.android.Message$Properties
+com.piusvelte.mosaic.android.Mosaic
 com.piusvelte.mosaic.android.MosaicService:
     private static final java.lang.String TAG
 com.piusvelte.mosaic.android.R
@@ -3511,176 +3512,266 @@ com.piusvelte.mosaic.android.R$styleable
 com.piusvelte.mosaic.android.SignIn:
     private static final java.lang.String TAG
     68:68:protected void storeEmail(java.lang.String)
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint:
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages:
     public static final java.lang.String DEFAULT_ROOT_URL
     public static final java.lang.String DEFAULT_SERVICE_PATH
     public static final java.lang.String DEFAULT_BASE_URL
-    104:110:public Mosaicmessageendpoint(com.google.api.client.http.HttpTransport,com.google.api.client.json.JsonFactory,com.google.api.client.http.HttpRequestInitializer)
-    158:160:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$GetMosaicMessage getMosaicMessage(java.lang.String)
-    256:258:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$InsertMosaicMessage insertMosaicMessage(com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage)
-    409:411:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$RemoveMosaicMessage removeMosaicMessage(java.lang.String)
-    498:500:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$UpdateMosaicMessage updateMosaicMessage(com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage)
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder:
-    615:615:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer)
-    620:620:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder setApplicationName(java.lang.String)
-    625:625:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder setSuppressPatternChecks(boolean)
-    635:635:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$Builder setMosaicmessageendpointRequestInitializer(com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequestInitializer)
+    104:110:public Mosaicmessages(com.google.api.client.http.HttpTransport,com.google.api.client.json.JsonFactory,com.google.api.client.http.HttpRequestInitializer)
+    158:160:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$GetMosaicMessage getMosaicMessage(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$Builder:
+    842:842:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer)
+    847:847:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$Builder setApplicationName(java.lang.String)
+    852:852:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$Builder setSuppressPatternChecks(boolean)
+    862:862:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$Builder setMosaicmessagesRequestInitializer(com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequestInitializer)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setApplicationName(java.lang.String)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient build()
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setSuppressPatternChecks(boolean)
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$GetMosaicMessage
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$InsertMosaicMessage
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage:
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$GetMosaicMessage
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage:
     private static final java.lang.String REST_PATH
-    353:353:public com.google.api.client.http.HttpResponse executeUsingHead()
-    358:358:public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead()
-    363:363:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setAlt(java.lang.String)
-    368:368:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setFields(java.lang.String)
-    373:373:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setKey(java.lang.String)
-    378:378:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setOauthToken(java.lang.String)
-    383:383:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setPrettyPrint(java.lang.Boolean)
-    388:388:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setQuotaUser(java.lang.String)
-    393:393:public com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$ListMosaicMessage setUserIp(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setAlt(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setPrettyPrint(java.lang.Boolean)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setUserIp(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setKey(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setFields(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setQuotaUser(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setOauthToken(java.lang.String)
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$RemoveMosaicMessage
-com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint$UpdateMosaicMessage
-com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest:
+    282:282:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setAlt(java.lang.String)
+    287:287:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setFields(java.lang.String)
+    292:292:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setKey(java.lang.String)
+    297:297:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setOauthToken(java.lang.String)
+    302:302:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setPrettyPrint(java.lang.Boolean)
+    307:307:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setQuotaUser(java.lang.String)
+    312:312:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage:
+    private static final java.lang.String REST_PATH
+    361:361:public com.google.api.client.http.HttpResponse executeUsingHead()
+    366:366:public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead()
+    371:371:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setAlt(java.lang.String)
+    376:376:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setFields(java.lang.String)
+    381:381:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setKey(java.lang.String)
+    386:386:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setOauthToken(java.lang.String)
+    391:391:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setPrettyPrint(java.lang.Boolean)
+    396:396:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setQuotaUser(java.lang.String)
+    401:401:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setUserIp(java.lang.String)
+    411:411:public java.lang.String getId()
+    415:416:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setId(java.lang.String)
+    426:426:public java.lang.Integer getLatitude()
+    430:431:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setLatitude(java.lang.Integer)
+    441:441:public java.lang.Integer getLongitude()
+    445:446:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage setLongitude(java.lang.Integer)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage:
+    private static final java.lang.String REST_PATH
+    489:489:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setAlt(java.lang.String)
+    494:494:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setFields(java.lang.String)
+    499:499:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setKey(java.lang.String)
+    504:504:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setOauthToken(java.lang.String)
+    509:509:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setPrettyPrint(java.lang.Boolean)
+    514:514:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setQuotaUser(java.lang.String)
+    519:519:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setUserIp(java.lang.String)
+    529:529:public java.lang.String getId()
+    533:534:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage setId(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage:
+    private static final java.lang.String REST_PATH
+    577:577:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setAlt(java.lang.String)
+    582:582:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setFields(java.lang.String)
+    587:587:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setKey(java.lang.String)
+    592:592:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setOauthToken(java.lang.String)
+    597:597:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setPrettyPrint(java.lang.Boolean)
+    602:602:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setQuotaUser(java.lang.String)
+    607:607:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setUserIp(java.lang.String)
+    617:617:public java.lang.String getId()
+    621:622:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage setId(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage:
+    private static final java.lang.String REST_PATH
+    664:664:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setAlt(java.lang.String)
+    669:669:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setFields(java.lang.String)
+    674:674:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setKey(java.lang.String)
+    679:679:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setOauthToken(java.lang.String)
+    684:684:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setPrettyPrint(java.lang.Boolean)
+    689:689:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setQuotaUser(java.lang.String)
+    694:694:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage:
+    private static final java.lang.String REST_PATH
+    737:737:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setAlt(java.lang.String)
+    742:742:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setFields(java.lang.String)
+    747:747:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setKey(java.lang.String)
+    752:752:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setOauthToken(java.lang.String)
+    757:757:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setPrettyPrint(java.lang.Boolean)
+    762:762:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setQuotaUser(java.lang.String)
+    767:767:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setUserIp(java.lang.String)
+    777:777:public java.lang.String getId()
+    781:782:public com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage setId(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest:
     65:65:public java.lang.String getAlt()
-    70:71:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setAlt(java.lang.String)
+    70:71:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setAlt(java.lang.String)
     82:82:public java.lang.String getFields()
-    87:88:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setFields(java.lang.String)
+    87:88:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setFields(java.lang.String)
     103:103:public java.lang.String getKey()
-    111:112:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setKey(java.lang.String)
+    111:112:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setKey(java.lang.String)
     123:123:public java.lang.String getOauthToken()
-    128:129:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setOauthToken(java.lang.String)
+    128:129:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setOauthToken(java.lang.String)
     140:140:public java.lang.Boolean getPrettyPrint()
-    145:146:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setPrettyPrint(java.lang.Boolean)
+    145:146:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setPrettyPrint(java.lang.Boolean)
     161:161:public java.lang.String getQuotaUser()
-    169:170:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setQuotaUser(java.lang.String)
+    169:170:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setQuotaUser(java.lang.String)
     185:185:public java.lang.String getUserIp()
-    193:194:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setUserIp(java.lang.String)
-    209:209:public com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequest setRequestHeaders(com.google.api.client.http.HttpHeaders)
+    193:194:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setUserIp(java.lang.String)
+    209:209:public com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest setRequestHeaders(com.google.api.client.http.HttpHeaders)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest setRequestHeaders(com.google.api.client.http.HttpHeaders)
-com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointRequestInitializer
-com.piusvelte.mosaic.android.mosaicmessageendpoint.MosaicmessageendpointScopes
-com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage:
-    142:143:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setBody(java.lang.String)
-    151:151:public java.lang.Long getCreated()
-    159:160:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setCreated(java.lang.Long)
-    168:168:public java.lang.Long getExpiry()
-    176:177:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setExpiry(java.lang.Long)
-    185:185:public java.lang.Boolean getFlagged()
-    193:194:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setFlagged(java.lang.Boolean)
-    202:202:public java.lang.String getId()
-    210:211:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setId(java.lang.String)
-    227:228:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setLatitude(java.lang.Integer)
-    244:245:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setLongitude(java.lang.Integer)
-    253:253:public java.lang.Integer getMaxlatitude()
-    261:262:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setMaxlatitude(java.lang.Integer)
-    270:270:public java.lang.Integer getMaxlongitude()
-    278:279:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setMaxlongitude(java.lang.Integer)
-    287:287:public java.lang.Integer getMinlatitude()
-    295:296:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setMinlatitude(java.lang.Integer)
-    304:304:public java.lang.Integer getMinlongitude()
-    312:313:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setMinlongitude(java.lang.Integer)
-    321:321:public java.lang.Integer getRadius()
-    329:330:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setRadius(java.lang.Integer)
-    338:338:public java.lang.Integer getReports()
-    346:347:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setReports(java.lang.Integer)
-    363:364:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setTitle(java.lang.String)
-    372:372:public java.lang.Integer getVisits()
-    380:381:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage setVisits(java.lang.Integer)
-com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessageCollection:
-    63:64:public com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessageCollection setItems(java.util.List)
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint:
+com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequestInitializer
+com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesScopes
+com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage:
+    175:175:public java.lang.Long getCreated()
+    183:184:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setCreated(java.lang.Long)
+    209:209:public java.lang.Boolean getFlagged()
+    217:218:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setFlagged(java.lang.Boolean)
+    234:235:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setId(java.lang.String)
+    277:277:public java.lang.Integer getMaxLatitude()
+    285:286:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMaxLatitude(java.lang.Integer)
+    294:294:public java.lang.Integer getMaxLongitude()
+    302:303:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMaxLongitude(java.lang.Integer)
+    311:311:public java.lang.Integer getMinLatitude()
+    319:320:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMinLatitude(java.lang.Integer)
+    328:328:public java.lang.Integer getMinLongitude()
+    336:337:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMinLongitude(java.lang.Integer)
+    345:345:public java.lang.Integer getMinlongitude()
+    353:354:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMinlongitude(java.lang.Integer)
+    370:371:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMosaicUser(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser)
+    413:413:public java.lang.Integer getReports()
+    421:422:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setReports(java.lang.Integer)
+    447:447:public java.util.List getVisitors()
+    455:456:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setVisitors(java.util.List)
+    464:464:public java.lang.Integer getVisits()
+    472:473:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setVisits(java.lang.Integer)
+com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection:
+    63:64:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection setItems(java.util.List)
+com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser:
+    36:36:public MosaicUser()
+    67:67:public java.lang.String getEmail()
+    75:76:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setEmail(java.lang.String)
+    84:84:public java.lang.String getId()
+    92:93:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setId(java.lang.String)
+    109:110:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setNickname(java.lang.String)
+    118:118:public java.lang.String getUserid()
+    126:127:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setUserid(java.lang.String)
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers:
     public static final java.lang.String DEFAULT_ROOT_URL
     public static final java.lang.String DEFAULT_SERVICE_PATH
     public static final java.lang.String DEFAULT_BASE_URL
-    104:110:public Mosaicuserendpoint(com.google.api.client.http.HttpTransport,com.google.api.client.json.JsonFactory,com.google.api.client.http.HttpRequestInitializer)
-    327:329:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$ListMosaicUser listMosaicUser()
-    408:410:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$RemoveMosaicUser removeMosaicUser(java.lang.String)
-    496:498:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$UpdateMosaicUser updateMosaicUser(com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser)
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder:
-    612:612:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer)
-    617:617:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setApplicationName(java.lang.String)
-    622:622:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setSuppressPatternChecks(boolean)
-    632:632:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$Builder setMosaicuserendpointRequestInitializer(com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequestInitializer)
+    104:110:public Mosaicusers(com.google.api.client.http.HttpTransport,com.google.api.client.json.JsonFactory,com.google.api.client.http.HttpRequestInitializer)
+    327:329:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$ListMosaicUser listMosaicUser()
+    408:410:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$RemoveMosaicUser removeMosaicUser(java.lang.String)
+    496:498:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$UpdateMosaicUser updateMosaicUser(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser)
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$Builder:
+    612:612:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer)
+    617:617:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$Builder setApplicationName(java.lang.String)
+    622:622:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$Builder setSuppressPatternChecks(boolean)
+    632:632:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$Builder setMosaicusersRequestInitializer(com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequestInitializer)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setApplicationName(java.lang.String)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient build()
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient$Builder setSuppressPatternChecks(boolean)
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser:
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser:
     private static final java.lang.String REST_PATH
     185:185:public com.google.api.client.http.HttpResponse executeUsingHead()
     190:190:public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead()
-    195:195:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setAlt(java.lang.String)
-    200:200:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setFields(java.lang.String)
-    205:205:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setKey(java.lang.String)
-    210:210:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setOauthToken(java.lang.String)
-    215:215:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setPrettyPrint(java.lang.Boolean)
-    220:220:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setQuotaUser(java.lang.String)
-    225:225:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setUserIp(java.lang.String)
+    195:195:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setAlt(java.lang.String)
+    200:200:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setFields(java.lang.String)
+    205:205:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setKey(java.lang.String)
+    210:210:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setOauthToken(java.lang.String)
+    215:215:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setPrettyPrint(java.lang.Boolean)
+    220:220:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setQuotaUser(java.lang.String)
+    225:225:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setUserIp(java.lang.String)
     235:235:public java.lang.String getId()
-    239:240:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$GetMosaicUser setId(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setAlt(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setPrettyPrint(java.lang.Boolean)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setUserIp(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setKey(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setFields(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setQuotaUser(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setOauthToken(java.lang.String)
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser:
+    239:240:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser setId(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser:
     private static final java.lang.String REST_PATH
-    282:282:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setAlt(java.lang.String)
-    287:287:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setFields(java.lang.String)
-    292:292:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setKey(java.lang.String)
-    297:297:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setOauthToken(java.lang.String)
-    302:302:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setPrettyPrint(java.lang.Boolean)
-    307:307:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setQuotaUser(java.lang.String)
-    312:312:public com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$InsertMosaicUser setUserIp(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setAlt(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setPrettyPrint(java.lang.Boolean)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setUserIp(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setKey(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setFields(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setQuotaUser(java.lang.String)
-    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setOauthToken(java.lang.String)
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$ListMosaicUser
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$RemoveMosaicUser
-com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint$UpdateMosaicUser
-com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest:
+    282:282:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setAlt(java.lang.String)
+    287:287:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setFields(java.lang.String)
+    292:292:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setKey(java.lang.String)
+    297:297:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setOauthToken(java.lang.String)
+    302:302:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setPrettyPrint(java.lang.Boolean)
+    307:307:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setQuotaUser(java.lang.String)
+    312:312:public com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$InsertMosaicUser setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setAlt(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setPrettyPrint(java.lang.Boolean)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setUserIp(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setKey(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setFields(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setQuotaUser(java.lang.String)
+    1:1:public bridge synthetic com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setOauthToken(java.lang.String)
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$ListMosaicUser
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$RemoveMosaicUser
+com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$UpdateMosaicUser
+com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest:
     65:65:public java.lang.String getAlt()
-    70:71:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setAlt(java.lang.String)
+    70:71:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setAlt(java.lang.String)
     82:82:public java.lang.String getFields()
-    87:88:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setFields(java.lang.String)
+    87:88:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setFields(java.lang.String)
     103:103:public java.lang.String getKey()
-    111:112:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setKey(java.lang.String)
+    111:112:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setKey(java.lang.String)
     123:123:public java.lang.String getOauthToken()
-    128:129:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setOauthToken(java.lang.String)
+    128:129:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setOauthToken(java.lang.String)
     140:140:public java.lang.Boolean getPrettyPrint()
-    145:146:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setPrettyPrint(java.lang.Boolean)
+    145:146:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setPrettyPrint(java.lang.Boolean)
     161:161:public java.lang.String getQuotaUser()
-    169:170:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setQuotaUser(java.lang.String)
+    169:170:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setQuotaUser(java.lang.String)
     185:185:public java.lang.String getUserIp()
-    193:194:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setUserIp(java.lang.String)
-    209:209:public com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequest setRequestHeaders(com.google.api.client.http.HttpHeaders)
+    193:194:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setUserIp(java.lang.String)
+    209:209:public com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setRequestHeaders(com.google.api.client.http.HttpHeaders)
     1:1:public bridge synthetic com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest setRequestHeaders(com.google.api.client.http.HttpHeaders)
-com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointRequestInitializer
-com.piusvelte.mosaic.android.mosaicuserendpoint.MosaicuserendpointScopes
-com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser:
-    75:76:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setEmail(java.lang.String)
-    84:84:public java.lang.String getId()
-    92:93:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setId(java.lang.String)
+com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequestInitializer
+com.piusvelte.mosaic.android.mosaicusers.MosaicusersScopes
+com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser:
+    75:76:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setEmail(java.lang.String)
+    92:93:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setId(java.lang.String)
     118:118:public java.lang.String getUserid()
-    126:127:public com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser setUserid(java.lang.String)
-com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUserCollection
+    126:127:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setUserid(java.lang.String)
+com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection
 javax.annotation.CheckForNull
 javax.annotation.CheckForSigned
 javax.annotation.CheckReturnValue

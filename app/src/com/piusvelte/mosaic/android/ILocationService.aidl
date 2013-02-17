@@ -23,4 +23,8 @@ interface ILocationService {
 	void setCallback(in IBinder mainBinder);
 	void changeNickname(String nickname);
 	void insertMessage(String title, String body, int latitude, int longitude, int radius, long expiry);
+	void updateMessage(String id, String title, String body, int radius, long expiry);
+	void getMessage(String id);
+	void reportMessage(String id);
+	void deleteMessage(String id);
 }

@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -33,9 +34,10 @@ import android.widget.DatePicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class MessageEditor extends Activity implements OnCheckedChangeListener {
+public class MessageEditor extends Activity implements OnCheckedChangeListener, OnClickListener {
 	
 	private Button btnSave;
+	private Button btnDelete;
 	private CheckBox expires;
 	private DatePicker expiry;
 	
@@ -43,40 +45,62 @@ public class MessageEditor extends Activity implements OnCheckedChangeListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.messageedit);
+		Intent i = getIntent();
+		if (i.hasExtra(Mosaic.EXTRA_TITLE))
+			((TextView) findViewById(R.id.title)).setText(i.getStringExtra(Mosaic.EXTRA_TITLE));
+		if (i.hasExtra(Mosaic.EXTRA_BODY))
+			((TextView) findViewById(R.id.body)).setText(i.getStringExtra(Mosaic.EXTRA_BODY));
+		if (i.hasExtra(Mosaic.EXTRA_RADIUS))
+			((SeekBar) findViewById(R.id.radius)).setProgress(i.getIntExtra(Mosaic.EXTRA_RADIUS, 0));
 		expires = (CheckBox) findViewById(R.id.expires);
-		expires.setOnCheckedChangeListener(this);
 		expiry = (DatePicker) findViewById(R.id.expiry);
-		expiry.setEnabled(false);
+		if (i.hasExtra(Mosaic.EXTRA_EXPIRY) && (i.getIntExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES) != Mosaic.NEVER_EXPIRES)) {
+			Calendar c = Calendar.getInstance();
+			c.setTimeInMillis(i.getIntExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES));
+			expiry.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+			expires.setChecked(true);		
+			expiry.setEnabled(true);
+		} else		
+			expiry.setEnabled(false);
+		expires.setOnCheckedChangeListener(this);
 		btnSave = (Button) findViewById(R.id.save);
-		btnSave.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent i = getIntent();
-				i.putExtra(Main.EXTRA_TITLE, ((TextView) findViewById(R.id.title)).getText().toString());
-				i.putExtra(Main.EXTRA_BODY, ((TextView) findViewById(R.id.body)).getText().toString());
-				i.putExtra(Main.EXTRA_RADIUS, ((SeekBar) findViewById(R.id.radius)).getProgress());
-				if (expires.isChecked()) {
-					Calendar c = Calendar.getInstance();
-					c.set(Calendar.DAY_OF_MONTH, expiry.getDayOfMonth());
-					c.set(Calendar.MONTH, expiry.getMonth());
-					c.set(Calendar.YEAR, expiry.getYear());
-					i.putExtra(Main.EXTRA_EXPIRY, c.getTimeInMillis());
-				} else
-					i.putExtra(Main.EXTRA_EXPIRY, -1L);
-				setResult(RESULT_OK, i);
-				finish();
-			}
-			
-		});
+		btnSave.setOnClickListener(this);
+		btnDelete = (Button) findViewById(R.id.delete);
+		if (i.hasExtra(Mosaic.EXTRA_ID))
+			btnDelete.setOnClickListener(this);
+		else
+			btnDelete.setEnabled(false);
 		setResult(RESULT_CANCELED);
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if (isChecked)
-			expiry.setMinDate(System.currentTimeMillis());
 		expiry.setEnabled(isChecked);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == btnSave) {
+			Intent i = getIntent();
+			i.putExtra(Mosaic.EXTRA_TITLE, ((TextView) findViewById(R.id.title)).getText().toString());
+			i.putExtra(Mosaic.EXTRA_BODY, ((TextView) findViewById(R.id.body)).getText().toString());
+			i.putExtra(Mosaic.EXTRA_RADIUS, ((SeekBar) findViewById(R.id.radius)).getProgress());
+			if (expires.isChecked()) {
+				Calendar c = Calendar.getInstance();
+				c.set(Calendar.DAY_OF_MONTH, expiry.getDayOfMonth());
+				c.set(Calendar.MONTH, expiry.getMonth());
+				c.set(Calendar.YEAR, expiry.getYear());
+				i.putExtra(Mosaic.EXTRA_EXPIRY, c.getTimeInMillis());
+			} else
+				i.putExtra(Mosaic.EXTRA_EXPIRY, -1L);
+			setResult(RESULT_OK, i);
+			finish();
+		} else if (v == btnDelete) {
+			Intent i = getIntent();
+			i.removeExtra(Mosaic.EXTRA_TITLE);
+			setResult(RESULT_OK);
+			finish();
+		}
 	}
 
 }

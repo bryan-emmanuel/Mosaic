@@ -51,12 +51,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.piusvelte.mosaic.android.SignIn" />
-        <activity
-            android:name="com.piusvelte.mosaic.android.MessageEditor"
-            android:theme="@style/MessageDialog" />
-        <activity
-            android:name="com.piusvelte.mosaic.android.MessageViewer"
-            android:theme="@style/MessageDialog" />
+        <activity android:name="com.piusvelte.mosaic.android.MessageEditor" />
+        <activity android:name="com.piusvelte.mosaic.android.MessageViewer" />
 
         <service android:name="com.piusvelte.mosaic.android.LocationService" />
 

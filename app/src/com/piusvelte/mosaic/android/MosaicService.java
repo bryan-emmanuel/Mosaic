@@ -22,19 +22,15 @@ package com.piusvelte.mosaic.android;
 import java.io.IOException;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.piusvelte.mosaic.android.Message.Properties;
-import com.piusvelte.mosaic.android.mosaicmessageendpoint.Mosaicmessageendpoint;
-import com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage;
-import com.piusvelte.mosaic.android.mosaicuserendpoint.Mosaicuserendpoint;
-import com.piusvelte.mosaic.android.mosaicuserendpoint.model.MosaicUser;
+import com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages;
+import com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage;
+import com.piusvelte.mosaic.android.mosaicusers.Mosaicusers;
+import com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -76,13 +72,13 @@ public class MosaicService {
 	class UpdateUserTask extends AsyncTask<Void, Void, Void> {
 
 		LocationService callback;
-		Mosaicuserendpoint endpoint;
+		Mosaicusers endpoint;
 		
 		UpdateUserTask(LocationService callback) {
 			this.callback = callback;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
 			credential.setSelectedAccountName(user.getEmail());
-			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(transport,
+			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
 					credential);
 			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
@@ -111,7 +107,7 @@ public class MosaicService {
 	class GetUserTask extends AsyncTask<Void, Void, Void> {
 
 		LocationService callback;
-		Mosaicuserendpoint endpoint;
+		Mosaicusers endpoint;
 		String accountName;
 		
 		GetUserTask(LocationService callback, String accountName) {
@@ -119,7 +115,7 @@ public class MosaicService {
 			this.accountName = accountName;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
 			credential.setSelectedAccountName(accountName);
-			Mosaicuserendpoint.Builder endpointBuilder = new Mosaicuserendpoint.Builder(transport,
+			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
 					credential);
 			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
@@ -148,7 +144,7 @@ public class MosaicService {
 		}
 	}
 
-	public GetMessagesTask getMessages(LocationService callback, int latitude, int longitude) throws Exception {
+	public void getMessages(LocationService callback, int latitude, int longitude) throws Exception {
 		if (callback == null)
 			throw new Exception("callback is null");
 		else if (latitude == Integer.MAX_VALUE)
@@ -157,25 +153,23 @@ public class MosaicService {
 			throw new Exception("invalid longitude");
 		else if (user == null)
 			throw new Exception("user is null");
-		return new GetMessagesTask(callback, latitude, longitude);
+		new GetMessagesTask(callback, latitude, longitude).execute();
 	}
 
 	class GetMessagesTask extends AsyncTask<Void, Void, List<MosaicMessage>> {
 
 		LocationService callback;
-		String latitude;
-		String longitude;
-		Mosaicmessageendpoint endpoint;
+		int latitude;
+		int longitude;
+		Mosaicmessages endpoint;
 
 		GetMessagesTask(LocationService callback, int latitude, int longitude) {
 			this.callback = callback;
-			this.latitude = Long.toString(latitude);
-			this.longitude = Long.toString(longitude);
-			Log.d(TAG, "GetMessagesTask");
-			Log.d(TAG, "user: " + user.getEmail());
+			this.latitude = latitude;
+			this.longitude = longitude;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId)
 					.setSelectedAccountName(user.getEmail());
-			Mosaicmessageendpoint.Builder endpointBuilder = new Mosaicmessageendpoint.Builder(transport,
+			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
 			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
@@ -184,7 +178,7 @@ public class MosaicService {
 		@Override
 		protected List<MosaicMessage> doInBackground(Void... params) {
 			try {
-				return endpoint.listMosaicMessage().execute().getItems();
+				return endpoint.listMosaicMessage("", latitude, longitude).execute().getItems();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -194,10 +188,206 @@ public class MosaicService {
 		
 		@Override
 		protected void onPostExecute(List<MosaicMessage> messages) {
-			Log.d(TAG, "GetMessagesTask.onPostExecute");
 			callback.setMessages(messages);
 		}
 
+	}
+	
+	public void insertMessage(LocationService callback, MosaicMessage message) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if (message == null)
+			throw new Exception("message is null");
+		new InsertMessageTask(callback, message).execute();
+	}
+	
+	class InsertMessageTask extends AsyncTask<Void, Void, MosaicMessage> {
+
+		LocationService callback;
+		Mosaicmessages endpoint;
+		MosaicMessage message;
+		
+		InsertMessageTask(LocationService callback, MosaicMessage message) {
+			this.callback = callback;
+			this.message = message;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(user.getEmail());
+			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected MosaicMessage doInBackground(Void... params) { 
+			try {
+				return endpoint.insertMosaicMessage(message).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(MosaicMessage message) {
+			if (message != null)
+				callback.addMessage(message);
+		}
+	}
+	
+	public void viewMessage(LocationService callback, String id) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if (id == null)
+			throw new Exception("id is null");
+		new ViewMessageTask(callback, id).execute();
+	}
+	
+	class ViewMessageTask extends AsyncTask<Void, Void, Void> {
+
+		LocationService callback;
+		Mosaicmessages endpoint;
+		String id;
+		
+		ViewMessageTask(LocationService callback, String id) {
+			this.callback = callback;
+			this.id = id;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(user.getEmail());
+			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) { 
+			try {
+				endpoint.viewMosaicMessage(id).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
+	public void updateMessage(LocationService callback, MosaicMessage message) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if (message == null)
+			throw new Exception("message is null");
+		new UpdateMessageTask(callback, message).execute();
+	}
+	
+	class UpdateMessageTask extends AsyncTask<Void, Void, MosaicMessage> {
+
+		LocationService callback;
+		Mosaicmessages endpoint;
+		MosaicMessage message;
+		
+		UpdateMessageTask(LocationService callback, MosaicMessage message) {
+			this.callback = callback;
+			this.message = message;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(user.getEmail());
+			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected MosaicMessage doInBackground(Void... params) { 
+			try {
+				return endpoint.updateMosaicMessage(message).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(MosaicMessage message) {
+			if (message != null)
+				callback.updateMessage(message);
+		}
+	}
+	
+	public void reportMessage(LocationService callback, String id) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if (id == null)
+			throw new Exception("id is null");
+		new ReportMessageTask(callback, id).execute();
+	}
+	
+	class ReportMessageTask extends AsyncTask<Void, Void, Void> {
+
+		LocationService callback;
+		Mosaicmessages endpoint;
+		String id;
+		
+		ReportMessageTask(LocationService callback, String id) {
+			this.callback = callback;
+			this.id = id;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(user.getEmail());
+			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) { 
+			try {
+				endpoint.reportMosaicMessage(id).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+	
+	public void deleteMessage(LocationService callback, String id) throws Exception {
+		if (callback == null)
+			throw new Exception("callback is null");
+		else if (id == null)
+			throw new Exception("id is null");
+		new DeleteMessageTask(callback, id).execute();
+	}
+	
+	class DeleteMessageTask extends AsyncTask<Void, Void, Void> {
+
+		LocationService callback;
+		Mosaicmessages endpoint;
+		String id;
+		
+		DeleteMessageTask(LocationService callback, String id) {
+			this.callback = callback;
+			this.id = id;
+			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
+			credential.setSelectedAccountName(user.getEmail());
+			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) { 
+			try {
+				endpoint.removeMosaicMessage(id).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 
 }

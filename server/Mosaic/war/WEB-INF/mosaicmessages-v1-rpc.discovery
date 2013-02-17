@@ -1,0 +1,285 @@
+{
+ "kind": "discovery#rpcDescription",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/VAFpzP7R7uB-ht-5BsVGc_7fjxc\"",
+ "discoveryVersion": "v1",
+ "id": "mosaicmessages:v1",
+ "name": "mosaicmessages",
+ "version": "v1",
+ "description": "This is an API",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rpc",
+ "rootUrl": "https://mosaic-messaging.appspot.com/_ah/api/",
+ "rpcUrl": "https://mosaic-messaging.appspot.com/_ah/api/rpc",
+ "rpcPath": "/_ah/api/rpc",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "MosaicMessage": {
+   "id": "MosaicMessage",
+   "type": "object",
+   "properties": {
+    "body": {
+     "type": "string"
+    },
+    "created": {
+     "type": "string",
+     "format": "int64"
+    },
+    "expiry": {
+     "type": "string",
+     "format": "int64"
+    },
+    "flagged": {
+     "type": "boolean"
+    },
+    "id": {
+     "type": "string"
+    },
+    "latitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "longitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "maxLatitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "maxLongitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "minLatitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "minLongitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "minlongitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "mosaicUser": {
+     "$ref": "MosaicUser"
+    },
+    "mosaicUserId": {
+     "type": "string"
+    },
+    "radius": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "reports": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "title": {
+     "type": "string"
+    },
+    "visitors": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "visits": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "MosaicMessageCollection": {
+   "id": "MosaicMessageCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MosaicMessage"
+     }
+    }
+   }
+  },
+  "MosaicUser": {
+   "id": "MosaicUser",
+   "type": "object",
+   "properties": {
+    "email": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "nickname": {
+     "type": "string"
+    },
+    "userid": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "methods": {
+  "mosaicmessages.getMosaicMessage": {
+   "id": "mosaicmessages.getMosaicMessage",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "mosaicmessages.insertMosaicMessage": {
+   "id": "mosaicmessages.insertMosaicMessage",
+   "parameters": {
+    "resource": {
+     "$ref": "MosaicMessage"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "mosaicmessages.listMosaicMessage": {
+   "id": "mosaicmessages.listMosaicMessage",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true
+    },
+    "latitude": {
+     "type": "integer",
+     "required": true,
+     "format": "int32"
+    },
+    "longitude": {
+     "type": "integer",
+     "required": true,
+     "format": "int32"
+    }
+   },
+   "parameterOrder": [
+    "id",
+    "latitude",
+    "longitude"
+   ],
+   "returns": {
+    "$ref": "MosaicMessageCollection"
+   }
+  },
+  "mosaicmessages.removeMosaicMessage": {
+   "id": "mosaicmessages.removeMosaicMessage",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "mosaicmessages.reportMosaicMessage": {
+   "id": "mosaicmessages.reportMosaicMessage",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ]
+  },
+  "mosaicmessages.updateMosaicMessage": {
+   "id": "mosaicmessages.updateMosaicMessage",
+   "parameters": {
+    "resource": {
+     "$ref": "MosaicMessage"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "mosaicmessages.viewMosaicMessage": {
+   "id": "mosaicmessages.viewMosaicMessage",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ]
+  }
+ }
+}

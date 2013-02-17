@@ -20,10 +20,12 @@
 package com.piusvelte.mosaic.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MessageViewer extends Activity {
 	
@@ -33,13 +35,17 @@ public class MessageViewer extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.messageview);
+		Intent i = getIntent();
+		if (i.hasExtra(Mosaic.EXTRA_TITLE))
+			((TextView) findViewById(R.id.title)).setText(i.getStringExtra(Mosaic.EXTRA_TITLE));
+		if (i.hasExtra(Mosaic.EXTRA_BODY))
+			((TextView) findViewById(R.id.body)).setText(i.getStringExtra(Mosaic.EXTRA_BODY));
 		btnReport = (Button) findViewById(R.id.report);
 		btnReport.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				//TODO pack the intent
-				setResult(RESULT_OK);
+				setResult(RESULT_OK, getIntent());
 				finish();
 			}
 			

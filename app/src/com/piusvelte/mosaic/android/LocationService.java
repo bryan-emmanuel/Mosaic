@@ -19,10 +19,10 @@
  */
 package com.piusvelte.mosaic.android;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import com.piusvelte.mosaic.android.mosaicmessageendpoint.model.MosaicMessage;
+import com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage;
 
 import android.app.Service;
 import android.content.Context;
@@ -43,7 +43,7 @@ public class LocationService extends Service implements LocationListener {
 	private LocationManager locationManager = null;
 	protected int latitude = Integer.MAX_VALUE;
 	protected int longitude = Integer.MAX_VALUE;
-	protected List<MosaicMessage> messages = new ArrayList<MosaicMessage>();
+	protected HashMap<String, MosaicMessage> messages = new HashMap<String, MosaicMessage>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
 	private String[] providers = new String[]{LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER};
@@ -59,7 +59,7 @@ public class LocationService extends Service implements LocationListener {
 		super.onCreate();
 		loadMosaicService();
 	}
-	
+
 	private void initLocationManager() {
 		if (locationManager == null) {
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -127,8 +127,20 @@ public class LocationService extends Service implements LocationListener {
 			}
 			Log.d(TAG, "getMessages");
 			try {
-				mosaicService.getMessages(LocationService.this, latitude, longitude).execute();
+				mosaicService.getMessages(LocationService.this, latitude, longitude);
 			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected void addMessage(MosaicMessage message) {
+		messages.put(message.getId(), message);
+		if (iMain != null) {
+			try {
+				iMain.addMessage(message.getId(), message.getLatitude(), message.getLongitude(), message.getTitle(), message.getBody(), message.getMosaicUser().getNickname());
+			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -137,13 +149,25 @@ public class LocationService extends Service implements LocationListener {
 
 	protected void setMessages(List<MosaicMessage> messages) {
 		this.messages.clear();
-		if (messages != null)
-			this.messages = messages;
 		if (iMain != null) {
 			try {
 				iMain.clearMessages();
-				for (MosaicMessage message : this.messages)
-					iMain.addMessage(message.getLatitude(), message.getLongitude(), message.getTitle(), message.getBody());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (messages != null) {
+			for (MosaicMessage message : messages)
+				addMessage(message);
+		}
+	}
+
+	protected void setNickname(String nickname) {
+		initLocationManager();
+		if (iMain != null) {
+			try {
+				iMain.setNickname(nickname);
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -151,12 +175,11 @@ public class LocationService extends Service implements LocationListener {
 		}
 	}
 
-	protected void setNickname(String nickname) {
-		Log.d(TAG, "setNickname: " + nickname);
-		initLocationManager();
+	protected void updateMessage(MosaicMessage message) {
+		message.put(message.getId(), message);
 		if (iMain != null) {
 			try {
-				iMain.setNickname(nickname);
+				iMain.updateMarker(message.getId(), message.getTitle() + " - " + message.getMosaicUser().getNickname(), message.getBody(), message.getMosaicUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -194,7 +217,6 @@ public class LocationService extends Service implements LocationListener {
 		@Override
 		public void insertMessage(String title, String body, int latitude,
 				int longitude, int radius, long expiry) throws RemoteException {
-			// TODO Auto-generated method stub
 			MosaicMessage message = new MosaicMessage();
 			message.setTitle(title);
 			message.setBody(body);
@@ -202,6 +224,69 @@ public class LocationService extends Service implements LocationListener {
 			message.setLongitude(longitude);
 			message.setRadius(radius);
 			message.setMosaicUserId(mosaicService.user.getId());
+			try {
+				mosaicService.insertMessage(LocationService.this, message);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void updateMessage(String id, String title, String body,
+				int radius, long expiry)
+						throws RemoteException {
+			MosaicMessage message = messages.get(id);
+			message.setTitle(title);
+			message.setBody(body);
+			message.setRadius(radius);
+			message.setExpiry(expiry);
+			try {
+				mosaicService.updateMessage(LocationService.this, message);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void getMessage(String id) throws RemoteException {
+			if (messages.containsKey(id)) {
+				MosaicMessage message = messages.get(id);
+				try {
+					mosaicService.viewMessage(LocationService.this, id);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (message.getMosaicUserId().equals(mosaicService.user.getId()))
+					iMain.editMessage(message.getId(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
+				else
+					iMain.viewMessage(message.getId(), message.getTitle(), message.getBody(), message.getMosaicUser().getNickname());
+			} else {
+				//TODO error
+			}
+		}
+
+		@Override
+		public void reportMessage(String id) throws RemoteException {
+			try {
+				mosaicService.reportMessage(LocationService.this, id);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void deleteMessage(String id) throws RemoteException {
+			messages.remove(id);
+			try {
+				mosaicService.deleteMessage(LocationService.this, id);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	};
 

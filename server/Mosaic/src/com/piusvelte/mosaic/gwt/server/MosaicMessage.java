@@ -36,11 +36,11 @@ public class MosaicMessage {
 	private String body;
 	private long created;
 	private int latitude;
-	private int minlatitude;
-	private int maxlatitude;
+	private int minLatitude;
+	private int maxLatitude;
 	private int longitude;
-	private int minlongitude;
-	private int maxlongitude;
+	private int minLongitude;
+	private int maxLongitude;
 	private int radius;
 	private long expiry;
 	private int visits;
@@ -97,20 +97,20 @@ public class MosaicMessage {
 		this.latitude = latitude;
 	}
 
-	public int getMinlatitude() {
-		return minlatitude;
+	public int getMinLatitude() {
+		return minLatitude;
 	}
 
-	public void setMinlatitude(int minlatitude) {
-		this.minlatitude = minlatitude;
+	public void setMinLatitude(int minLatitude) {
+		this.minLatitude = minLatitude;
 	}
 
-	public int getMaxlatitude() {
-		return maxlatitude;
+	public int getMaxLatitude() {
+		return maxLatitude;
 	}
 
-	public void setMaxlatitude(int maxlatitude) {
-		this.maxlatitude = maxlatitude;
+	public void setMaxLatitude(int maxLatitude) {
+		this.maxLatitude = maxLatitude;
 	}
 
 	public int getLongitude() {
@@ -122,19 +122,19 @@ public class MosaicMessage {
 	}
 
 	public int getMinlongitude() {
-		return minlongitude;
+		return minLongitude;
 	}
 
-	public void setMinlongitude(int minlongitude) {
-		this.minlongitude = minlongitude;
+	public void setMinLongitude(int minLongitude) {
+		this.minLongitude = minLongitude;
 	}
 
-	public int getMaxlongitude() {
-		return maxlongitude;
+	public int getMaxLongitude() {
+		return maxLongitude;
 	}
 
-	public void setMaxlongitude(int maxlongitude) {
-		this.maxlongitude = maxlongitude;
+	public void setMaxLongitude(int maxLongitude) {
+		this.maxLongitude = maxLongitude;
 	}
 
 	public int getRadius() {

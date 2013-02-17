@@ -17,9 +17,28 @@
  *  
  *  Bryan Emmanuel piusvelte@gmail.com
  */
+/*
+ * Mosaic - Location Based Messaging
+ * Copyright (C) 2013 Bryan Emmanuel
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  
+ *  Bryan Emmanuel piusvelte@gmail.com
+ */
 package com.piusvelte.mosaic.android;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,17 +72,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	private ILocationService iLocationService;
 	private GoogleMap map;
 	private Button btnNickname;
-	public static final String EXTRA_TITLE = "com.piusvelte.mosaic.android.EXTRA_TITLE";
-	public static final String EXTRA_BODY = "com.piusvelte.mosaic.android.EXTRA_BODY";
-	public static final String EXTRA_EXPIRY = "com.piusvelte.mosaic.android.EXTRA_EXPIRY";
-	public static final String EXTRA_LATITUDE = "com.piusvelte.mosaic.android.EXTRA_LATITUDE";
-	public static final String EXTRA_LONGITUDE = "com.piusvelte.mosaic.android.EXTRA_LONGITUDE";
-	public static final String EXTRA_RADIUS = "com.piusvelte.mosaic.android.EXTRA_RADIUS";
-	private static final int REQUEST_EDIT_MESSAGE = 0;
-	private static final int REQUEST_VIEW_MESSAGE = 0;
-	private ArrayList<String> markerIds = new ArrayList<String>();
-	private static final int INVALID_MESSAGE = -1;
-	private int markerIndex = INVALID_MESSAGE;
+	private static final int REQUEST_INSERT_MESSAGE = 0;
+	private static final int REQUEST_UPDATE_MESSAGE = 1;
+	private static final int REQUEST_VIEW_MESSAGE = 2;
+	private HashMap<String, String> markerIds = new HashMap<String, String>();
+	private HashMap<String, Marker> markers = new HashMap<String, Marker>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +111,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 							//TODO no name
 						}
 					}
-					
+
 				})
 				.show();
 			}
-			
+
 		});
 		GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this);
 	}
@@ -211,19 +224,49 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			// TODO Auto-generated method stub
 			map.clear();
 			markerIds.clear();
+			markers.clear();
 		}
 
 		@Override
-		public void addMessage(double latitude, double longitude, String title, String body)
+		public void addMessage(String id, double latitude, double longitude, String title, String body, String nickname)
 				throws RemoteException {
 			// TODO Auto-generated method stub
-			markerIds.add(map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title).snippet(body)).getId());
+			Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title + " - " + nickname).snippet(body));
+			markerIds.put(marker.getId(), id);
+			markers.put(id, marker);
+		}
+
+		@Override
+		public void editMessage(String id, String title, String body,
+				int radius, long expiry) throws RemoteException {
+			startActivityForResult(new Intent(Main.this, MessageEditor.class)
+			.putExtra(Mosaic.EXTRA_ID, id)
+			.putExtra(Mosaic.EXTRA_TITLE, title)
+			.putExtra(Mosaic.EXTRA_BODY, body)
+			.putExtra(Mosaic.EXTRA_RADIUS, radius)
+			.putExtra(Mosaic.EXTRA_EXPIRY, expiry), REQUEST_UPDATE_MESSAGE);
+		}
+
+		@Override
+		public void viewMessage(String id, String title, String body,
+				String nickname) throws RemoteException {
+			startActivityForResult(new Intent(Main.this, MessageViewer.class)
+			.putExtra(Mosaic.EXTRA_ID, id)
+			.putExtra(Mosaic.EXTRA_TITLE, title + " - " + nickname)
+			.putExtra(Mosaic.EXTRA_BODY, body), REQUEST_VIEW_MESSAGE);
+		}
+
+		@Override
+		public void updateMarker(String id, String title, String body, String nickname)
+				throws RemoteException {
+			Marker marker = markers.get(id);
+			marker.setTitle(title + " - " + nickname);
+			marker.setSnippet(body);
 		}
 	};
 
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder service) {
-		// TODO Auto-generated method stub
 		iLocationService = ILocationService.Stub.asInterface(service);
 		try {
 			iLocationService.setCallback(iMain);
@@ -235,33 +278,78 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 	@Override
 	public void onServiceDisconnected(ComponentName name) {
-		// TODO Auto-generated method stub
 		iLocationService = null;
 	}
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
-		// TODO Auto-generated method stub
-		markerIndex = markerIds.indexOf(marker.getId());
-		
+		if (markerIds.containsKey(marker.getId())) {
+			try {
+				iLocationService.getMessage(markerIds.get(marker.getId()));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			//TODO error!
+		}
 		return false;
 	}
 
 	@Override
 	public void onMapLongClick(LatLng point) {
-		// TODO Auto-generated method stub
 		startActivityForResult(new Intent(this, MessageEditor.class)
-		.putExtra(EXTRA_LATITUDE, (int) (point.latitude * 1E6))
-		.putExtra(EXTRA_LONGITUDE, (int) (point.longitude * 1E6)), REQUEST_EDIT_MESSAGE);
+		.putExtra(Mosaic.EXTRA_LATITUDE, (int) (point.latitude * 1E6))
+		.putExtra(Mosaic.EXTRA_LONGITUDE, (int) (point.longitude * 1E6)), REQUEST_INSERT_MESSAGE);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if ((requestCode == REQUEST_EDIT_MESSAGE) && (resultCode == RESULT_OK)) {
-			//TODO save the message
+		if ((requestCode == REQUEST_INSERT_MESSAGE) && (resultCode == RESULT_OK)) {
+			try {
+				iLocationService.insertMessage(data.getStringExtra(Mosaic.EXTRA_TITLE),
+						data.getStringExtra(Mosaic.EXTRA_BODY),
+						data.getIntExtra(Mosaic.EXTRA_LATITUDE, 0),
+						data.getIntExtra(Mosaic.EXTRA_LONGITUDE, 0),
+						data.getIntExtra(Mosaic.EXTRA_RADIUS, 0),
+						data.getLongExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if ((requestCode == REQUEST_UPDATE_MESSAGE) && (resultCode == RESULT_OK)) {
+			if (data.hasExtra(Mosaic.EXTRA_TITLE)) {
+				try {
+					iLocationService.updateMessage(data.getStringExtra(Mosaic.EXTRA_ID),
+							data.getStringExtra(Mosaic.EXTRA_TITLE),
+							data.getStringExtra(Mosaic.EXTRA_BODY),
+							data.getIntExtra(Mosaic.EXTRA_RADIUS, 0),
+							data.getLongExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES));
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				String id = data.getStringExtra(Mosaic.EXTRA_ID);
+				Marker marker = markers.get(id);
+				markers.remove(id);
+				markerIds.remove(marker.getId());
+				marker.remove();
+				try {
+					iLocationService.deleteMessage(id);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		} else if ((requestCode == REQUEST_VIEW_MESSAGE) && (resultCode == RESULT_OK)) {
-			//TODO report the message
+			try {
+				iLocationService.reportMessage(markerIds.get(data.getStringExtra(Mosaic.EXTRA_ID)));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

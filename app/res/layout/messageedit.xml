@@ -30,18 +30,33 @@
         android:hint="@string/title"
         android:singleLine="true" />
 
-    <Button
-        android:id="@+id/save"
+    <LinearLayout
+        android:id="@+id/buttons_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/save" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/delete" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/expiry_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/save" >
+        android:layout_above="@id/buttons_wrapper" >
 
         <CheckBox
             android:id="@+id/expires"
@@ -55,7 +70,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/expires" />
+            android:layout_toRightOf="@id/expires"
+            android:calendarViewShown="false" />
     </RelativeLayout>
 
     <RelativeLayout
