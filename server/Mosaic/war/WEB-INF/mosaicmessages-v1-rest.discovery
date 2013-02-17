@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/VAFpzP7R7uB-ht-5BsVGc_7fjxc\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/hdabZJg39u6mxLgAM_dyQ7Byr6I\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessages:v1",
  "name": "mosaicmessages",
@@ -163,9 +163,6 @@
      "type": "string"
     },
     "nickname": {
-     "type": "string"
-    },
-    "userid": {
      "type": "string"
     }
    }

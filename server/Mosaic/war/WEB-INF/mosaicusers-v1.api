@@ -144,9 +144,6 @@
           },
           "nickname" : {
             "type" : "string"
-          },
-          "userid" : {
-            "type" : "string"
           }
         }
       },

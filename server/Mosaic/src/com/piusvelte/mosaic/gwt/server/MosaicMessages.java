@@ -28,7 +28,6 @@ import com.google.appengine.api.users.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -60,9 +59,11 @@ public class MosaicMessages {
 					.setParameter("id", id);
 				else
 					query = mgr
-						.createQuery("select from MosaicMessage as MosaicMessage where minLatitude <= :latitude and maxLatitude >= :latitude and minLongitude <= :longitude and maxLongitude >= :longitude and visits > (reports * 2)")
-						.setParameter("latitude", latitude)
-						.setParameter("longitude", longitude);
+						.createQuery("select from MosaicMessage as MosaicMessage where minLatitude <= :maxLatitude and maxLatitude >= :minLatitude and minLongitude <= :maxLongitude and maxLongitude >= :minLongitude and visits > (reports * 2)")
+						.setParameter("minLatitude", offsetLatitude(latitude, -10))
+						.setParameter("maxLatitude", offsetLatitude(latitude, 10))
+						.setParameter("minLongitude", offsetLongitude(latitude, longitude, -10))
+						.setParameter("maxLongitude", offsetLongitude(latitude, longitude, 10));
 				for (Object obj : (List<Object>) query.getResultList())
 					result.add(((MosaicMessage) obj));
 			} finally {
@@ -71,6 +72,23 @@ public class MosaicMessages {
 			return result;
 		} else
 			throw new OAuthRequestException("Invalid user.");
+	}
+	
+	private static final int EARTHS_RADIUS = 6378137;
+	private static final double DEGREES = 57.2957795131;//180 / Pi
+	
+	private int offsetLatitude(int latitude, int offset) {
+		if (offset == 0)
+			return latitude;
+		int sign = offset < 0 ? -1 : 1;
+		return (int) (latitude + offset * sign / EARTHS_RADIUS * DEGREES * 1E6 * sign); 
+	}
+	
+	private int offsetLongitude(int latitude, int longitude, int offset) {
+		if (offset == 0)
+			return longitude;
+		int sign = offset < 0 ? -1 : 1;
+		return (int) (longitude + offset * sign / (EARTHS_RADIUS * Math.cos(Math.PI * (latitude / 1E6) / 180)));
 	}
 
 	/**
@@ -102,10 +120,10 @@ public class MosaicMessages {
 	 */
 	public MosaicMessage insertMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
-			mosaicmessage.setMinLatitude(mosaicmessage.getLatitude() - mosaicmessage.getRadius());
-			mosaicmessage.setMaxLatitude(mosaicmessage.getLatitude() + mosaicmessage.getRadius());
-			mosaicmessage.setMinLongitude(mosaicmessage.getLongitude() - mosaicmessage.getRadius());
-			mosaicmessage.setMaxLongitude(mosaicmessage.getLongitude() + mosaicmessage.getRadius());
+			mosaicmessage.setMinLatitude(offsetLatitude(mosaicmessage.getLatitude(), mosaicmessage.getRadius() * -1));
+			mosaicmessage.setMaxLatitude(offsetLatitude(mosaicmessage.getLatitude(), mosaicmessage.getRadius()));
+			mosaicmessage.setMinLongitude(offsetLongitude(mosaicmessage.getLatitude(), mosaicmessage.getLongitude(), mosaicmessage.getRadius() * -1));
+			mosaicmessage.setMaxLongitude(offsetLongitude(mosaicmessage.getLatitude(), mosaicmessage.getLongitude(), mosaicmessage.getRadius()));
 			EntityManager mgr = getEntityManager();
 			try {
 				mgr.persist(mosaicmessage);
@@ -126,10 +144,10 @@ public class MosaicMessages {
 	 */
 	public MosaicMessage updateMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
-			mosaicmessage.setMinLatitude(mosaicmessage.getLatitude() - mosaicmessage.getRadius());
-			mosaicmessage.setMaxLatitude(mosaicmessage.getLatitude() + mosaicmessage.getRadius());
-			mosaicmessage.setMinLongitude(mosaicmessage.getLongitude() - mosaicmessage.getRadius());
-			mosaicmessage.setMaxLongitude(mosaicmessage.getLongitude() + mosaicmessage.getRadius());
+			mosaicmessage.setMinLatitude(offsetLatitude(mosaicmessage.getLatitude(), mosaicmessage.getRadius() * -1));
+			mosaicmessage.setMaxLatitude(offsetLatitude(mosaicmessage.getLatitude(), mosaicmessage.getRadius()));
+			mosaicmessage.setMinLongitude(offsetLongitude(mosaicmessage.getLatitude(), mosaicmessage.getLongitude(), mosaicmessage.getRadius() * -1));
+			mosaicmessage.setMaxLongitude(offsetLongitude(mosaicmessage.getLatitude(), mosaicmessage.getLongitude(), mosaicmessage.getRadius()));
 			EntityManager mgr = getEntityManager();
 			try {
 				mgr.persist(mosaicmessage);

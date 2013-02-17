@@ -96,7 +96,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
 						String nickname = newNickname.getText().toString();
 						if (nickname.length() > 0) {
 							if (!nickname.equals(btnNickname.getText().toString())) {
@@ -141,7 +140,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		uiSettings.setZoomControlsEnabled(false);
 		uiSettings.setZoomGesturesEnabled(false);
 		map.setOnMarkerClickListener(this);
-		bindService(new Intent(this, LocationService.class), this, BIND_AUTO_CREATE);
+		bindService(new Intent(this, MosaicService.class), this, BIND_AUTO_CREATE);
 	}
 
 	@Override
@@ -163,7 +162,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void setCoordinates(double latitude, double longitude)
 				throws RemoteException {
-			// TODO Auto-generated method stub
 			if (latitude != Integer.MAX_VALUE) {
 				if (map != null)
 					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 20F));
@@ -221,7 +219,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void clearMessages() throws RemoteException {
-			// TODO Auto-generated method stub
 			map.clear();
 			markerIds.clear();
 			markers.clear();
@@ -230,8 +227,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void addMessage(String id, double latitude, double longitude, String title, String body, String nickname)
 				throws RemoteException {
-			// TODO Auto-generated method stub
-			Marker marker = map.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title + " - " + nickname).snippet(body));
+			Marker marker = map.addMarker(new MarkerOptions()
+			.position(new LatLng(latitude, longitude))
+			.title(title + " - " + nickname)
+			.snippet(body)
+			.draggable(false));
 			markerIds.put(marker.getId(), id);
 			markers.put(id, marker);
 		}

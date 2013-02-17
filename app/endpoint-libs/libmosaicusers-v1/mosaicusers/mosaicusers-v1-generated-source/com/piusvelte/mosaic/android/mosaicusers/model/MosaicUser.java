@@ -54,12 +54,6 @@ public final class MosaicUser extends GenericJson {
   private java.lang.String nickname;
 
   /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String userid;
-
-  /**
 
    * The value returned may be {@code null}.
    */
@@ -107,23 +101,6 @@ public final class MosaicUser extends GenericJson {
    */
   public MosaicUser setNickname(java.lang.String nickname) {
     this.nickname = nickname;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public java.lang.String getUserid() {
-    return userid;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicUser setUserid(java.lang.String userid) {
-    this.userid = userid;
     return this;
   }
 

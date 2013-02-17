@@ -36,14 +36,6 @@ public class MosaicUser {
 		this.id = id;
 	}
 
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
 	public String getNickname() {
 		return nickname;
 	}
@@ -59,8 +51,7 @@ public class MosaicUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	private String userid;
+	
 	private String nickname;
 	private String email;
 	

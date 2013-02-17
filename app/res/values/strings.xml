@@ -26,6 +26,7 @@
     <string name="preference_account_name">account_name</string>
     <string name="no_accounts">Please add a Google account through Settings</string>
     <string name="loading">loading&#8230;</string>
+    <string name="signing_in">signing in&#8230;</string>
     <string name="save">Save</string>
     <string name="title">Title</string>
     <string name="message">Message</string>

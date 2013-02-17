@@ -54,7 +54,7 @@
         <activity android:name="com.piusvelte.mosaic.android.MessageEditor" />
         <activity android:name="com.piusvelte.mosaic.android.MessageViewer" />
 
-        <service android:name="com.piusvelte.mosaic.android.LocationService" />
+        <service android:name="com.piusvelte.mosaic.android.MosaicService" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

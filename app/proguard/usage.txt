@@ -1072,7 +1072,6 @@ com.google.android.gms.maps.model.Marker:
 com.google.android.gms.maps.model.MarkerOptions:
     public com.google.android.gms.maps.model.MarkerOptions icon(com.google.android.gms.maps.model.BitmapDescriptor)
     public com.google.android.gms.maps.model.MarkerOptions anchor(float,float)
-    public com.google.android.gms.maps.model.MarkerOptions draggable(boolean)
     public com.google.android.gms.maps.model.MarkerOptions visible(boolean)
     public com.google.android.gms.maps.model.BitmapDescriptor getIcon()
 com.google.android.gms.maps.model.MarkerOptionsCreator:
@@ -3486,8 +3485,6 @@ com.piusvelte.mosaic.android.IMain$Stub:
     static final int TRANSACTION_updateMarker
 com.piusvelte.mosaic.android.IMain$Stub$Proxy:
     154:154:public java.lang.String getInterfaceDescriptor()
-com.piusvelte.mosaic.android.LocationService:
-    private static final java.lang.String TAG
 com.piusvelte.mosaic.android.Main:
     private static final java.lang.String TAG
     private static final int REQUEST_INSERT_MESSAGE
@@ -3684,13 +3681,11 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection:
     63:64:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection setItems(java.util.List)
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser:
     36:36:public MosaicUser()
-    67:67:public java.lang.String getEmail()
-    75:76:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setEmail(java.lang.String)
-    84:84:public java.lang.String getId()
-    92:93:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setId(java.lang.String)
-    109:110:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setNickname(java.lang.String)
-    118:118:public java.lang.String getUserid()
-    126:127:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setUserid(java.lang.String)
+    61:61:public java.lang.String getEmail()
+    69:70:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setEmail(java.lang.String)
+    78:78:public java.lang.String getId()
+    86:87:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setId(java.lang.String)
+    103:104:public com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser setNickname(java.lang.String)
 com.piusvelte.mosaic.android.mosaicusers.Mosaicusers:
     public static final java.lang.String DEFAULT_ROOT_URL
     public static final java.lang.String DEFAULT_SERVICE_PATH
@@ -3767,10 +3762,8 @@ com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest:
 com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequestInitializer
 com.piusvelte.mosaic.android.mosaicusers.MosaicusersScopes
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser:
-    75:76:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setEmail(java.lang.String)
-    92:93:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setId(java.lang.String)
-    118:118:public java.lang.String getUserid()
-    126:127:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setUserid(java.lang.String)
+    69:70:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setEmail(java.lang.String)
+    86:87:public com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setId(java.lang.String)
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection
 javax.annotation.CheckForNull
 javax.annotation.CheckForSigned

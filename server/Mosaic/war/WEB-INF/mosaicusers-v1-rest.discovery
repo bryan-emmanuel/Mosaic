@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/fAAzs4uzS1gIBYRIauE1MOpBy58\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/NPjFmHiSBq-MVZ6JwKdp9GeEYcE\"",
  "discoveryVersion": "v1",
  "id": "mosaicusers:v1",
  "name": "mosaicusers",
@@ -73,9 +73,6 @@
      "type": "string"
     },
     "nickname": {
-     "type": "string"
-    },
-    "userid": {
      "type": "string"
     }
    }

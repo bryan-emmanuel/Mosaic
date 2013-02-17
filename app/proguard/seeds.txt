@@ -370,8 +370,6 @@ com.google.gson.stream.JsonScope: com.google.gson.stream.JsonScope[] values()
 com.google.gson.stream.JsonScope: com.google.gson.stream.JsonScope valueOf(java.lang.String)
 com.google.gson.stream.JsonToken: com.google.gson.stream.JsonToken[] values()
 com.google.gson.stream.JsonToken: com.google.gson.stream.JsonToken valueOf(java.lang.String)
-com.piusvelte.mosaic.android.LocationService
-com.piusvelte.mosaic.android.LocationService: LocationService()
 com.piusvelte.mosaic.android.Main
 com.piusvelte.mosaic.android.Main: Main()
 com.piusvelte.mosaic.android.Message$Properties: com.piusvelte.mosaic.android.Message$Properties[] values()
@@ -381,6 +379,8 @@ com.piusvelte.mosaic.android.MessageEditor: MessageEditor()
 com.piusvelte.mosaic.android.MessageEditor: void onClick(android.view.View)
 com.piusvelte.mosaic.android.MessageViewer
 com.piusvelte.mosaic.android.MessageViewer: MessageViewer()
+com.piusvelte.mosaic.android.MosaicService
+com.piusvelte.mosaic.android.MosaicService: MosaicService()
 com.piusvelte.mosaic.android.R$attr: int cameraBearing
 com.piusvelte.mosaic.android.R$attr: int cameraTargetLat
 com.piusvelte.mosaic.android.R$attr: int cameraTargetLng
@@ -443,6 +443,7 @@ com.piusvelte.mosaic.android.R$string: int preference_account_name
 com.piusvelte.mosaic.android.R$string: int radius
 com.piusvelte.mosaic.android.R$string: int report
 com.piusvelte.mosaic.android.R$string: int save
+com.piusvelte.mosaic.android.R$string: int signing_in
 com.piusvelte.mosaic.android.R$string: int title
 com.piusvelte.mosaic.android.R$style: int AppBaseTheme
 com.piusvelte.mosaic.android.R$style: int AppTheme
@@ -500,7 +501,6 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection: java.
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String email
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String id
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String nickname
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String userid
 com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$GetMosaicUser: java.lang.String id
 com.piusvelte.mosaic.android.mosaicusers.Mosaicusers$RemoveMosaicUser: java.lang.String id
 com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest: java.lang.String alt
@@ -513,7 +513,6 @@ com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest: java.lang.String us
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String email
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String id
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String nickname
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String userid
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection: java.util.List items
 javax.annotation.meta.When: javax.annotation.meta.When[] values()
 javax.annotation.meta.When: javax.annotation.meta.When valueOf(java.lang.String)

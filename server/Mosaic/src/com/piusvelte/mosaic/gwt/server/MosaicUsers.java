@@ -100,7 +100,6 @@ public class MosaicUsers {
 			try {
 				mosaicuser.setEmail(user.getEmail());
 				mosaicuser.setNickname(user.getNickname());
-				mosaicuser.setUserid(user.getUserId());
 				mgr.persist(mosaicuser);
 			} finally {
 				mgr.close();
