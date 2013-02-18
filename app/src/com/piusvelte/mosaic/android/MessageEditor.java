@@ -32,14 +32,16 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class MessageEditor extends Activity implements OnCheckedChangeListener, OnClickListener {
+public class MessageEditor extends Activity implements OnCheckedChangeListener, OnClickListener, OnSeekBarChangeListener {
 	
 	private Button btnSave;
 	private Button btnDelete;
 	private CheckBox expires;
 	private DatePicker expiry;
+	private TextView radius;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class MessageEditor extends Activity implements OnCheckedChangeListener, 
 			btnDelete.setOnClickListener(this);
 		else
 			btnDelete.setEnabled(false);
+		radius = (TextView) findViewById(R.id.lbl_radius);
+		((SeekBar) findViewById(R.id.radius)).setOnSeekBarChangeListener(this);
 		setResult(RESULT_CANCELED);
 	}
 
@@ -101,6 +105,20 @@ public class MessageEditor extends Activity implements OnCheckedChangeListener, 
 			setResult(RESULT_OK);
 			finish();
 		}
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser) {
+		radius.setText(String.format(getString(R.string.radius_progress), progress));
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
 	}
 
 }

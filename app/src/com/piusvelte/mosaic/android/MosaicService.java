@@ -83,7 +83,9 @@ public class MosaicService extends Service implements LocationListener {
 	}
 
 	private void loadMosaicUser() {
-		if (mosaicUser == null) {
+		if (mosaicUser != null)
+			setNickname(mosaicUser.getNickname());
+		else {
 			SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 			if (sharedPreferences.contains(getString(R.string.preference_account_name))) {
 				appengineWebappClientId = "server:client_id:" + getString(R.string.client_id);
@@ -94,8 +96,7 @@ public class MosaicService extends Service implements LocationListener {
 					setNickname(null);
 			} else
 				setNickname(null);
-		} else
-			setNickname(mosaicUser.getNickname());
+		}
 	}
 
 	@Override
@@ -199,9 +200,10 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		public void setCallback(IBinder mainBinder)
 				throws RemoteException {
-			if (mainBinder != null)
+			if (mainBinder != null) {
 				iMain = IMain.Stub.asInterface(mainBinder);
-			else
+				loadMosaicUser();
+			} else
 				iMain = null;
 		}
 
@@ -430,7 +432,8 @@ public class MosaicService extends Service implements LocationListener {
 		}
 
 		@Override
-		protected MosaicMessage doInBackground(Void... params) { 
+		protected MosaicMessage doInBackground(Void... params) {
+			Log.d(TAG, "InsertMessageTask");
 			try {
 				return endpoint.insertMosaicMessage(message).execute();
 			} catch (IOException e) {

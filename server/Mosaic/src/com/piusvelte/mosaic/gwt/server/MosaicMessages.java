@@ -203,8 +203,8 @@ public class MosaicMessages {
 				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, id);
 				List<String> visitors = mosaicmessage.getVisitors();
 				MosaicUser mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email").setParameter("email", user.getEmail()).getSingleResult();
-				if (!visitors.contains(mosaicuser.getId())) {
-					visitors.add(mosaicuser.getId());
+				if (!visitors.contains(mosaicuser.getEmail())) {
+					visitors.add(mosaicuser.getEmail());
 					mosaicmessage.setVisitors(visitors);
 				}
 				mosaicmessage.setVisits(mosaicmessage.getVisits() + 1);

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/NPjFmHiSBq-MVZ6JwKdp9GeEYcE\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/CxCMRnQGWkX66kBHQlTIQ9CMUoM\"",
  "discoveryVersion": "v1",
  "id": "mosaicusers:v1",
  "name": "mosaicusers",
@@ -62,6 +62,84 @@
   }
  },
  "schemas": {
+  "MosaicMessage": {
+   "id": "MosaicMessage",
+   "type": "object",
+   "properties": {
+    "body": {
+     "type": "string"
+    },
+    "created": {
+     "type": "string",
+     "format": "int64"
+    },
+    "expiry": {
+     "type": "string",
+     "format": "int64"
+    },
+    "flagged": {
+     "type": "boolean"
+    },
+    "id": {
+     "type": "string"
+    },
+    "latitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "longitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "maxLatitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "maxLongitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "minLatitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "minLongitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "minlongitude": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "mosaicUser": {
+     "$ref": "MosaicUser"
+    },
+    "mosaicUserId": {
+     "type": "string"
+    },
+    "radius": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "reports": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "title": {
+     "type": "string"
+    },
+    "visitors": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "visits": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
   "MosaicUser": {
    "id": "MosaicUser",
    "type": "object",
@@ -71,6 +149,12 @@
     },
     "id": {
      "type": "string"
+    },
+    "mosaicMessages": {
+     "type": "array",
+     "items": {
+      "$ref": "MosaicMessage"
+     }
     },
     "nickname": {
      "type": "string"

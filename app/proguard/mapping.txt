@@ -3518,18 +3518,25 @@ com.piusvelte.mosaic.android.Main$2$1 -> com.piusvelte.mosaic.android.o:
     com.piusvelte.mosaic.android.Main$2 this$1 -> a
     android.widget.EditText val$newNickname -> b
     void onClick(android.content.DialogInterface,int) -> onClick
+com.piusvelte.mosaic.android.Main$2$2 -> com.piusvelte.mosaic.android.p:
+    com.piusvelte.mosaic.android.Main$2 this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
 com.piusvelte.mosaic.android.MessageEditor -> com.piusvelte.mosaic.android.MessageEditor:
     android.widget.Button btnSave -> a
     android.widget.Button btnDelete -> b
     android.widget.CheckBox expires -> c
     android.widget.DatePicker expiry -> d
+    android.widget.TextView radius -> e
     void onCreate(android.os.Bundle) -> onCreate
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
     void onClick(android.view.View) -> onClick
+    void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
+    void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
+    void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
 com.piusvelte.mosaic.android.MessageViewer -> com.piusvelte.mosaic.android.MessageViewer:
     android.widget.Button btnReport -> a
     void onCreate(android.os.Bundle) -> onCreate
-com.piusvelte.mosaic.android.MessageViewer$1 -> com.piusvelte.mosaic.android.p:
+com.piusvelte.mosaic.android.MessageViewer$1 -> com.piusvelte.mosaic.android.q:
     com.piusvelte.mosaic.android.MessageViewer this$0 -> a
     void onClick(android.view.View) -> onClick
 com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.MosaicService:
@@ -3565,10 +3572,11 @@ com.piusvelte.mosaic.android.MosaicService -> com.piusvelte.mosaic.android.Mosai
     void onProviderEnabled(java.lang.String) -> onProviderEnabled
     void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
     void access$0(com.piusvelte.mosaic.android.MosaicService,com.piusvelte.mosaic.android.IMain) -> a
-    com.piusvelte.mosaic.android.IMain access$1(com.piusvelte.mosaic.android.MosaicService) -> a
-    com.google.api.client.http.HttpTransport access$2(com.piusvelte.mosaic.android.MosaicService) -> b
-    com.google.api.client.json.JsonFactory access$3(com.piusvelte.mosaic.android.MosaicService) -> c
-com.piusvelte.mosaic.android.MosaicService$1 -> com.piusvelte.mosaic.android.q:
+    void access$1(com.piusvelte.mosaic.android.MosaicService) -> a
+    com.piusvelte.mosaic.android.IMain access$2(com.piusvelte.mosaic.android.MosaicService) -> b
+    com.google.api.client.http.HttpTransport access$3(com.piusvelte.mosaic.android.MosaicService) -> c
+    com.google.api.client.json.JsonFactory access$4(com.piusvelte.mosaic.android.MosaicService) -> d
+com.piusvelte.mosaic.android.MosaicService$1 -> com.piusvelte.mosaic.android.r:
     com.piusvelte.mosaic.android.MosaicService this$0 -> a
     void setCallback(android.os.IBinder) -> a
     void changeNickname(java.lang.String) -> a
@@ -3577,14 +3585,14 @@ com.piusvelte.mosaic.android.MosaicService$1 -> com.piusvelte.mosaic.android.q:
     void getMessage(java.lang.String) -> b
     void reportMessage(java.lang.String) -> c
     void deleteMessage(java.lang.String) -> d
-com.piusvelte.mosaic.android.MosaicService$DeleteMessageTask -> com.piusvelte.mosaic.android.r:
+com.piusvelte.mosaic.android.MosaicService$DeleteMessageTask -> com.piusvelte.mosaic.android.s:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages endpoint -> b
     java.lang.String id -> c
     com.piusvelte.mosaic.android.MosaicService this$0 -> d
     java.lang.Void doInBackground(java.lang.Void[]) -> a
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.s:
+com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosaic.android.t:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     int latitude -> b
     int longitude -> c
@@ -3594,7 +3602,7 @@ com.piusvelte.mosaic.android.MosaicService$GetMessagesTask -> com.piusvelte.mosa
     void onPostExecute(java.util.List) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.t:
+com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.android.u:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicusers.Mosaicusers endpoint -> b
     java.lang.String accountName -> c
@@ -3603,7 +3611,7 @@ com.piusvelte.mosaic.android.MosaicService$GetUserTask -> com.piusvelte.mosaic.a
     void onPostExecute(java.lang.Void) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$InsertMessageTask -> com.piusvelte.mosaic.android.u:
+com.piusvelte.mosaic.android.MosaicService$InsertMessageTask -> com.piusvelte.mosaic.android.v:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages endpoint -> b
     com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage message -> c
@@ -3612,14 +3620,14 @@ com.piusvelte.mosaic.android.MosaicService$InsertMessageTask -> com.piusvelte.mo
     void onPostExecute(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$ReportMessageTask -> com.piusvelte.mosaic.android.v:
+com.piusvelte.mosaic.android.MosaicService$ReportMessageTask -> com.piusvelte.mosaic.android.w:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages endpoint -> b
     java.lang.String id -> c
     com.piusvelte.mosaic.android.MosaicService this$0 -> d
     java.lang.Void doInBackground(java.lang.Void[]) -> a
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$UpdateMessageTask -> com.piusvelte.mosaic.android.w:
+com.piusvelte.mosaic.android.MosaicService$UpdateMessageTask -> com.piusvelte.mosaic.android.x:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages endpoint -> b
     com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage message -> c
@@ -3628,7 +3636,7 @@ com.piusvelte.mosaic.android.MosaicService$UpdateMessageTask -> com.piusvelte.mo
     void onPostExecute(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.x:
+com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosaic.android.y:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicusers.Mosaicusers endpoint -> b
     com.piusvelte.mosaic.android.MosaicService this$0 -> c
@@ -3636,7 +3644,7 @@ com.piusvelte.mosaic.android.MosaicService$UpdateUserTask -> com.piusvelte.mosai
     void onPostExecute(java.lang.Void) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.piusvelte.mosaic.android.MosaicService$ViewMessageTask -> com.piusvelte.mosaic.android.y:
+com.piusvelte.mosaic.android.MosaicService$ViewMessageTask -> com.piusvelte.mosaic.android.z:
     com.piusvelte.mosaic.android.MosaicService callback -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages endpoint -> b
     java.lang.String id -> c
@@ -3739,6 +3747,7 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection -> com
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser -> com.piusvelte.mosaic.android.a.a.c:
     java.lang.String email -> email
     java.lang.String id -> id
+    java.util.List mosaicMessages -> mosaicMessages
     java.lang.String nickname -> nickname
     java.lang.String getNickname() -> c
 com.piusvelte.mosaic.android.mosaicusers.Mosaicusers -> com.piusvelte.mosaic.android.b.a:
@@ -3770,9 +3779,30 @@ com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest -> com.piusvelte.mos
     com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest setDisableGZipContent(boolean) -> c
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest setDisableGZipContent(boolean) -> b
     com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient getAbstractGoogleClient() -> a_
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser -> com.piusvelte.mosaic.android.b.a.a:
+com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage -> com.piusvelte.mosaic.android.b.a.a:
+    java.lang.String body -> body
+    java.lang.Long created -> created
+    java.lang.Long expiry -> expiry
+    java.lang.Boolean flagged -> flagged
+    java.lang.String id -> id
+    java.lang.Integer latitude -> latitude
+    java.lang.Integer longitude -> longitude
+    java.lang.Integer maxLatitude -> maxLatitude
+    java.lang.Integer maxLongitude -> maxLongitude
+    java.lang.Integer minLatitude -> minLatitude
+    java.lang.Integer minLongitude -> minLongitude
+    java.lang.Integer minlongitude -> minlongitude
+    com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser mosaicUser -> mosaicUser
+    java.lang.String mosaicUserId -> mosaicUserId
+    java.lang.Integer radius -> radius
+    java.lang.Integer reports -> reports
+    java.lang.String title -> title
+    java.util.List visitors -> visitors
+    java.lang.Integer visits -> visits
+com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser -> com.piusvelte.mosaic.android.b.a.b:
     java.lang.String email -> email
     java.lang.String id -> id
+    java.util.List mosaicMessages -> mosaicMessages
     java.lang.String nickname -> nickname
     java.lang.String getEmail() -> c
     java.lang.String getId() -> d

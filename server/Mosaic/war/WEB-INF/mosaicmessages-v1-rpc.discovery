@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/hdabZJg39u6mxLgAM_dyQ7Byr6I\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/-zEvubSSZOsc792_Ber_vIUC1CI\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessages:v1",
  "name": "mosaicmessages",
@@ -159,6 +159,12 @@
     },
     "id": {
      "type": "string"
+    },
+    "mosaicMessages": {
+     "type": "array",
+     "items": {
+      "$ref": "MosaicMessage"
+     }
     },
     "nickname": {
      "type": "string"

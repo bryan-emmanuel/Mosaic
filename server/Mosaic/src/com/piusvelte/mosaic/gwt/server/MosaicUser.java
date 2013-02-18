@@ -19,9 +19,13 @@
  */
 package com.piusvelte.mosaic.gwt.server;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class MosaicUser {
@@ -57,5 +61,16 @@ public class MosaicUser {
 	
 	public MosaicUser() {
 	}
+	
+	public List<MosaicMessage> getMosaicMessages() {
+		return mosaicMessages;
+	}
+
+	public void setMosaicMessages(List<MosaicMessage> mosaicMessages) {
+		this.mosaicMessages = mosaicMessages;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mosaicUser")
+	private List<MosaicMessage> mosaicMessages;
 
 }

@@ -243,6 +243,12 @@
           "id" : {
             "type" : "string"
           },
+          "mosaicMessages" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MosaicMessage"
+            }
+          },
           "nickname" : {
             "type" : "string"
           }

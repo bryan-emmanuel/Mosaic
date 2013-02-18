@@ -142,8 +142,82 @@
           "id" : {
             "type" : "string"
           },
+          "mosaicMessages" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MosaicMessage"
+            }
+          },
           "nickname" : {
             "type" : "string"
+          }
+        }
+      },
+      "MosaicMessage" : {
+        "id" : "MosaicMessage",
+        "type" : "object",
+        "properties" : {
+          "body" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "expiry" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "flagged" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "latitude" : {
+            "type" : "integer"
+          },
+          "longitude" : {
+            "type" : "integer"
+          },
+          "maxLatitude" : {
+            "type" : "integer"
+          },
+          "maxLongitude" : {
+            "type" : "integer"
+          },
+          "minLatitude" : {
+            "type" : "integer"
+          },
+          "minLongitude" : {
+            "type" : "integer"
+          },
+          "minlongitude" : {
+            "type" : "integer"
+          },
+          "mosaicUser" : {
+            "$ref" : "MosaicUser"
+          },
+          "mosaicUserId" : {
+            "type" : "string"
+          },
+          "radius" : {
+            "type" : "integer"
+          },
+          "reports" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "visitors" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "visits" : {
+            "type" : "integer"
           }
         }
       },

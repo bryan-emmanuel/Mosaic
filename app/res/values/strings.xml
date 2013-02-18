@@ -30,7 +30,8 @@
     <string name="save">Save</string>
     <string name="title">Title</string>
     <string name="message">Message</string>
-    <string name="radius">Radius</string>
+    <string name="radius">Radius: 0m</string>
+    <string name="radius_progress">Radius: %dm</string>
     <string name="report">Report</string>
     <string name="expires">Expires</string>
     <string name="delete">Delete</string>

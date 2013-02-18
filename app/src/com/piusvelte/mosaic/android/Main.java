@@ -112,6 +112,13 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 					}
 
 				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				})
 				.show();
 			}
 

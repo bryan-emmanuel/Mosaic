@@ -51,6 +51,18 @@ public final class MosaicUser extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
+  private java.util.List<MosaicMessage> mosaicMessages;
+
+  static {
+    // hack to force ProGuard to consider MosaicMessage used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(MosaicMessage.class);
+  }
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
   private java.lang.String nickname;
 
   /**
@@ -84,6 +96,23 @@ public final class MosaicUser extends GenericJson {
    */
   public MosaicUser setId(java.lang.String id) {
     this.id = id;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public java.util.List<MosaicMessage> getMosaicMessages() {
+    return mosaicMessages;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicUser setMosaicMessages(java.util.List<MosaicMessage> mosaicMessages) {
+    this.mosaicMessages = mosaicMessages;
     return this;
   }
 
