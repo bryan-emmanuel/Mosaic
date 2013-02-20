@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/CxCMRnQGWkX66kBHQlTIQ9CMUoM\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/_2PJiiUP9MAgBIEwIdmYn5T9-kk\"",
  "discoveryVersion": "v1",
  "id": "mosaicusers:v1",
  "name": "mosaicusers",
@@ -75,9 +75,6 @@
      "type": "string",
      "format": "int64"
     },
-    "flagged": {
-     "type": "boolean"
-    },
     "id": {
      "type": "string"
     },
@@ -112,7 +109,7 @@
     "mosaicUser": {
      "$ref": "MosaicUser"
     },
-    "mosaicUserId": {
+    "mosaicUserEmail": {
      "type": "string"
     },
     "radius": {
@@ -143,9 +140,6 @@
    "type": "object",
    "properties": {
     "email": {
-     "type": "string"
-    },
-    "id": {
      "type": "string"
     },
     "mosaicMessages": {

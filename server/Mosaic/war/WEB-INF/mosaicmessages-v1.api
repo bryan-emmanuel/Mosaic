@@ -24,6 +24,21 @@
     "maxAge" : 0
   },
   "methods" : {
+    "mosaicmessages.distance" : {
+      "path" : "distance",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.distance",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "mosaicmessages.updateMosaicMessage" : {
       "path" : "mosaicmessage",
       "httpMethod" : "PUT",
@@ -31,6 +46,21 @@
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
       "rosyMethod" : "MosaicMessages.updateMosaicMessage",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicmessages.makeDoubleInRange" : {
+      "path" : "makeDoubleInRange",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.makeDoubleInRange",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -75,7 +105,7 @@
       }
     },
     "mosaicmessages.listMosaicMessage" : {
-      "path" : "mosaicmessage/{id}/{latitude}/{longitude}",
+      "path" : "mosaicmessage/{latitude}/{longitude}",
       "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
@@ -83,10 +113,6 @@
       "rosyMethod" : "MosaicMessages.listMosaicMessage",
       "request" : {
         "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          },
           "latitude" : {
             "type" : "int32",
             "required" : true
@@ -180,37 +206,33 @@
             "type" : "string",
             "format" : "int64"
           },
-          "flagged" : {
-            "type" : "boolean"
+          "geocells" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
           },
           "id" : {
             "type" : "string"
           },
           "latitude" : {
+            "type" : "number",
+            "format" : "float"
+          },
+          "latitude1E6" : {
             "type" : "integer"
           },
           "longitude" : {
-            "type" : "integer"
+            "type" : "number",
+            "format" : "float"
           },
-          "maxLatitude" : {
-            "type" : "integer"
-          },
-          "maxLongitude" : {
-            "type" : "integer"
-          },
-          "minLatitude" : {
-            "type" : "integer"
-          },
-          "minLongitude" : {
-            "type" : "integer"
-          },
-          "minlongitude" : {
+          "longitude1E6" : {
             "type" : "integer"
           },
           "mosaicUser" : {
             "$ref" : "MosaicUser"
           },
-          "mosaicUserId" : {
+          "mosaicUserEmail" : {
             "type" : "string"
           },
           "radius" : {
@@ -238,9 +260,6 @@
         "type" : "object",
         "properties" : {
           "email" : {
-            "type" : "string"
-          },
-          "id" : {
             "type" : "string"
           },
           "mosaicMessages" : {
@@ -289,12 +308,28 @@
       }
     },
     "methods" : {
+      "MosaicMessages.distance" : {
+        "request" : {
+          "type" : "number"
+        },
+        "response" : {
+          "type" : "number"
+        }
+      },
       "MosaicMessages.updateMosaicMessage" : {
         "request" : {
           "$ref" : "MosaicMessage"
         },
         "response" : {
           "$ref" : "MosaicMessage"
+        }
+      },
+      "MosaicMessages.makeDoubleInRange" : {
+        "request" : {
+          "type" : "number"
+        },
+        "response" : {
+          "type" : "number"
         }
       },
       "MosaicMessages.insertMosaicMessage" : {

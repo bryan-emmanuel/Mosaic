@@ -22,10 +22,12 @@ package com.piusvelte.mosaic.gwt.server;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class MosaicMessage {
@@ -35,24 +37,23 @@ public class MosaicMessage {
 	private String title;
 	private String body;
 	private long created;
-	private int latitude;
-	private int minLatitude;
-	private int maxLatitude;
-	private int longitude;
-	private int minLongitude;
-	private int maxLongitude;
+	private float latitude;
+	private float longitude;
 	private int radius;
 	private long expiry;
 	private int visits;
 	private int reports;
-	private boolean flagged;
 	// select from MosaicMessage as MosaicMessage where :visitor in visitors
 	private List<String> visitors;
-	private String mosaicUserId;
+	
+	private String mosaicUserEmail;
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="mosaicUserId",referencedColumnName="id")
+	@JoinColumn(name="mosaicUserEmail",referencedColumnName="email")
 	private MosaicUser mosaicUser;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<String> geocells;
 
 	public MosaicMessage() {
 	}
@@ -89,52 +90,28 @@ public class MosaicMessage {
 		this.created = created;
 	}
 
-	public int getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
+	
+	public void setLatitude1E6(int latitude) {
+		this.latitude = (float) (latitude / 1E6);
+	}
 
-	public void setLatitude(int latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
-	public int getMinLatitude() {
-		return minLatitude;
-	}
-
-	public void setMinLatitude(int minLatitude) {
-		this.minLatitude = minLatitude;
-	}
-
-	public int getMaxLatitude() {
-		return maxLatitude;
-	}
-
-	public void setMaxLatitude(int maxLatitude) {
-		this.maxLatitude = maxLatitude;
-	}
-
-	public int getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
+	
+	public void setLongitude1E6(int longitude) {
+		this.longitude = (float) (longitude / 1E6);
+	}
 
-	public void setLongitude(int longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude = longitude;
-	}
-
-	public int getMinlongitude() {
-		return minLongitude;
-	}
-
-	public void setMinLongitude(int minLongitude) {
-		this.minLongitude = minLongitude;
-	}
-
-	public int getMaxLongitude() {
-		return maxLongitude;
-	}
-
-	public void setMaxLongitude(int maxLongitude) {
-		this.maxLongitude = maxLongitude;
 	}
 
 	public int getRadius() {
@@ -169,14 +146,6 @@ public class MosaicMessage {
 		this.reports = reports;
 	}
 
-	public boolean isFlagged() {
-		return flagged;
-	}
-
-	public void setFlagged(boolean flagged) {
-		this.flagged = flagged;
-	}
-
 	public MosaicUser getMosaicUser() {
 		return mosaicUser;
 	}
@@ -185,20 +154,28 @@ public class MosaicMessage {
 		this.mosaicUser = mosaicUser;
 	}
 
-	public String getMosaicUserId() {
-		return mosaicUserId;
-	}
-
-	public void setMosaicUserId(String mosaicUserId) {
-		this.mosaicUserId = mosaicUserId;
-	}
-
 	public List<String> getVisitors() {
 		return visitors;
 	}
 
 	public void setVisitors(List<String> visitors) {
 		this.visitors = visitors;
+	}
+
+	public String getMosaicUserEmail() {
+		return mosaicUserEmail;
+	}
+
+	public void setMosaicUserEmail(String mosaicUserEmail) {
+		this.mosaicUserEmail = mosaicUserEmail;
+	}
+
+	public List<String> getGeocells() {
+		return geocells;
+	}
+
+	public void setGeocells(List<String> geocells) {
+		this.geocells = geocells;
 	}
 	
 }

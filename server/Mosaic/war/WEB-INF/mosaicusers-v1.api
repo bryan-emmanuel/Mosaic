@@ -139,9 +139,6 @@
           "email" : {
             "type" : "string"
           },
-          "id" : {
-            "type" : "string"
-          },
           "mosaicMessages" : {
             "type" : "array",
             "items" : {
@@ -168,37 +165,33 @@
             "type" : "string",
             "format" : "int64"
           },
-          "flagged" : {
-            "type" : "boolean"
+          "geocells" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
           },
           "id" : {
             "type" : "string"
           },
           "latitude" : {
+            "type" : "number",
+            "format" : "float"
+          },
+          "latitude1E6" : {
             "type" : "integer"
           },
           "longitude" : {
-            "type" : "integer"
+            "type" : "number",
+            "format" : "float"
           },
-          "maxLatitude" : {
-            "type" : "integer"
-          },
-          "maxLongitude" : {
-            "type" : "integer"
-          },
-          "minLatitude" : {
-            "type" : "integer"
-          },
-          "minLongitude" : {
-            "type" : "integer"
-          },
-          "minlongitude" : {
+          "longitude1E6" : {
             "type" : "integer"
           },
           "mosaicUser" : {
             "$ref" : "MosaicUser"
           },
-          "mosaicUserId" : {
+          "mosaicUserEmail" : {
             "type" : "string"
           },
           "radius" : {

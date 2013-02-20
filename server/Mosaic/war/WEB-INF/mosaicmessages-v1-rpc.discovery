@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/-zEvubSSZOsc792_Ber_vIUC1CI\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/pbdClZUeLcfhuifgAoKLp5auBDw\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessages:v1",
  "name": "mosaicmessages",
@@ -75,9 +75,6 @@
      "type": "string",
      "format": "int64"
     },
-    "flagged": {
-     "type": "boolean"
-    },
     "id": {
      "type": "string"
     },
@@ -112,7 +109,7 @@
     "mosaicUser": {
      "$ref": "MosaicUser"
     },
-    "mosaicUserId": {
+    "mosaicUserEmail": {
      "type": "string"
     },
     "radius": {
@@ -155,9 +152,6 @@
    "type": "object",
    "properties": {
     "email": {
-     "type": "string"
-    },
-    "id": {
      "type": "string"
     },
     "mosaicMessages": {
@@ -207,10 +201,6 @@
    "id": "mosaicmessages.listMosaicMessage",
    "allowGet": true,
    "parameters": {
-    "id": {
-     "type": "string",
-     "required": true
-    },
     "latitude": {
      "type": "integer",
      "required": true,
@@ -223,7 +213,6 @@
     }
    },
    "parameterOrder": [
-    "id",
     "latitude",
     "longitude"
    ],

@@ -224,7 +224,7 @@ public class MosaicService extends Service implements LocationListener {
 			message.setLatitude(latitude);
 			message.setLongitude(longitude);
 			message.setRadius(radius);
-			message.setMosaicUserId(mosaicUser.getId());
+			message.setMosaicUserEmail(mosaicUser.getEmail());
 			new InsertMessageTask(MosaicService.this, message).execute();
 		}
 
@@ -245,7 +245,7 @@ public class MosaicService extends Service implements LocationListener {
 			if (messages.containsKey(id)) {
 				MosaicMessage message = messages.get(id);
 				new ViewMessageTask(MosaicService.this, id).execute();
-				if (message.getMosaicUserId().equals(mosaicUser.getId()))
+				if (message.getMosaicUserEmail().equals(mosaicUser.getEmail()))
 					iMain.editMessage(message.getId(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
 				else
 					iMain.viewMessage(message.getId(), message.getTitle(), message.getBody(), message.getMosaicUser().getNickname());
@@ -398,8 +398,9 @@ public class MosaicService extends Service implements LocationListener {
 
 		@Override
 		protected List<MosaicMessage> doInBackground(Void... params) {
+			Log.d(TAG, "GetMessagesTask");
 			try {
-				return endpoint.listMosaicMessage("", latitude, longitude).execute().getItems();
+				return endpoint.listMosaicMessage(latitude, longitude).execute().getItems();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

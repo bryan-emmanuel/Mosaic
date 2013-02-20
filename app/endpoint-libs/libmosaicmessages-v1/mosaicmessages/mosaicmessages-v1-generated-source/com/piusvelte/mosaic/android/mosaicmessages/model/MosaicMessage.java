@@ -58,12 +58,6 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.Boolean flagged;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
   private java.lang.String id;
 
   /**
@@ -118,7 +112,7 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String mosaicUserId;
+  private java.lang.String mosaicUserEmail;
 
   /**
    * The value may be {@code null}.
@@ -198,23 +192,6 @@ public final class MosaicMessage extends GenericJson {
    */
   public MosaicMessage setExpiry(java.lang.Long expiry) {
     this.expiry = expiry;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public java.lang.Boolean getFlagged() {
-    return flagged;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicMessage setFlagged(java.lang.Boolean flagged) {
-    this.flagged = flagged;
     return this;
   }
 
@@ -375,16 +352,16 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public java.lang.String getMosaicUserId() {
-    return mosaicUserId;
+  public java.lang.String getMosaicUserEmail() {
+    return mosaicUserEmail;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setMosaicUserId(java.lang.String mosaicUserId) {
-    this.mosaicUserId = mosaicUserId;
+  public MosaicMessage setMosaicUserEmail(java.lang.String mosaicUserEmail) {
+    this.mosaicUserEmail = mosaicUserEmail;
     return this;
   }
 

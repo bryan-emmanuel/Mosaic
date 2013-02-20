@@ -3662,7 +3662,7 @@ com.piusvelte.mosaic.android.SignIn -> com.piusvelte.mosaic.android.SignIn:
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages -> com.piusvelte.mosaic.android.a.a:
     void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest) -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage insertMosaicMessage(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage) -> a
-    com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage listMosaicMessage(java.lang.String,java.lang.Integer,java.lang.Integer) -> a
+    com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage listMosaicMessage(java.lang.Integer,java.lang.Integer) -> a
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage removeMosaicMessage(java.lang.String) -> c
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage reportMosaicMessage(java.lang.String) -> d
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$UpdateMosaicMessage updateMosaicMessage(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage) -> b
@@ -3678,7 +3678,6 @@ com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$Builder -> com.piusve
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$InsertMosaicMessage -> com.piusvelte.mosaic.android.a.c:
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages this$0 -> c
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage -> com.piusvelte.mosaic.android.a.d:
-    java.lang.String id -> id
     java.lang.Integer latitude -> latitude
     java.lang.Integer longitude -> longitude
     com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages this$0 -> c
@@ -3709,7 +3708,6 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage -> com.piusvelte
     java.lang.String body -> body
     java.lang.Long created -> created
     java.lang.Long expiry -> expiry
-    java.lang.Boolean flagged -> flagged
     java.lang.String id -> id
     java.lang.Integer latitude -> latitude
     java.lang.Integer longitude -> longitude
@@ -3719,7 +3717,7 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage -> com.piusvelte
     java.lang.Integer minLongitude -> minLongitude
     java.lang.Integer minlongitude -> minlongitude
     com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser mosaicUser -> mosaicUser
-    java.lang.String mosaicUserId -> mosaicUserId
+    java.lang.String mosaicUserEmail -> mosaicUserEmail
     java.lang.Integer radius -> radius
     java.lang.Integer reports -> reports
     java.lang.String title -> title
@@ -3735,8 +3733,8 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage -> com.piusvelte
     java.lang.Integer getLongitude() -> i
     com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setLongitude(java.lang.Integer) -> b
     com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser getMosaicUser() -> j
-    java.lang.String getMosaicUserId() -> k
-    com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMosaicUserId(java.lang.String) -> b
+    java.lang.String getMosaicUserEmail() -> k
+    com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setMosaicUserEmail(java.lang.String) -> b
     java.lang.Integer getRadius() -> l
     com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage setRadius(java.lang.Integer) -> c
     java.lang.String getTitle() -> m
@@ -3746,7 +3744,6 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection -> com
     java.util.List getItems() -> c
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser -> com.piusvelte.mosaic.android.a.a.c:
     java.lang.String email -> email
-    java.lang.String id -> id
     java.util.List mosaicMessages -> mosaicMessages
     java.lang.String nickname -> nickname
     java.lang.String getNickname() -> c
@@ -3783,7 +3780,6 @@ com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage -> com.piusvelte.mo
     java.lang.String body -> body
     java.lang.Long created -> created
     java.lang.Long expiry -> expiry
-    java.lang.Boolean flagged -> flagged
     java.lang.String id -> id
     java.lang.Integer latitude -> latitude
     java.lang.Integer longitude -> longitude
@@ -3793,7 +3789,7 @@ com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage -> com.piusvelte.mo
     java.lang.Integer minLongitude -> minLongitude
     java.lang.Integer minlongitude -> minlongitude
     com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser mosaicUser -> mosaicUser
-    java.lang.String mosaicUserId -> mosaicUserId
+    java.lang.String mosaicUserEmail -> mosaicUserEmail
     java.lang.Integer radius -> radius
     java.lang.Integer reports -> reports
     java.lang.String title -> title
@@ -3801,10 +3797,8 @@ com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage -> com.piusvelte.mo
     java.lang.Integer visits -> visits
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser -> com.piusvelte.mosaic.android.b.a.b:
     java.lang.String email -> email
-    java.lang.String id -> id
     java.util.List mosaicMessages -> mosaicMessages
     java.lang.String nickname -> nickname
     java.lang.String getEmail() -> c
-    java.lang.String getId() -> d
-    java.lang.String getNickname() -> f
+    java.lang.String getNickname() -> d
     com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser setNickname(java.lang.String) -> a

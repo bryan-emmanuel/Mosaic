@@ -23,22 +23,14 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
 public class MosaicUser {
 	
-	@Id @GeneratedValue
-	private String id;
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
+	@Id
+	private String email;
 
 	public String getNickname() {
 		return nickname;
@@ -57,7 +49,6 @@ public class MosaicUser {
 	}
 	
 	private String nickname;
-	private String email;
 	
 	public MosaicUser() {
 	}

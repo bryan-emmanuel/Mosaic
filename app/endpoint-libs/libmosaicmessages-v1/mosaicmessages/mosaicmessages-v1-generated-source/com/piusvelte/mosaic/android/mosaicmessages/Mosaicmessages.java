@@ -12,7 +12,7 @@
 /*
  * This file was generated.
  *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
- *  on 2013-02-18 at 20:07:53 UTC 
+ *  on 2013-02-19 at 01:57:53 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicmessages;
@@ -321,20 +321,19 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * optional parameters, call the {@link ListMosaicMessage#execute()} method to invoke the remote
    * operation.
    *
-   * @param id
    * @param latitude
    * @param longitude
    * @return the request
    */
-  public ListMosaicMessage listMosaicMessage(java.lang.String id, java.lang.Integer latitude, java.lang.Integer longitude) throws java.io.IOException {
-    ListMosaicMessage result = new ListMosaicMessage(id, latitude, longitude);
+  public ListMosaicMessage listMosaicMessage(java.lang.Integer latitude, java.lang.Integer longitude) throws java.io.IOException {
+    ListMosaicMessage result = new ListMosaicMessage(latitude, longitude);
     initialize(result);
     return result;
   }
 
   public class ListMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection> {
 
-    private static final String REST_PATH = "mosaicmessage/{id}/{latitude}/{longitude}";
+    private static final String REST_PATH = "mosaicmessage/{latitude}/{longitude}";
 
     /**
      * Create a request for the method "listMosaicMessage".
@@ -344,14 +343,12 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * operation. <p> {@link ListMosaicMessage#initialize(AbstractGoogleClientRequest)} must be called
      * to initialize this instance immediately after invoking the constructor. </p>
      *
-     * @param id
      * @param latitude
      * @param longitude
      * @since 1.13
      */
-    protected ListMosaicMessage(java.lang.String id, java.lang.Integer latitude, java.lang.Integer longitude) {
+    protected ListMosaicMessage(java.lang.Integer latitude, java.lang.Integer longitude) {
       super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
       this.latitude = Preconditions.checkNotNull(latitude, "Required parameter latitude must be specified.");
       this.longitude = Preconditions.checkNotNull(longitude, "Required parameter longitude must be specified.");
     }
@@ -399,21 +396,6 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
     @Override
     public ListMosaicMessage setUserIp(java.lang.String userIp) {
       return (ListMosaicMessage) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.String id;
-
-    /**
-
-     */
-    public java.lang.String getId() {
-      return id;
-    }
-
-    public ListMosaicMessage setId(java.lang.String id) {
-      this.id = id;
-      return this;
     }
 
     @com.google.api.client.util.Key
