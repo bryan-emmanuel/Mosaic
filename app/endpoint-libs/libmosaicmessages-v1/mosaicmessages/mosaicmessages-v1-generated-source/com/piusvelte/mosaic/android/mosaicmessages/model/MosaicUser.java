@@ -39,7 +39,25 @@ public final class MosaicUser extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String email;
+  private String email;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private String encodedId;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private String encodedKey;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private Key key;
 
   /**
    * The value may be {@code null}.
@@ -57,13 +75,13 @@ public final class MosaicUser extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String nickname;
+  private String nickname;
 
   /**
 
    * The value returned may be {@code null}.
    */
-  public java.lang.String getEmail() {
+  public String getEmail() {
     return email;
   }
 
@@ -71,8 +89,59 @@ public final class MosaicUser extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicUser setEmail(java.lang.String email) {
+  public MosaicUser setEmail(String email) {
     this.email = email;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public String getEncodedId() {
+    return encodedId;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicUser setEncodedId(String encodedId) {
+    this.encodedId = encodedId;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public String getEncodedKey() {
+    return encodedKey;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicUser setEncodedKey(String encodedKey) {
+    this.encodedKey = encodedKey;
+    return this;
+  }
+
+  /**
+
+   * The value returned may be {@code null}.
+   */
+  public Key getKey() {
+    return key;
+  }
+
+  /**
+
+   * The value set may be {@code null}.
+   */
+  public MosaicUser setKey(Key key) {
+    this.key = key;
     return this;
   }
 
@@ -97,7 +166,7 @@ public final class MosaicUser extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public java.lang.String getNickname() {
+  public String getNickname() {
     return nickname;
   }
 
@@ -105,7 +174,7 @@ public final class MosaicUser extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicUser setNickname(java.lang.String nickname) {
+  public MosaicUser setNickname(String nickname) {
     this.nickname = nickname;
     return this;
   }

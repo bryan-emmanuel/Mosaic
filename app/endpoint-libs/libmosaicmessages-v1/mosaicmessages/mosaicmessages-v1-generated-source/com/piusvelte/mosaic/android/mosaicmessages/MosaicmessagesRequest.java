@@ -12,7 +12,7 @@
 /*
  * This file was generated.
  *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
- *  on 2013-02-19 at 01:57:53 UTC 
+ *  on 2013-02-21 at 04:02:27 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicmessages;
@@ -56,34 +56,34 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
 
   /** Data format for the response. */
   @com.google.api.client.util.Key
-  private java.lang.String alt;
+  private String alt;
 
   /**
    * Data format for the response.    [default: json]
    */
-  public java.lang.String getAlt() {
+  public String getAlt() {
     return alt;
   }
 
   /** Data format for the response. */
-  public MosaicmessagesRequest<T> setAlt(java.lang.String alt) {
+  public MosaicmessagesRequest<T> setAlt(String alt) {
     this.alt = alt;
     return this;
   }
 
   /** Selector specifying which fields to include in a partial response. */
   @com.google.api.client.util.Key
-  private java.lang.String fields;
+  private String fields;
 
   /**
    * Selector specifying which fields to include in a partial response.
    */
-  public java.lang.String getFields() {
+  public String getFields() {
     return fields;
   }
 
   /** Selector specifying which fields to include in a partial response. */
-  public MosaicmessagesRequest<T> setFields(java.lang.String fields) {
+  public MosaicmessagesRequest<T> setFields(String fields) {
     this.fields = fields;
     return this;
   }
@@ -93,13 +93,13 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
  * reports. Required unless you provide an OAuth 2.0 token.
  */
   @com.google.api.client.util.Key
-  private java.lang.String key;
+  private String key;
 
   /**
    * API key. Your API key identifies your project and provides you with API access, quota, and
    * reports. Required unless you provide an OAuth 2.0 token.
    */
-  public java.lang.String getKey() {
+  public String getKey() {
     return key;
   }
 
@@ -107,41 +107,41 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
  * API key. Your API key identifies your project and provides you with API access, quota, and
  * reports. Required unless you provide an OAuth 2.0 token.
  */
-  public MosaicmessagesRequest<T> setKey(java.lang.String key) {
+  public MosaicmessagesRequest<T> setKey(String key) {
     this.key = key;
     return this;
   }
 
   /** OAuth 2.0 token for the current user. */
   @com.google.api.client.util.Key("oauth_token")
-  private java.lang.String oauthToken;
+  private String oauthToken;
 
   /**
    * OAuth 2.0 token for the current user.
    */
-  public java.lang.String getOauthToken() {
+  public String getOauthToken() {
     return oauthToken;
   }
 
   /** OAuth 2.0 token for the current user. */
-  public MosaicmessagesRequest<T> setOauthToken(java.lang.String oauthToken) {
+  public MosaicmessagesRequest<T> setOauthToken(String oauthToken) {
     this.oauthToken = oauthToken;
     return this;
   }
 
   /** Returns response with indentations and line breaks. */
   @com.google.api.client.util.Key
-  private java.lang.Boolean prettyPrint;
+  private Boolean prettyPrint;
 
   /**
    * Returns response with indentations and line breaks.    [default: true]
    */
-  public java.lang.Boolean getPrettyPrint() {
+  public Boolean getPrettyPrint() {
     return prettyPrint;
   }
 
   /** Returns response with indentations and line breaks. */
-  public MosaicmessagesRequest<T> setPrettyPrint(java.lang.Boolean prettyPrint) {
+  public MosaicmessagesRequest<T> setPrettyPrint(Boolean prettyPrint) {
     this.prettyPrint = prettyPrint;
     return this;
   }
@@ -151,13 +151,13 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
  * assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
  */
   @com.google.api.client.util.Key
-  private java.lang.String quotaUser;
+  private String quotaUser;
 
   /**
    * Available to use for quota purposes for server-side applications. Can be any arbitrary string
    * assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
    */
-  public java.lang.String getQuotaUser() {
+  public String getQuotaUser() {
     return quotaUser;
   }
 
@@ -165,7 +165,7 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
  * Available to use for quota purposes for server-side applications. Can be any arbitrary string
  * assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.
  */
-  public MosaicmessagesRequest<T> setQuotaUser(java.lang.String quotaUser) {
+  public MosaicmessagesRequest<T> setQuotaUser(String quotaUser) {
     this.quotaUser = quotaUser;
     return this;
   }
@@ -175,13 +175,13 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
  * limits.
  */
   @com.google.api.client.util.Key
-  private java.lang.String userIp;
+  private String userIp;
 
   /**
    * IP address of the site where the request originates. Use this if you want to enforce per-user
    * limits.
    */
-  public java.lang.String getUserIp() {
+  public String getUserIp() {
     return userIp;
   }
 
@@ -189,7 +189,7 @@ public abstract class MosaicmessagesRequest<T> extends AbstractGoogleJsonClientR
  * IP address of the site where the request originates. Use this if you want to enforce per-user
  * limits.
  */
-  public MosaicmessagesRequest<T> setUserIp(java.lang.String userIp) {
+  public MosaicmessagesRequest<T> setUserIp(String userIp) {
     this.userIp = userIp;
     return this;
   }

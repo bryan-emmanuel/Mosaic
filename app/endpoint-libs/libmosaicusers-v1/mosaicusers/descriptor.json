@@ -1,11 +1,11 @@
 {
   "files": [
     {
-      "path": "mosaic-messaging-mosaicusers-v1-20130219015806-java-1.13.2-beta-sources.jar", 
+      "path": "mosaic-messaging-mosaicusers-v1-20130221040239-java-1.13.2-beta-sources.jar", 
       "type": "source"
     }, 
     {
-      "path": "mosaic-messaging-mosaicusers-v1-20130219015806-java-1.13.2-beta.jar.properties", 
+      "path": "mosaic-messaging-mosaicusers-v1-20130221040239-java-1.13.2-beta.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -690,7 +690,7 @@
     }
   ], 
   "language_version": "1.13.2-beta", 
-  "revision": 20130219015806, 
+  "revision": 20130221040239, 
   "id": "mosaicusers:v1", 
   "name": "mosaicusers"
 }

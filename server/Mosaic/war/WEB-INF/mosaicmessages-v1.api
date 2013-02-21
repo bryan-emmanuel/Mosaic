@@ -202,6 +202,12 @@
             "type" : "string",
             "format" : "int64"
           },
+          "email" : {
+            "type" : "string"
+          },
+          "encodedKey" : {
+            "type" : "string"
+          },
           "expiry" : {
             "type" : "string",
             "format" : "int64"
@@ -212,8 +218,8 @@
               "type" : "string"
             }
           },
-          "id" : {
-            "type" : "string"
+          "key" : {
+            "$ref" : "Key"
           },
           "latitude" : {
             "type" : "number",
@@ -229,12 +235,6 @@
           "longitude1E6" : {
             "type" : "integer"
           },
-          "mosaicUser" : {
-            "$ref" : "MosaicUser"
-          },
-          "mosaicUserEmail" : {
-            "type" : "string"
-          },
           "radius" : {
             "type" : "integer"
           },
@@ -243,6 +243,9 @@
           },
           "title" : {
             "type" : "string"
+          },
+          "user" : {
+            "$ref" : "MosaicUser"
           },
           "visitors" : {
             "type" : "array",
@@ -255,12 +258,46 @@
           }
         }
       },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "complete" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "kind" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "namespace" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          }
+        }
+      },
       "MosaicUser" : {
         "id" : "MosaicUser",
         "type" : "object",
         "properties" : {
           "email" : {
             "type" : "string"
+          },
+          "encodedId" : {
+            "type" : "string"
+          },
+          "encodedKey" : {
+            "type" : "string"
+          },
+          "key" : {
+            "$ref" : "Key"
           },
           "mosaicMessages" : {
             "type" : "array",

@@ -24,16 +24,20 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Entity
 public class MosaicMessage {
 
-	@Id @GeneratedValue
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key key;
 	private String title;
 	private String body;
 	private long created;
@@ -46,24 +50,31 @@ public class MosaicMessage {
 	// select from MosaicMessage as MosaicMessage where :visitor in visitors
 	private List<String> visitors;
 	
-	private String mosaicUserEmail;
+	private String email;
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="mosaicUserEmail",referencedColumnName="email")
-	private MosaicUser mosaicUser;
+	private MosaicUser user;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<String> geocells;
 
 	public MosaicMessage() {
 	}
-
-	public String getId() {
-		return id;
+	
+	public void setKey(Key key) {
+		this.key = key;
+	}
+	
+	public void setEncodedKey(String key) {
+		this.key = KeyFactory.stringToKey(key);
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public Key getKey() {
+		return key;
+	}
+	
+	public String getEncodedKey() {
+		return KeyFactory.keyToString(key);
 	}
 	
 	public String getTitle() {
@@ -146,12 +157,12 @@ public class MosaicMessage {
 		this.reports = reports;
 	}
 
-	public MosaicUser getMosaicUser() {
-		return mosaicUser;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMosaicUser(MosaicUser mosaicUser) {
-		this.mosaicUser = mosaicUser;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<String> getVisitors() {
@@ -162,12 +173,12 @@ public class MosaicMessage {
 		this.visitors = visitors;
 	}
 
-	public String getMosaicUserEmail() {
-		return mosaicUserEmail;
+	public MosaicUser getUser() {
+		return user;
 	}
 
-	public void setMosaicUserEmail(String mosaicUserEmail) {
-		this.mosaicUserEmail = mosaicUserEmail;
+	public void setUser(MosaicUser user) {
+		this.user = user;
 	}
 
 	public List<String> getGeocells() {

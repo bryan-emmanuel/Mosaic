@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/_2PJiiUP9MAgBIEwIdmYn5T9-kk\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/a7-p4S1hogqIU-2c4mPBq21auZg\"",
  "discoveryVersion": "v1",
  "id": "mosaicusers:v1",
  "name": "mosaicusers",
@@ -62,6 +62,31 @@
   }
  },
  "schemas": {
+  "Key": {
+   "id": "Key",
+   "type": "object",
+   "properties": {
+    "complete": {
+     "type": "boolean"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "namespace": {
+     "type": "string"
+    },
+    "parent": {
+     "$ref": "Key"
+    }
+   }
+  },
   "MosaicMessage": {
    "id": "MosaicMessage",
    "type": "object",
@@ -73,46 +98,40 @@
      "type": "string",
      "format": "int64"
     },
+    "email": {
+     "type": "string"
+    },
+    "encodedKey": {
+     "type": "string"
+    },
     "expiry": {
      "type": "string",
      "format": "int64"
     },
-    "id": {
-     "type": "string"
+    "geocells": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "key": {
+     "$ref": "Key"
     },
     "latitude": {
+     "type": "number",
+     "format": "float"
+    },
+    "latitude1E6": {
      "type": "integer",
      "format": "int32"
     },
     "longitude": {
+     "type": "number",
+     "format": "float"
+    },
+    "longitude1E6": {
      "type": "integer",
      "format": "int32"
-    },
-    "maxLatitude": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "maxLongitude": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "minLatitude": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "minLongitude": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "minlongitude": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "mosaicUser": {
-     "$ref": "MosaicUser"
-    },
-    "mosaicUserEmail": {
-     "type": "string"
     },
     "radius": {
      "type": "integer",
@@ -124,6 +143,9 @@
     },
     "title": {
      "type": "string"
+    },
+    "user": {
+     "$ref": "MosaicUser"
     },
     "visitors": {
      "type": "array",
@@ -143,6 +165,15 @@
    "properties": {
     "email": {
      "type": "string"
+    },
+    "encodedId": {
+     "type": "string"
+    },
+    "encodedKey": {
+     "type": "string"
+    },
+    "key": {
+     "$ref": "Key"
     },
     "mosaicMessages": {
      "type": "array",

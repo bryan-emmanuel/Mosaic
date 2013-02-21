@@ -22,6 +22,7 @@ package com.piusvelte.mosaic.gwt.server;
 import com.piusvelte.mosaic.gwt.server.EMF;
 
 import com.google.api.server.spi.config.Api;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
@@ -143,7 +144,7 @@ public class MosaicUsers {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
 			try {
-				mosaicuser = mgr.find(MosaicUser.class, id);
+				mosaicuser = mgr.find(MosaicUser.class, KeyFactory.stringToKey(id));
 				mgr.remove(mosaicuser);
 			} finally {
 				mgr.close();

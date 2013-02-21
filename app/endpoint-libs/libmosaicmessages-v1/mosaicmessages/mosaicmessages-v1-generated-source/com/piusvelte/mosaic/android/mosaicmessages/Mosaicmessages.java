@@ -12,7 +12,7 @@
 /*
  * This file was generated.
  *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
- *  on 2013-02-19 at 01:57:53 UTC 
+ *  on 2013-02-21 at 04:02:27 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicmessages;
@@ -145,6 +145,75 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
   }
 
   /**
+   * Create a request for the method "distance".
+   *
+   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+   * optional parameters, call the {@link Distance#execute()} method to invoke the remote operation.
+   *
+   * @return the request
+   */
+  public Distance distance() throws java.io.IOException {
+    Distance result = new Distance();
+    initialize(result);
+    return result;
+  }
+
+  public class Distance extends MosaicmessagesRequest<Void> {
+
+    private static final String REST_PATH = "distance";
+
+    /**
+     * Create a request for the method "distance".
+     *
+     * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+     * optional parameters, call the {@link Distance#execute()} method to invoke the remote operation.
+     * <p> {@link Distance#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+     * instance immediately after invoking the constructor. </p>
+     *
+     * @since 1.13
+     */
+    protected Distance() {
+      super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
+    }
+
+    @Override
+    public Distance setAlt(String alt) {
+      return (Distance) super.setAlt(alt);
+    }
+
+    @Override
+    public Distance setFields(String fields) {
+      return (Distance) super.setFields(fields);
+    }
+
+    @Override
+    public Distance setKey(String key) {
+      return (Distance) super.setKey(key);
+    }
+
+    @Override
+    public Distance setOauthToken(String oauthToken) {
+      return (Distance) super.setOauthToken(oauthToken);
+    }
+
+    @Override
+    public Distance setPrettyPrint(Boolean prettyPrint) {
+      return (Distance) super.setPrettyPrint(prettyPrint);
+    }
+
+    @Override
+    public Distance setQuotaUser(String quotaUser) {
+      return (Distance) super.setQuotaUser(quotaUser);
+    }
+
+    @Override
+    public Distance setUserIp(String userIp) {
+      return (Distance) super.setUserIp(userIp);
+    }
+
+  }
+
+  /**
    * Create a request for the method "getMosaicMessage".
    *
    * This request holds the parameters needed by the the mosaicmessages server.  After setting any
@@ -154,7 +223,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * @param id
    * @return the request
    */
-  public GetMosaicMessage getMosaicMessage(java.lang.String id) throws java.io.IOException {
+  public GetMosaicMessage getMosaicMessage(String id) throws java.io.IOException {
     GetMosaicMessage result = new GetMosaicMessage(id);
     initialize(result);
     return result;
@@ -175,7 +244,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * @param id
      * @since 1.13
      */
-    protected GetMosaicMessage(java.lang.String id) {
+    protected GetMosaicMessage(String id) {
       super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
       this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
     }
@@ -191,51 +260,51 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public GetMosaicMessage setAlt(java.lang.String alt) {
+    public GetMosaicMessage setAlt(String alt) {
       return (GetMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public GetMosaicMessage setFields(java.lang.String fields) {
+    public GetMosaicMessage setFields(String fields) {
       return (GetMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public GetMosaicMessage setKey(java.lang.String key) {
+    public GetMosaicMessage setKey(String key) {
       return (GetMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public GetMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public GetMosaicMessage setOauthToken(String oauthToken) {
       return (GetMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public GetMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public GetMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (GetMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public GetMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public GetMosaicMessage setQuotaUser(String quotaUser) {
       return (GetMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public GetMosaicMessage setUserIp(java.lang.String userIp) {
+    public GetMosaicMessage setUserIp(String userIp) {
       return (GetMosaicMessage) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private java.lang.String id;
+    private String id;
 
     /**
 
      */
-    public java.lang.String getId() {
+    public String getId() {
       return id;
     }
 
-    public GetMosaicMessage setId(java.lang.String id) {
+    public GetMosaicMessage setId(String id) {
       this.id = id;
       return this;
     }
@@ -278,37 +347,37 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public InsertMosaicMessage setAlt(java.lang.String alt) {
+    public InsertMosaicMessage setAlt(String alt) {
       return (InsertMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public InsertMosaicMessage setFields(java.lang.String fields) {
+    public InsertMosaicMessage setFields(String fields) {
       return (InsertMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public InsertMosaicMessage setKey(java.lang.String key) {
+    public InsertMosaicMessage setKey(String key) {
       return (InsertMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public InsertMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public InsertMosaicMessage setOauthToken(String oauthToken) {
       return (InsertMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public InsertMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public InsertMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (InsertMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public InsertMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public InsertMosaicMessage setQuotaUser(String quotaUser) {
       return (InsertMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public InsertMosaicMessage setUserIp(java.lang.String userIp) {
+    public InsertMosaicMessage setUserIp(String userIp) {
       return (InsertMosaicMessage) super.setUserIp(userIp);
     }
 
@@ -325,7 +394,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * @param longitude
    * @return the request
    */
-  public ListMosaicMessage listMosaicMessage(java.lang.Integer latitude, java.lang.Integer longitude) throws java.io.IOException {
+  public ListMosaicMessage listMosaicMessage(Integer latitude, Integer longitude) throws java.io.IOException {
     ListMosaicMessage result = new ListMosaicMessage(latitude, longitude);
     initialize(result);
     return result;
@@ -347,7 +416,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * @param longitude
      * @since 1.13
      */
-    protected ListMosaicMessage(java.lang.Integer latitude, java.lang.Integer longitude) {
+    protected ListMosaicMessage(Integer latitude, Integer longitude) {
       super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection.class);
       this.latitude = Preconditions.checkNotNull(latitude, "Required parameter latitude must be specified.");
       this.longitude = Preconditions.checkNotNull(longitude, "Required parameter longitude must be specified.");
@@ -364,68 +433,138 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public ListMosaicMessage setAlt(java.lang.String alt) {
+    public ListMosaicMessage setAlt(String alt) {
       return (ListMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public ListMosaicMessage setFields(java.lang.String fields) {
+    public ListMosaicMessage setFields(String fields) {
       return (ListMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public ListMosaicMessage setKey(java.lang.String key) {
+    public ListMosaicMessage setKey(String key) {
       return (ListMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public ListMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public ListMosaicMessage setOauthToken(String oauthToken) {
       return (ListMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public ListMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public ListMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (ListMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public ListMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public ListMosaicMessage setQuotaUser(String quotaUser) {
       return (ListMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public ListMosaicMessage setUserIp(java.lang.String userIp) {
+    public ListMosaicMessage setUserIp(String userIp) {
       return (ListMosaicMessage) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private java.lang.Integer latitude;
+    private Integer latitude;
 
     /**
 
      */
-    public java.lang.Integer getLatitude() {
+    public Integer getLatitude() {
       return latitude;
     }
 
-    public ListMosaicMessage setLatitude(java.lang.Integer latitude) {
+    public ListMosaicMessage setLatitude(Integer latitude) {
       this.latitude = latitude;
       return this;
     }
 
     @com.google.api.client.util.Key
-    private java.lang.Integer longitude;
+    private Integer longitude;
 
     /**
 
      */
-    public java.lang.Integer getLongitude() {
+    public Integer getLongitude() {
       return longitude;
     }
 
-    public ListMosaicMessage setLongitude(java.lang.Integer longitude) {
+    public ListMosaicMessage setLongitude(Integer longitude) {
       this.longitude = longitude;
       return this;
+    }
+
+  }
+
+  /**
+   * Create a request for the method "makeDoubleInRange".
+   *
+   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+   * optional parameters, call the {@link MakeDoubleInRange#execute()} method to invoke the remote
+   * operation.
+   *
+   * @return the request
+   */
+  public MakeDoubleInRange makeDoubleInRange() throws java.io.IOException {
+    MakeDoubleInRange result = new MakeDoubleInRange();
+    initialize(result);
+    return result;
+  }
+
+  public class MakeDoubleInRange extends MosaicmessagesRequest<Void> {
+
+    private static final String REST_PATH = "makeDoubleInRange";
+
+    /**
+     * Create a request for the method "makeDoubleInRange".
+     *
+     * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+     * optional parameters, call the {@link MakeDoubleInRange#execute()} method to invoke the remote
+     * operation. <p> {@link MakeDoubleInRange#initialize(AbstractGoogleClientRequest)} must be called
+     * to initialize this instance immediately after invoking the constructor. </p>
+     *
+     * @since 1.13
+     */
+    protected MakeDoubleInRange() {
+      super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
+    }
+
+    @Override
+    public MakeDoubleInRange setAlt(String alt) {
+      return (MakeDoubleInRange) super.setAlt(alt);
+    }
+
+    @Override
+    public MakeDoubleInRange setFields(String fields) {
+      return (MakeDoubleInRange) super.setFields(fields);
+    }
+
+    @Override
+    public MakeDoubleInRange setKey(String key) {
+      return (MakeDoubleInRange) super.setKey(key);
+    }
+
+    @Override
+    public MakeDoubleInRange setOauthToken(String oauthToken) {
+      return (MakeDoubleInRange) super.setOauthToken(oauthToken);
+    }
+
+    @Override
+    public MakeDoubleInRange setPrettyPrint(Boolean prettyPrint) {
+      return (MakeDoubleInRange) super.setPrettyPrint(prettyPrint);
+    }
+
+    @Override
+    public MakeDoubleInRange setQuotaUser(String quotaUser) {
+      return (MakeDoubleInRange) super.setQuotaUser(quotaUser);
+    }
+
+    @Override
+    public MakeDoubleInRange setUserIp(String userIp) {
+      return (MakeDoubleInRange) super.setUserIp(userIp);
     }
 
   }
@@ -440,7 +579,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * @param id
    * @return the request
    */
-  public RemoveMosaicMessage removeMosaicMessage(java.lang.String id) throws java.io.IOException {
+  public RemoveMosaicMessage removeMosaicMessage(String id) throws java.io.IOException {
     RemoveMosaicMessage result = new RemoveMosaicMessage(id);
     initialize(result);
     return result;
@@ -461,57 +600,57 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * @param id
      * @since 1.13
      */
-    protected RemoveMosaicMessage(java.lang.String id) {
+    protected RemoveMosaicMessage(String id) {
       super(Mosaicmessages.this, "DELETE", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
       this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
     }
 
     @Override
-    public RemoveMosaicMessage setAlt(java.lang.String alt) {
+    public RemoveMosaicMessage setAlt(String alt) {
       return (RemoveMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public RemoveMosaicMessage setFields(java.lang.String fields) {
+    public RemoveMosaicMessage setFields(String fields) {
       return (RemoveMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public RemoveMosaicMessage setKey(java.lang.String key) {
+    public RemoveMosaicMessage setKey(String key) {
       return (RemoveMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public RemoveMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public RemoveMosaicMessage setOauthToken(String oauthToken) {
       return (RemoveMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public RemoveMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public RemoveMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (RemoveMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public RemoveMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public RemoveMosaicMessage setQuotaUser(String quotaUser) {
       return (RemoveMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public RemoveMosaicMessage setUserIp(java.lang.String userIp) {
+    public RemoveMosaicMessage setUserIp(String userIp) {
       return (RemoveMosaicMessage) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private java.lang.String id;
+    private String id;
 
     /**
 
      */
-    public java.lang.String getId() {
+    public String getId() {
       return id;
     }
 
-    public RemoveMosaicMessage setId(java.lang.String id) {
+    public RemoveMosaicMessage setId(String id) {
       this.id = id;
       return this;
     }
@@ -528,7 +667,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * @param id
    * @return the request
    */
-  public ReportMosaicMessage reportMosaicMessage(java.lang.String id) throws java.io.IOException {
+  public ReportMosaicMessage reportMosaicMessage(String id) throws java.io.IOException {
     ReportMosaicMessage result = new ReportMosaicMessage(id);
     initialize(result);
     return result;
@@ -549,57 +688,57 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * @param id
      * @since 1.13
      */
-    protected ReportMosaicMessage(java.lang.String id) {
+    protected ReportMosaicMessage(String id) {
       super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
       this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
     }
 
     @Override
-    public ReportMosaicMessage setAlt(java.lang.String alt) {
+    public ReportMosaicMessage setAlt(String alt) {
       return (ReportMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public ReportMosaicMessage setFields(java.lang.String fields) {
+    public ReportMosaicMessage setFields(String fields) {
       return (ReportMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public ReportMosaicMessage setKey(java.lang.String key) {
+    public ReportMosaicMessage setKey(String key) {
       return (ReportMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public ReportMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public ReportMosaicMessage setOauthToken(String oauthToken) {
       return (ReportMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public ReportMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public ReportMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (ReportMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public ReportMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public ReportMosaicMessage setQuotaUser(String quotaUser) {
       return (ReportMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public ReportMosaicMessage setUserIp(java.lang.String userIp) {
+    public ReportMosaicMessage setUserIp(String userIp) {
       return (ReportMosaicMessage) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private java.lang.String id;
+    private String id;
 
     /**
 
      */
-    public java.lang.String getId() {
+    public String getId() {
       return id;
     }
 
-    public ReportMosaicMessage setId(java.lang.String id) {
+    public ReportMosaicMessage setId(String id) {
       this.id = id;
       return this;
     }
@@ -642,37 +781,37 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
     }
 
     @Override
-    public UpdateMosaicMessage setAlt(java.lang.String alt) {
+    public UpdateMosaicMessage setAlt(String alt) {
       return (UpdateMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public UpdateMosaicMessage setFields(java.lang.String fields) {
+    public UpdateMosaicMessage setFields(String fields) {
       return (UpdateMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public UpdateMosaicMessage setKey(java.lang.String key) {
+    public UpdateMosaicMessage setKey(String key) {
       return (UpdateMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public UpdateMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public UpdateMosaicMessage setOauthToken(String oauthToken) {
       return (UpdateMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public UpdateMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public UpdateMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (UpdateMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public UpdateMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public UpdateMosaicMessage setQuotaUser(String quotaUser) {
       return (UpdateMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public UpdateMosaicMessage setUserIp(java.lang.String userIp) {
+    public UpdateMosaicMessage setUserIp(String userIp) {
       return (UpdateMosaicMessage) super.setUserIp(userIp);
     }
 
@@ -688,7 +827,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * @param id
    * @return the request
    */
-  public ViewMosaicMessage viewMosaicMessage(java.lang.String id) throws java.io.IOException {
+  public ViewMosaicMessage viewMosaicMessage(String id) throws java.io.IOException {
     ViewMosaicMessage result = new ViewMosaicMessage(id);
     initialize(result);
     return result;
@@ -709,57 +848,57 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * @param id
      * @since 1.13
      */
-    protected ViewMosaicMessage(java.lang.String id) {
+    protected ViewMosaicMessage(String id) {
       super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
       this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
     }
 
     @Override
-    public ViewMosaicMessage setAlt(java.lang.String alt) {
+    public ViewMosaicMessage setAlt(String alt) {
       return (ViewMosaicMessage) super.setAlt(alt);
     }
 
     @Override
-    public ViewMosaicMessage setFields(java.lang.String fields) {
+    public ViewMosaicMessage setFields(String fields) {
       return (ViewMosaicMessage) super.setFields(fields);
     }
 
     @Override
-    public ViewMosaicMessage setKey(java.lang.String key) {
+    public ViewMosaicMessage setKey(String key) {
       return (ViewMosaicMessage) super.setKey(key);
     }
 
     @Override
-    public ViewMosaicMessage setOauthToken(java.lang.String oauthToken) {
+    public ViewMosaicMessage setOauthToken(String oauthToken) {
       return (ViewMosaicMessage) super.setOauthToken(oauthToken);
     }
 
     @Override
-    public ViewMosaicMessage setPrettyPrint(java.lang.Boolean prettyPrint) {
+    public ViewMosaicMessage setPrettyPrint(Boolean prettyPrint) {
       return (ViewMosaicMessage) super.setPrettyPrint(prettyPrint);
     }
 
     @Override
-    public ViewMosaicMessage setQuotaUser(java.lang.String quotaUser) {
+    public ViewMosaicMessage setQuotaUser(String quotaUser) {
       return (ViewMosaicMessage) super.setQuotaUser(quotaUser);
     }
 
     @Override
-    public ViewMosaicMessage setUserIp(java.lang.String userIp) {
+    public ViewMosaicMessage setUserIp(String userIp) {
       return (ViewMosaicMessage) super.setUserIp(userIp);
     }
 
     @com.google.api.client.util.Key
-    private java.lang.String id;
+    private String id;
 
     /**
 
      */
-    public java.lang.String getId() {
+    public String getId() {
       return id;
     }
 
-    public ViewMosaicMessage setId(java.lang.String id) {
+    public ViewMosaicMessage setId(String id) {
       this.id = id;
       return this;
     }

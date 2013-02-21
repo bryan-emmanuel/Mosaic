@@ -142,10 +142,10 @@ public class MosaicService extends Service implements LocationListener {
 	}
 
 	protected void addMessage(MosaicMessage message) {
-		messages.put(message.getId(), message);
+		messages.put(message.getKey().toString(), message);
 		if (iMain != null) {
 			try {
-				iMain.addMessage(message.getId(), message.getLatitude(), message.getLongitude(), message.getTitle(), message.getBody(), message.getMosaicUser().getNickname());
+				iMain.addMessage(message.getKey().toString(), message.getLatitude(), message.getLongitude(), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -182,10 +182,10 @@ public class MosaicService extends Service implements LocationListener {
 	}
 
 	protected void updateMessage(MosaicMessage message) {
-		message.put(message.getId(), message);
+		message.put(message.getKey().toString(), message);
 		if (iMain != null) {
 			try {
-				iMain.updateMarker(message.getId(), message.getTitle() + " - " + message.getMosaicUser().getNickname(), message.getBody(), message.getMosaicUser().getNickname());
+				iMain.updateMarker(message.getKey().toString(), message.getTitle() + " - " + message.getUser().getNickname(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -221,10 +221,10 @@ public class MosaicService extends Service implements LocationListener {
 			MosaicMessage message = new MosaicMessage();
 			message.setTitle(title);
 			message.setBody(body);
-			message.setLatitude(latitude);
-			message.setLongitude(longitude);
+			message.setLatitude1E6(latitude);
+			message.setLongitude1E6(longitude);
 			message.setRadius(radius);
-			message.setMosaicUserEmail(mosaicUser.getEmail());
+			message.setEmail(mosaicUser.getEmail());
 			new InsertMessageTask(MosaicService.this, message).execute();
 		}
 
@@ -245,10 +245,10 @@ public class MosaicService extends Service implements LocationListener {
 			if (messages.containsKey(id)) {
 				MosaicMessage message = messages.get(id);
 				new ViewMessageTask(MosaicService.this, id).execute();
-				if (message.getMosaicUserEmail().equals(mosaicUser.getEmail()))
-					iMain.editMessage(message.getId(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
+				if (message.getEmail().equals(mosaicUser.getEmail()))
+					iMain.editMessage(message.getKey().toString(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
 				else
-					iMain.viewMessage(message.getId(), message.getTitle(), message.getBody(), message.getMosaicUser().getNickname());
+					iMain.viewMessage(message.getKey().toString(), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} else {
 				//TODO error
 			}

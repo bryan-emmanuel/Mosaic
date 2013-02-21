@@ -23,14 +23,27 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @Entity
 public class MosaicUser {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key key;
+	
 	private String email;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<MosaicMessage> mosaicMessages;
+	
+	private String nickname;
 
 	public String getNickname() {
 		return nickname;
@@ -48,8 +61,6 @@ public class MosaicUser {
 		this.email = email;
 	}
 	
-	private String nickname;
-	
 	public MosaicUser() {
 	}
 	
@@ -60,8 +71,21 @@ public class MosaicUser {
 	public void setMosaicMessages(List<MosaicMessage> mosaicMessages) {
 		this.mosaicMessages = mosaicMessages;
 	}
+	
+	public void setKey(Key key) {
+		this.key = key;
+	}
+	
+	public void setEncodedKey(String key) {
+		this.key = KeyFactory.stringToKey(key);
+	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mosaicUser")
-	private List<MosaicMessage> mosaicMessages;
+	public Key getKey() {
+		return key;
+	}
+	
+	public String getEncodedId() {
+		return KeyFactory.keyToString(key);
+	}
 
 }
