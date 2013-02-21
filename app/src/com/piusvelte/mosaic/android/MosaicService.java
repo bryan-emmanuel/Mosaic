@@ -54,8 +54,8 @@ public class MosaicService extends Service implements LocationListener {
 	private JsonFactory jsonFactory = new GsonFactory();
 	protected MosaicUser mosaicUser = null;
 	private LocationManager locationManager = null;
-	protected int latitude = Integer.MAX_VALUE;
-	protected int longitude = Integer.MAX_VALUE;
+	protected int latitudeE6 = Integer.MAX_VALUE;
+	protected int longitudeE6 = Integer.MAX_VALUE;
 	protected HashMap<String, MosaicMessage> messages = new HashMap<String, MosaicMessage>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
@@ -127,8 +127,8 @@ public class MosaicService extends Service implements LocationListener {
 
 	private void setCoordinates(Location location) {
 		if (location != null) {
-			latitude = (int) (location.getLatitude() * 1E6);
-			longitude = (int) (location.getLongitude() * 1E6);
+			latitudeE6 = toE6(location.getLatitude());
+			longitudeE6 = toE6(location.getLongitude());
 			if (iMain != null) {
 				try {
 					iMain.setCoordinates(location.getLatitude(), location.getLongitude());
@@ -137,7 +137,7 @@ public class MosaicService extends Service implements LocationListener {
 					e.printStackTrace();
 				}
 			}
-			new GetMessagesTask(this, latitude, longitude).execute();
+			new GetMessagesTask(this, latitudeE6, longitudeE6).execute();
 		}
 	}
 
@@ -145,7 +145,7 @@ public class MosaicService extends Service implements LocationListener {
 		messages.put(message.getKey().toString(), message);
 		if (iMain != null) {
 			try {
-				iMain.addMessage(message.getKey().toString(), message.getLatitude(), message.getLongitude(), message.getTitle(), message.getBody(), message.getUser().getNickname());
+				iMain.addMessage(message.getKey().toString(), fromE6(message.getLatitudeE6()), fromE6(message.getLongitudeE6()), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -192,6 +192,14 @@ public class MosaicService extends Service implements LocationListener {
 			}
 		}
 	}
+	
+	private int toE6(double d) {
+		return (int) (d * 1E6);
+	}
+	
+	private double fromE6(int e6) {
+		return e6 / 1E6;
+	}
 
 	private IMain iMain;
 
@@ -221,10 +229,9 @@ public class MosaicService extends Service implements LocationListener {
 			MosaicMessage message = new MosaicMessage();
 			message.setTitle(title);
 			message.setBody(body);
-			message.setLatitude1E6(latitude);
-			message.setLongitude1E6(longitude);
+			message.setLatitudeE6(latitude);
+			message.setLongitudeE6(longitude);
 			message.setRadius(radius);
-			message.setEmail(mosaicUser.getEmail());
 			new InsertMessageTask(MosaicService.this, message).execute();
 		}
 
@@ -245,7 +252,7 @@ public class MosaicService extends Service implements LocationListener {
 			if (messages.containsKey(id)) {
 				MosaicMessage message = messages.get(id);
 				new ViewMessageTask(MosaicService.this, id).execute();
-				if (message.getEmail().equals(mosaicUser.getEmail()))
+				if (mosaicUser.getEncodedKey().equals(message.getUser().getEncodedKey()))
 					iMain.editMessage(message.getKey().toString(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
 				else
 					iMain.viewMessage(message.getKey().toString(), message.getTitle(), message.getBody(), message.getUser().getNickname());
@@ -274,11 +281,11 @@ public class MosaicService extends Service implements LocationListener {
 	@Override
 	public void onProviderDisabled(String provider) {
 		if ((LocationManager.GPS_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) || (LocationManager.NETWORK_PROVIDER.equals(provider) && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
-			latitude = Integer.MAX_VALUE;
-			longitude = Integer.MAX_VALUE;
+			latitudeE6 = Integer.MAX_VALUE;
+			longitudeE6 = Integer.MAX_VALUE;
 			if (iMain != null) {
 				try {
-					iMain.setCoordinates(latitude, longitude);
+					iMain.setCoordinates(latitudeE6, longitudeE6);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

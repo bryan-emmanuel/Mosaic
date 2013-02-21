@@ -45,12 +45,6 @@ public final class MosaicUser extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private String encodedId;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
   private String encodedKey;
 
   /**
@@ -91,23 +85,6 @@ public final class MosaicUser extends GenericJson {
    */
   public MosaicUser setEmail(String email) {
     this.email = email;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public String getEncodedId() {
-    return encodedId;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicUser setEncodedId(String encodedId) {
-    this.encodedId = encodedId;
     return this;
   }
 

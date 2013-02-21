@@ -29,6 +29,7 @@ import com.google.appengine.api.users.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -73,12 +74,17 @@ public class MosaicUsers {
 	 * @return The entity with primary key id.
 	 * @throws OAuthRequestException 
 	 */
-	public MosaicUser getMosaicUser(@Named("id") String id, User user) throws OAuthRequestException {
+	public MosaicUser getMosaicUser(@Nullable @Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
 			try {
-				mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email").setParameter("email", user.getEmail()).getSingleResult();
+				if (encodedKey != null)
+					mosaicuser = (MosaicUser) mgr.find(MosaicUser.class, KeyFactory.stringToKey(encodedKey));
+				else
+					mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email")
+						.setParameter("email", user.getEmail())
+						.getSingleResult();
 			} finally {
 				mgr.close();
 			}
@@ -139,12 +145,12 @@ public class MosaicUsers {
 	 * @return The deleted entity.
 	 * @throws OAuthRequestException 
 	 */
-	public MosaicUser removeMosaicUser(@Named("id") String id, User user) throws OAuthRequestException {
+	public MosaicUser removeMosaicUser(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
 			try {
-				mosaicuser = mgr.find(MosaicUser.class, KeyFactory.stringToKey(id));
+				mosaicuser = mgr.find(MosaicUser.class, KeyFactory.stringToKey(encodedKey));
 				mgr.remove(mosaicuser);
 			} finally {
 				mgr.close();

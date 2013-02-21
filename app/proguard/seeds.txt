@@ -466,8 +466,8 @@ com.piusvelte.mosaic.android.R$styleable: int MapAttrs_zOrderOnTop
 com.piusvelte.mosaic.android.SignIn
 com.piusvelte.mosaic.android.SignIn: SignIn()
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$GetMosaicMessage: java.lang.String id
-com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage: java.lang.Integer latitude
-com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage: java.lang.Integer longitude
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage: java.lang.Integer latE6
+com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ListMosaicMessage: java.lang.Integer lonE6
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$RemoveMosaicMessage: java.lang.String id
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ReportMosaicMessage: java.lang.String id
 com.piusvelte.mosaic.android.mosaicmessages.Mosaicmessages$ViewMosaicMessage: java.lang.String id
@@ -478,6 +478,7 @@ com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest: java.lang.Str
 com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest: java.lang.Boolean prettyPrint
 com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest: java.lang.String quotaUser
 com.piusvelte.mosaic.android.mosaicmessages.MosaicmessagesRequest: java.lang.String userIp
+com.piusvelte.mosaic.android.mosaicmessages.model.Key: java.lang.String appId
 com.piusvelte.mosaic.android.mosaicmessages.model.Key: java.lang.Boolean complete
 com.piusvelte.mosaic.android.mosaicmessages.model.Key: java.lang.Long id
 com.piusvelte.mosaic.android.mosaicmessages.model.Key: java.lang.String kind
@@ -486,15 +487,12 @@ com.piusvelte.mosaic.android.mosaicmessages.model.Key: java.lang.String namespac
 com.piusvelte.mosaic.android.mosaicmessages.model.Key: com.piusvelte.mosaic.android.mosaicmessages.model.Key parent
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.String body
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Long created
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.String email
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.String encodedKey
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Long expiry
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.util.List geocells
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: com.piusvelte.mosaic.android.mosaicmessages.model.Key key
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Float latitude
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer latitude1E6
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Float longitude
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer longitude1E6
+com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer latitudeE6
+com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer longitudeE6
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer radius
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer reports
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.String title
@@ -503,7 +501,6 @@ com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.util.List 
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage: java.lang.Integer visits
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection: java.util.List items
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String email
-com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String encodedId
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.lang.String encodedKey
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: com.piusvelte.mosaic.android.mosaicmessages.model.Key key
 com.piusvelte.mosaic.android.mosaicmessages.model.MosaicUser: java.util.List mosaicMessages
@@ -517,6 +514,7 @@ com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest: java.lang.String oa
 com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest: java.lang.Boolean prettyPrint
 com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest: java.lang.String quotaUser
 com.piusvelte.mosaic.android.mosaicusers.MosaicusersRequest: java.lang.String userIp
+com.piusvelte.mosaic.android.mosaicusers.model.Key: java.lang.String appId
 com.piusvelte.mosaic.android.mosaicusers.model.Key: java.lang.Boolean complete
 com.piusvelte.mosaic.android.mosaicusers.model.Key: java.lang.Long id
 com.piusvelte.mosaic.android.mosaicusers.model.Key: java.lang.String kind
@@ -525,15 +523,12 @@ com.piusvelte.mosaic.android.mosaicusers.model.Key: java.lang.String namespace
 com.piusvelte.mosaic.android.mosaicusers.model.Key: com.piusvelte.mosaic.android.mosaicusers.model.Key parent
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.String body
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Long created
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.String email
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.String encodedKey
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Long expiry
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.util.List geocells
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: com.piusvelte.mosaic.android.mosaicusers.model.Key key
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Float latitude
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer latitude1E6
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Float longitude
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer longitude1E6
+com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer latitudeE6
+com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer longitudeE6
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer radius
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer reports
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.String title
@@ -541,7 +536,6 @@ com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: com.piusvelte.mosa
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.util.List visitors
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicMessage: java.lang.Integer visits
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String email
-com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String encodedId
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.lang.String encodedKey
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: com.piusvelte.mosaic.android.mosaicusers.model.Key key
 com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser: java.util.List mosaicMessages

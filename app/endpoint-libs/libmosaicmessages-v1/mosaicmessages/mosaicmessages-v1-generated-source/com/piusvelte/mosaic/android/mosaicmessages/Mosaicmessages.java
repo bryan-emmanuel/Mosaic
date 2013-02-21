@@ -12,7 +12,7 @@
 /*
  * This file was generated.
  *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
- *  on 2013-02-21 at 04:02:27 UTC 
+ *  on 2013-02-21 at 20:26:25 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicmessages;
@@ -142,75 +142,6 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
   @Override
   protected void initialize(AbstractGoogleClientRequest<?> httpClientRequest) throws java.io.IOException {
     super.initialize(httpClientRequest);
-  }
-
-  /**
-   * Create a request for the method "distance".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link Distance#execute()} method to invoke the remote operation.
-   *
-   * @return the request
-   */
-  public Distance distance() throws java.io.IOException {
-    Distance result = new Distance();
-    initialize(result);
-    return result;
-  }
-
-  public class Distance extends MosaicmessagesRequest<Void> {
-
-    private static final String REST_PATH = "distance";
-
-    /**
-     * Create a request for the method "distance".
-     *
-     * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link Distance#execute()} method to invoke the remote operation.
-     * <p> {@link Distance#initialize(AbstractGoogleClientRequest)} must be called to initialize this
-     * instance immediately after invoking the constructor. </p>
-     *
-     * @since 1.13
-     */
-    protected Distance() {
-      super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
-    }
-
-    @Override
-    public Distance setAlt(String alt) {
-      return (Distance) super.setAlt(alt);
-    }
-
-    @Override
-    public Distance setFields(String fields) {
-      return (Distance) super.setFields(fields);
-    }
-
-    @Override
-    public Distance setKey(String key) {
-      return (Distance) super.setKey(key);
-    }
-
-    @Override
-    public Distance setOauthToken(String oauthToken) {
-      return (Distance) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public Distance setPrettyPrint(Boolean prettyPrint) {
-      return (Distance) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public Distance setQuotaUser(String quotaUser) {
-      return (Distance) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public Distance setUserIp(String userIp) {
-      return (Distance) super.setUserIp(userIp);
-    }
-
   }
 
   /**
@@ -390,19 +321,19 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    * optional parameters, call the {@link ListMosaicMessage#execute()} method to invoke the remote
    * operation.
    *
-   * @param latitude
-   * @param longitude
+   * @param latE6
+   * @param lonE6
    * @return the request
    */
-  public ListMosaicMessage listMosaicMessage(Integer latitude, Integer longitude) throws java.io.IOException {
-    ListMosaicMessage result = new ListMosaicMessage(latitude, longitude);
+  public ListMosaicMessage listMosaicMessage(Integer latE6, Integer lonE6) throws java.io.IOException {
+    ListMosaicMessage result = new ListMosaicMessage(latE6, lonE6);
     initialize(result);
     return result;
   }
 
   public class ListMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection> {
 
-    private static final String REST_PATH = "mosaicmessage/{latitude}/{longitude}";
+    private static final String REST_PATH = "mosaicmessage/{latE6}/{lonE6}";
 
     /**
      * Create a request for the method "listMosaicMessage".
@@ -412,14 +343,14 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
      * operation. <p> {@link ListMosaicMessage#initialize(AbstractGoogleClientRequest)} must be called
      * to initialize this instance immediately after invoking the constructor. </p>
      *
-     * @param latitude
-     * @param longitude
+     * @param latE6
+     * @param lonE6
      * @since 1.13
      */
-    protected ListMosaicMessage(Integer latitude, Integer longitude) {
+    protected ListMosaicMessage(Integer latE6, Integer lonE6) {
       super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection.class);
-      this.latitude = Preconditions.checkNotNull(latitude, "Required parameter latitude must be specified.");
-      this.longitude = Preconditions.checkNotNull(longitude, "Required parameter longitude must be specified.");
+      this.latE6 = Preconditions.checkNotNull(latE6, "Required parameter latE6 must be specified.");
+      this.lonE6 = Preconditions.checkNotNull(lonE6, "Required parameter lonE6 must be specified.");
     }
 
     @Override
@@ -468,103 +399,33 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
     }
 
     @com.google.api.client.util.Key
-    private Integer latitude;
+    private Integer latE6;
 
     /**
 
      */
-    public Integer getLatitude() {
-      return latitude;
+    public Integer getLatE6() {
+      return latE6;
     }
 
-    public ListMosaicMessage setLatitude(Integer latitude) {
-      this.latitude = latitude;
+    public ListMosaicMessage setLatE6(Integer latE6) {
+      this.latE6 = latE6;
       return this;
     }
 
     @com.google.api.client.util.Key
-    private Integer longitude;
+    private Integer lonE6;
 
     /**
 
      */
-    public Integer getLongitude() {
-      return longitude;
+    public Integer getLonE6() {
+      return lonE6;
     }
 
-    public ListMosaicMessage setLongitude(Integer longitude) {
-      this.longitude = longitude;
+    public ListMosaicMessage setLonE6(Integer lonE6) {
+      this.lonE6 = lonE6;
       return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "makeDoubleInRange".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link MakeDoubleInRange#execute()} method to invoke the remote
-   * operation.
-   *
-   * @return the request
-   */
-  public MakeDoubleInRange makeDoubleInRange() throws java.io.IOException {
-    MakeDoubleInRange result = new MakeDoubleInRange();
-    initialize(result);
-    return result;
-  }
-
-  public class MakeDoubleInRange extends MosaicmessagesRequest<Void> {
-
-    private static final String REST_PATH = "makeDoubleInRange";
-
-    /**
-     * Create a request for the method "makeDoubleInRange".
-     *
-     * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link MakeDoubleInRange#execute()} method to invoke the remote
-     * operation. <p> {@link MakeDoubleInRange#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
-     *
-     * @since 1.13
-     */
-    protected MakeDoubleInRange() {
-      super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
-    }
-
-    @Override
-    public MakeDoubleInRange setAlt(String alt) {
-      return (MakeDoubleInRange) super.setAlt(alt);
-    }
-
-    @Override
-    public MakeDoubleInRange setFields(String fields) {
-      return (MakeDoubleInRange) super.setFields(fields);
-    }
-
-    @Override
-    public MakeDoubleInRange setKey(String key) {
-      return (MakeDoubleInRange) super.setKey(key);
-    }
-
-    @Override
-    public MakeDoubleInRange setOauthToken(String oauthToken) {
-      return (MakeDoubleInRange) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public MakeDoubleInRange setPrettyPrint(Boolean prettyPrint) {
-      return (MakeDoubleInRange) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public MakeDoubleInRange setQuotaUser(String quotaUser) {
-      return (MakeDoubleInRange) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public MakeDoubleInRange setUserIp(String userIp) {
-      return (MakeDoubleInRange) super.setUserIp(userIp);
     }
 
   }

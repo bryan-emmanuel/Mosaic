@@ -48,14 +48,14 @@ public class MosaicMessages {
 	 * @throws OAuthRequestException 
 	 */
 	@SuppressWarnings({ "cast", "unchecked" })
-	public List<MosaicMessage> listMosaicMessage(@Named("latitude") int lat1E6, @Named("longitude") int lon1E6, User user) throws OAuthRequestException {
+	public List<MosaicMessage> listMosaicMessage(@Named("latitudeE6") int latitudeE6, @Named("longitudeE6") int longitudeE6, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			List<MosaicMessage> result = new ArrayList<MosaicMessage>();
 			try {
-				float lat = coordinateFrom1E6(lat1E6);
-				float lon = coordinateFrom1E6(lon1E6);
-				List<String> geocells = getGeocells(lat, lon);
+				double lat = GeocellHelper.fromE6(latitudeE6);
+				double lon = GeocellHelper.fromE6(longitudeE6);
+				List<String> geocells = GeocellHelper.getGeocells(lat, lon);
 				StringBuffer queryStr = new StringBuffer("select from MosaicMessage as MosaicMessage where geocells in (");
 				boolean first = true;
 				for (String geocell : geocells) {
@@ -71,7 +71,7 @@ public class MosaicMessages {
 				List<MosaicMessage> msgs = query.getResultList();
 				for (MosaicMessage msg : msgs) {
 					if ((msg.getReports() <= msg.getVisits())
-							&& (distance(lat, lon, msg.getLatitude(), msg.getLongitude()) < msg.getRadius()))
+							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(msg.getLatitudeE6()), GeocellHelper.fromE6(msg.getLongitudeE6())) < msg.getRadius()))
 						result.add(msg);
 				}
 			} finally {
@@ -82,145 +82,18 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	private static int distanceLatitude(float north, float south) {
-		return (int) Math.ceil((Math.toRadians(Math.abs(north - south)) * EARTHS_RADIUS));
-	}
-
-	private static int distanceLongitude(float latitude, float east, float west) {
-		return (int) Math.ceil((Math.toRadians(Math.abs(east - west)) * Math.cos(Math.toRadians(latitude)) * EARTHS_RADIUS));
-	}
-	
-	private static float coordinateFrom1E6(int coordinate) {
-		return (float) (coordinate / 1E6);
-	}
-
-	private static final int EARTHS_RADIUS = 6378135;
-	private static final int MAX_RESOLUTION = 13;
-	private static final float MIN_LONGITUDE = -180.0f;
-	private static final float MAX_LONGITUDE = 180.0f;
-	private static final float MIN_LATITUDE = -90.0f;
-	private static final float MAX_LATITUDE = 90.0f;
-	private static final int GEOCELL_GRID_SIZE = 4;
-	private static final String GEOCELL_ALPHABET = "0123456789abcdef";
-
-	private static char geocellChar(int[] pos) {
-		return GEOCELL_ALPHABET.charAt(
-				(pos[1] & 2) << 2 |
-				(pos[0] & 2) << 1 |
-				(pos[1] & 1) << 1 |
-				(pos[0] & 1) << 0);
-	}
-	
-	private static String getGeocell(float latitude, float longitude, int resolution) {
-		float north = MAX_LATITUDE;
-		float south = MIN_LATITUDE;
-		float east = MAX_LONGITUDE;
-		float west = MIN_LONGITUDE;
-		StringBuilder geocell = new StringBuilder();
-		while (geocell.length() < resolution) {
-			float subcellLonSpan = (east - west) / GEOCELL_GRID_SIZE;
-			float subcellLatSpan = (north - south) / GEOCELL_GRID_SIZE;
-			int x = Math.min((int) (GEOCELL_GRID_SIZE * (latitude - west) / (east - west)),
-					GEOCELL_GRID_SIZE - 1);
-			int y = Math.min((int) (GEOCELL_GRID_SIZE * (latitude - south) / (north - south)),
-					GEOCELL_GRID_SIZE - 1);
-			int pos[] = {x, y};
-			geocell.append(geocellChar(pos));
-			south +=  subcellLatSpan * y;
-			north = south + subcellLatSpan;
-			west += subcellLonSpan * x;
-			east = west + subcellLonSpan;
-		}
-		return geocell.toString();
-	}
-	
-	private static String getGeocellWithinRadius(float latitude, float longitude, int resolution, int radius) {
-		float north = MAX_LATITUDE;
-		float south = MIN_LATITUDE;
-		float east = MAX_LONGITUDE;
-		float west = MIN_LONGITUDE;
-		StringBuilder geocell = new StringBuilder();
-		boolean radiusMet = false;
-		while ((geocell.length() < resolution) && !radiusMet) {
-			if ((distanceLatitude(latitude, north) > radius)
-					&& (distanceLatitude(latitude, south) > radius)
-					&& (distanceLongitude(latitude, longitude, east) > radius)
-					&& (distanceLongitude(latitude, longitude, west) > radius))
-				radiusMet = true;
-			float subcellLonSpan = (east - west) / GEOCELL_GRID_SIZE;
-			float subcellLatSpan = (north - south) / GEOCELL_GRID_SIZE;
-			int x = Math.min((int) (GEOCELL_GRID_SIZE * (latitude - west) / (east - west)),
-					GEOCELL_GRID_SIZE - 1);
-			int y = Math.min((int) (GEOCELL_GRID_SIZE * (latitude - south) / (north - south)),
-					GEOCELL_GRID_SIZE - 1);
-			int pos[] = {x, y};
-			geocell.append(geocellChar(pos));
-			south +=  subcellLatSpan * y;
-			north = south + subcellLatSpan;
-			west += subcellLonSpan * x;
-			east = west + subcellLonSpan;
-		}
-		return geocell.toString();
-	}
-	
-	private static List<String> getGeocells(float latitude, float longitude) {
-		List<String> geocells = new ArrayList<String>();
-		String lastGeocell = "";
-		for (int resolution = MAX_RESOLUTION; resolution > 0; resolution--) {
-			String nextGeocell = getGeocell(latitude, longitude, resolution);
-			if (!nextGeocell.equals(lastGeocell))
-				geocells.add(nextGeocell);
-			else
-				break;
-		}
-		return geocells;
-	}
-	
-	private static List<String> getGeocellsWithinRadius(float latitude, float longitude, int radius) {
-		List<String> geocells = new ArrayList<String>();
-		String lastGeocell = "";
-		for (int resolution = MAX_RESOLUTION; resolution > 0; resolution--) {
-			String nextGeocell = getGeocellWithinRadius(latitude, longitude, resolution, radius);
-			if (!nextGeocell.equals(lastGeocell))
-				geocells.add(nextGeocell);
-			else
-				break;
-			lastGeocell = nextGeocell;
-		}
-		return geocells;
-	}
-
-	public static double distance(double lat1, double lon1, double lat2, double lon2) {
-		double p1lat = Math.toRadians(lat1);
-		double p1lon = Math.toRadians(lon1);
-		double p2lat = Math.toRadians(lat2);
-		double p2lon = Math.toRadians(lon2);
-		return EARTHS_RADIUS
-				* Math.acos(makeDoubleInRange(Math.sin(p1lat) * Math.sin(p2lat)
-						+ Math.cos(p1lat) * Math.cos(p2lat)
-						* Math.cos(p2lon - p1lon)));
-	}
-
-	public static double makeDoubleInRange(double d) {
-		if (d > 1)
-			return 1;
-		else if (d < -1)
-			return -1;
-		return d;
-	}
-
 	/**
 	 * This method gets the entity having primary key id. It uses HTTP GET method.
 	 *
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	public MosaicMessage getMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	public MosaicMessage getMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
 			} finally {
 				mgr.close();
 			}
@@ -238,9 +111,15 @@ public class MosaicMessages {
 	 */
 	public MosaicMessage insertMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
-			mosaicmessage.setGeocells(getGeocellsWithinRadius(mosaicmessage.getLatitude(), mosaicmessage.getLongitude(), mosaicmessage.getRadius()));
+			mosaicmessage.setGeocells(GeocellHelper.getGeocellsWithinRadius(GeocellHelper.fromE6(mosaicmessage.getLatitudeE6()), GeocellHelper.fromE6(mosaicmessage.getLongitudeE6()), mosaicmessage.getRadius()));
 			EntityManager mgr = getEntityManager();
 			try {
+				MosaicUser mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email")
+						.setParameter("email", user.getEmail())
+						.getSingleResult();
+				mosaicmessage.setUser(mosaicuser);
+				mosaicuser.addMosaicMessage(mosaicmessage);
+				mgr.persist(mosaicuser);
 				mgr.persist(mosaicmessage);
 			} finally {
 				mgr.close();
@@ -259,7 +138,7 @@ public class MosaicMessages {
 	 */
 	public MosaicMessage updateMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
-			mosaicmessage.setGeocells(getGeocellsWithinRadius(mosaicmessage.getLatitude(), mosaicmessage.getLongitude(), mosaicmessage.getRadius()));
+			mosaicmessage.setGeocells(GeocellHelper.getGeocellsWithinRadius(GeocellHelper.fromE6(mosaicmessage.getLatitudeE6()), GeocellHelper.fromE6(mosaicmessage.getLongitudeE6()), mosaicmessage.getRadius()));
 			EntityManager mgr = getEntityManager();
 			try {
 				mgr.persist(mosaicmessage);
@@ -278,12 +157,12 @@ public class MosaicMessages {
 	 * @param id the primary key of the entity to be deleted.
 	 * @return The deleted entity.
 	 */
-	public MosaicMessage removeMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	public MosaicMessage removeMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
 				mgr.remove(mosaicmessage);
 			} finally {
 				mgr.close();
@@ -293,12 +172,12 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	public void reportMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	public void reportMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
 				mosaicmessage.setReports(mosaicmessage.getReports() + 2);
 				mgr.persist(mosaicmessage);
 			} finally {
@@ -308,11 +187,11 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	public void viewMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	public void viewMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			try {
-				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
 				List<String> visitors = mosaicmessage.getVisitors();
 				MosaicUser mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email").setParameter("email", user.getEmail()).getSingleResult();
 				if (!visitors.contains(mosaicuser.getEmail())) {

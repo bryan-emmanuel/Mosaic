@@ -41,8 +41,8 @@ public class MosaicMessage {
 	private String title;
 	private String body;
 	private long created;
-	private float latitude;
-	private float longitude;
+	private int latitudeE6;
+	private int longitudeE6;
 	private int radius;
 	private long expiry;
 	private int visits;
@@ -50,14 +50,12 @@ public class MosaicMessage {
 	// select from MosaicMessage as MosaicMessage where :visitor in visitors
 	private List<String> visitors;
 	
-	private String email;
-	
 	@ManyToOne(optional=false)
 	private MosaicUser user;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<String> geocells;
-
+	
 	public MosaicMessage() {
 	}
 	
@@ -101,28 +99,20 @@ public class MosaicMessage {
 		this.created = created;
 	}
 
-	public float getLatitude() {
-		return latitude;
+	public int getLatitudeE6() {
+		return latitudeE6;
+	}
+
+	public void setLatitudeE6(int latitudeE6) {
+		this.latitudeE6 = latitudeE6;
+	}
+
+	public int getLongitudeE6() {
+		return longitudeE6;
 	}
 	
-	public void setLatitude1E6(int latitude) {
-		this.latitude = (float) (latitude / 1E6);
-	}
-
-	public void setLatitude(float latitude) {
-		this.latitude = latitude;
-	}
-
-	public float getLongitude() {
-		return longitude;
-	}
-	
-	public void setLongitude1E6(int longitude) {
-		this.longitude = (float) (longitude / 1E6);
-	}
-
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
+	public void setLongitudeE6(int longitudeE6) {
+		this.longitudeE6 = longitudeE6;
 	}
 
 	public int getRadius() {
@@ -155,14 +145,6 @@ public class MosaicMessage {
 
 	public void setReports(int reports) {
 		this.reports = reports;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public List<String> getVisitors() {

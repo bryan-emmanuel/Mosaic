@@ -47,8 +47,8 @@ WebClientService {
 	
 	@Override
 	public WebClientMessage[] getMessages(int page) throws IllegalArgumentException {
-		if (userService.isUserLoggedIn())
-			return MessageHelper.getMessages(userService.getCurrentUser(), page);
+//		if (userService.isUserLoggedIn())
+//			return MessageHelper.getMessages(userService.getCurrentUser(), page);
 		throw new IllegalArgumentException("Please sign in to view messages.");
 	}
 	

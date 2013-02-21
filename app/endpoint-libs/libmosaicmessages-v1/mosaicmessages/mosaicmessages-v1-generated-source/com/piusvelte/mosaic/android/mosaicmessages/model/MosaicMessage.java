@@ -52,12 +52,6 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private String email;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
   private String encodedKey;
 
   /**
@@ -82,25 +76,13 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Float latitude;
+  private Integer latitudeE6;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer latitude1E6;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private Float longitude;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private Integer longitude1E6;
+  private Integer longitudeE6;
 
   /**
    * The value may be {@code null}.
@@ -176,23 +158,6 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public String getEmail() {
-    return email;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicMessage setEmail(String email) {
-    this.email = email;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
   public String getEncodedKey() {
     return encodedKey;
   }
@@ -261,16 +226,16 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Float getLatitude() {
-    return latitude;
+  public Integer getLatitudeE6() {
+    return latitudeE6;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setLatitude(Float latitude) {
-    this.latitude = latitude;
+  public MosaicMessage setLatitudeE6(Integer latitudeE6) {
+    this.latitudeE6 = latitudeE6;
     return this;
   }
 
@@ -278,50 +243,16 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getLatitude1E6() {
-    return latitude1E6;
+  public Integer getLongitudeE6() {
+    return longitudeE6;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setLatitude1E6(Integer latitude1E6) {
-    this.latitude1E6 = latitude1E6;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public Float getLongitude() {
-    return longitude;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicMessage setLongitude(Float longitude) {
-    this.longitude = longitude;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public Integer getLongitude1E6() {
-    return longitude1E6;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicMessage setLongitude1E6(Integer longitude1E6) {
-    this.longitude1E6 = longitude1E6;
+  public MosaicMessage setLongitudeE6(Integer longitudeE6) {
+    this.longitudeE6 = longitudeE6;
     return this;
   }
 
