@@ -315,7 +315,7 @@ public class MosaicService extends Service implements LocationListener {
 		UpdateUserTask(MosaicService callback) {
 			this.callback = callback;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getEmail());
+			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
 					credential);
@@ -325,7 +325,7 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected Void doInBackground(Void... params) { 
 			try {
-				mosaicUser = endpoint.getMosaicUser(mosaicUser.getEmail()).execute();
+				mosaicUser = endpoint.getMosaicUser(mosaicUser.getKey().getName()).execute();
 			} catch (IOException e) {
 				try {
 					mosaicUser = endpoint.insertMosaicUser(new MosaicUser()).execute();
@@ -396,7 +396,7 @@ public class MosaicService extends Service implements LocationListener {
 			this.latitude = latitude;
 			this.longitude = longitude;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId)
-					.setSelectedAccountName(mosaicUser.getEmail());
+					.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -432,7 +432,7 @@ public class MosaicService extends Service implements LocationListener {
 			this.callback = callback;
 			this.message = message;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getEmail());
+			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -468,7 +468,7 @@ public class MosaicService extends Service implements LocationListener {
 			this.callback = callback;
 			this.id = id;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getEmail());
+			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -497,7 +497,7 @@ public class MosaicService extends Service implements LocationListener {
 			this.callback = callback;
 			this.message = message;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getEmail());
+			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -532,7 +532,7 @@ public class MosaicService extends Service implements LocationListener {
 			this.callback = callback;
 			this.id = id;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getEmail());
+			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -561,7 +561,7 @@ public class MosaicService extends Service implements LocationListener {
 			this.callback = callback;
 			this.id = id;
 			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getEmail());
+			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);

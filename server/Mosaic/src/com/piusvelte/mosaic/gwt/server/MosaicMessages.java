@@ -48,13 +48,13 @@ public class MosaicMessages {
 	 * @throws OAuthRequestException 
 	 */
 	@SuppressWarnings({ "cast", "unchecked" })
-	public List<MosaicMessage> listMosaicMessage(@Named("latitudeE6") int latitudeE6, @Named("longitudeE6") int longitudeE6, User user) throws OAuthRequestException {
+	public List<MosaicMessage> listMosaicMessage(@Named("latE6") int latE6, @Named("lonE6") int lonE6, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			List<MosaicMessage> result = new ArrayList<MosaicMessage>();
 			try {
-				double lat = GeocellHelper.fromE6(latitudeE6);
-				double lon = GeocellHelper.fromE6(longitudeE6);
+				double lat = GeocellHelper.fromE6(latE6);
+				double lon = GeocellHelper.fromE6(lonE6);
 				List<String> geocells = GeocellHelper.getGeocells(lat, lon);
 				StringBuffer queryStr = new StringBuffer("select from MosaicMessage as MosaicMessage where geocells in (");
 				boolean first = true;
@@ -88,12 +88,12 @@ public class MosaicMessages {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	public MosaicMessage getMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
+	public MosaicMessage getMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
+				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
 			} finally {
 				mgr.close();
 			}
@@ -114,11 +114,9 @@ public class MosaicMessages {
 			mosaicmessage.setGeocells(GeocellHelper.getGeocellsWithinRadius(GeocellHelper.fromE6(mosaicmessage.getLatitudeE6()), GeocellHelper.fromE6(mosaicmessage.getLongitudeE6()), mosaicmessage.getRadius()));
 			EntityManager mgr = getEntityManager();
 			try {
-				MosaicUser mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email")
-						.setParameter("email", user.getEmail())
-						.getSingleResult();
+				MosaicUser mosaicuser = mgr.find(MosaicUser.class, KeyFactory.createKey("MosaicUser", user.getEmail()));
 				mosaicmessage.setUser(mosaicuser);
-				mosaicuser.addMosaicMessage(mosaicmessage);
+				mosaicuser.addMessage(mosaicmessage);
 				mgr.persist(mosaicuser);
 				mgr.persist(mosaicmessage);
 			} finally {
@@ -157,12 +155,12 @@ public class MosaicMessages {
 	 * @param id the primary key of the entity to be deleted.
 	 * @return The deleted entity.
 	 */
-	public MosaicMessage removeMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
+	public MosaicMessage removeMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
+				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
 				mgr.remove(mosaicmessage);
 			} finally {
 				mgr.close();
@@ -172,12 +170,12 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	public void reportMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
+	public void reportMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
+				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
 				mosaicmessage.setReports(mosaicmessage.getReports() + 2);
 				mgr.persist(mosaicmessage);
 			} finally {
@@ -187,17 +185,12 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	public void viewMosaicMessage(@Named("encodedKey") String encodedKey, User user) throws OAuthRequestException {
+	public void viewMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			try {
-				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(encodedKey));
-				List<String> visitors = mosaicmessage.getVisitors();
-				MosaicUser mosaicuser = (MosaicUser) mgr.createQuery("select from MosaicUser as MosaicUser where email = :email").setParameter("email", user.getEmail()).getSingleResult();
-				if (!visitors.contains(mosaicuser.getEmail())) {
-					visitors.add(mosaicuser.getEmail());
-					mosaicmessage.setVisitors(visitors);
-				}
+				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				mosaicmessage.addVisitor(KeyFactory.createKey("MosaicUser", user.getEmail()));
 				mosaicmessage.setVisits(mosaicmessage.getVisits() + 1);
 				mgr.persist(mosaicmessage);
 			} finally {

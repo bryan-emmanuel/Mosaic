@@ -38,7 +38,7 @@ import android.widget.TextView;
 public class MessageEditor extends Activity implements OnCheckedChangeListener, OnClickListener, OnSeekBarChangeListener {
 	
 	private Button btnSave;
-	private Button btnDelete;
+	private Button btnCancel;
 	private CheckBox expires;
 	private DatePicker expiry;
 	private TextView radius;
@@ -67,11 +67,10 @@ public class MessageEditor extends Activity implements OnCheckedChangeListener, 
 		expires.setOnCheckedChangeListener(this);
 		btnSave = (Button) findViewById(R.id.save);
 		btnSave.setOnClickListener(this);
-		btnDelete = (Button) findViewById(R.id.delete);
+		btnCancel = (Button) findViewById(R.id.cancel);
 		if (i.hasExtra(Mosaic.EXTRA_ID))
-			btnDelete.setOnClickListener(this);
-		else
-			btnDelete.setEnabled(false);
+			btnCancel.setText(R.string.delete);
+		btnCancel.setOnClickListener(this);
 		radius = (TextView) findViewById(R.id.lbl_radius);
 		((SeekBar) findViewById(R.id.radius)).setOnSeekBarChangeListener(this);
 		setResult(RESULT_CANCELED);
@@ -99,10 +98,12 @@ public class MessageEditor extends Activity implements OnCheckedChangeListener, 
 				i.putExtra(Mosaic.EXTRA_EXPIRY, -1L);
 			setResult(RESULT_OK, i);
 			finish();
-		} else if (v == btnDelete) {
+		} else if (v == btnCancel) {
 			Intent i = getIntent();
-			i.removeExtra(Mosaic.EXTRA_TITLE);
-			setResult(RESULT_OK);
+			if (i.hasExtra(Mosaic.EXTRA_ID)) {
+				i.removeExtra(Mosaic.EXTRA_TITLE);
+				setResult(RESULT_OK);
+			}
 			finish();
 		}
 	}

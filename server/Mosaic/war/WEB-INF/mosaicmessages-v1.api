@@ -1,0 +1,341 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://mosaic-messaging.appspot.com/_ah/api",
+  "name" : "mosaicmessages",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "http://mosaic-messaging.appspot.com/_ah/spi",
+    "deadline" : 10.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "methods" : {
+    "mosaicmessages.updateMosaicMessage" : {
+      "path" : "mosaicmessage",
+      "httpMethod" : "PUT",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.updateMosaicMessage",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicmessages.insertMosaicMessage" : {
+      "path" : "mosaicmessage",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.insertMosaicMessage",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicmessages.viewMosaicMessage" : {
+      "path" : "viewMosaicMessage/{id}",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.viewMosaicMessage",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "mosaicmessages.listMosaicMessage" : {
+      "path" : "mosaicmessage/{latE6}/{lonE6}",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.listMosaicMessage",
+      "request" : {
+        "parameters" : {
+          "latE6" : {
+            "type" : "int32",
+            "required" : true
+          },
+          "lonE6" : {
+            "type" : "int32",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicmessages.removeMosaicMessage" : {
+      "path" : "mosaicmessage/{id}",
+      "httpMethod" : "DELETE",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.removeMosaicMessage",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicmessages.getMosaicMessage" : {
+      "path" : "mosaicmessage/{id}",
+      "httpMethod" : "GET",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.getMosaicMessage",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "mosaicmessages.reportMosaicMessage" : {
+      "path" : "reportMosaicMessage/{id}",
+      "httpMethod" : "POST",
+      "scopes" : [ ],
+      "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
+      "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
+      "rosyMethod" : "MosaicMessages.reportMosaicMessage",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "MosaicMessage" : {
+        "id" : "MosaicMessage",
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "$ref" : "Key"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "body" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "latitudeE6" : {
+            "type" : "integer"
+          },
+          "longitudeE6" : {
+            "type" : "integer"
+          },
+          "radius" : {
+            "type" : "integer"
+          },
+          "expiry" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "visits" : {
+            "type" : "integer"
+          },
+          "reports" : {
+            "type" : "integer"
+          },
+          "visitors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Key"
+            }
+          },
+          "user" : {
+            "$ref" : "MosaicUser"
+          },
+          "geocells" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "encodedKey" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          },
+          "complete" : {
+            "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MosaicUser" : {
+        "id" : "MosaicUser",
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "$ref" : "Key"
+          },
+          "messages" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MosaicMessage"
+            }
+          },
+          "nickname" : {
+            "type" : "string"
+          },
+          "encodedKey" : {
+            "type" : "string"
+          }
+        }
+      },
+      "User" : {
+        "id" : "User",
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "authDomain" : {
+            "type" : "string"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "federatedIdentity" : {
+            "type" : "string"
+          },
+          "nickname" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MosaicMessageCollection" : {
+        "id" : "MosaicMessageCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MosaicMessage"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "MosaicMessages.updateMosaicMessage" : {
+        "request" : {
+          "$ref" : "MosaicMessage"
+        },
+        "response" : {
+          "$ref" : "MosaicMessage"
+        }
+      },
+      "MosaicMessages.insertMosaicMessage" : {
+        "request" : {
+          "$ref" : "MosaicMessage"
+        },
+        "response" : {
+          "$ref" : "MosaicMessage"
+        }
+      },
+      "MosaicMessages.viewMosaicMessage" : {
+      },
+      "MosaicMessages.listMosaicMessage" : {
+        "response" : {
+          "$ref" : "MosaicMessageCollection"
+        }
+      },
+      "MosaicMessages.removeMosaicMessage" : {
+        "response" : {
+          "$ref" : "MosaicMessage"
+        }
+      },
+      "MosaicMessages.getMosaicMessage" : {
+        "response" : {
+          "$ref" : "MosaicMessage"
+        }
+      },
+      "MosaicMessages.reportMosaicMessage" : {
+      }
+    }
+  }
+}

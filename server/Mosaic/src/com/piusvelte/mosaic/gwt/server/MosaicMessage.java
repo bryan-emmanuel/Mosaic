@@ -47,10 +47,9 @@ public class MosaicMessage {
 	private long expiry;
 	private int visits;
 	private int reports;
-	// select from MosaicMessage as MosaicMessage where :visitor in visitors
-	private List<String> visitors;
+	private List<Key> visitors;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private MosaicUser user;
 	
 	@OneToMany(fetch = FetchType.EAGER)
@@ -147,12 +146,13 @@ public class MosaicMessage {
 		this.reports = reports;
 	}
 
-	public List<String> getVisitors() {
+	public List<Key> getVisitors() {
 		return visitors;
 	}
 
-	public void setVisitors(List<String> visitors) {
-		this.visitors = visitors;
+	public void addVisitor(Key visitor) {
+		if (!visitors.contains(visitor))
+			visitors.add(visitor);
 	}
 
 	public MosaicUser getUser() {

@@ -18,24 +18,23 @@
    
    Bryan Emmanuel piusvelte@gmail.com
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <EditText
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:hint="@string/title"
-        android:singleLine="true" />
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/buttons_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/save"
@@ -43,42 +42,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/save" />
-
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/delete" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/expiry_wrapper"
+    <EditText
+        android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/buttons_wrapper" >
-
-        <CheckBox
-            android:id="@+id/expires"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/expires" />
-
-        <DatePicker
-            android:id="@+id/expiry"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/expires"
-            android:calendarViewShown="false" />
-    </RelativeLayout>
+        android:hint="@string/title"
+        android:singleLine="true" />
 
     <RelativeLayout
         android:id="@+id/radius_wrapper"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/expiry_wrapper" >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/lbl_radius"
@@ -97,13 +73,32 @@
             android:progress="0" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/expiry_wrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/expires"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/expires" />
+
+        <DatePicker
+            android:id="@+id/expiry"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/expires"
+            android:calendarViewShown="false" />
+    </RelativeLayout>
+
     <EditText
         android:id="@+id/body"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/radius_wrapper"
-        android:layout_below="@id/title"
         android:gravity="top"
         android:hint="@string/message" />
 
-</RelativeLayout>
+</LinearLayout>

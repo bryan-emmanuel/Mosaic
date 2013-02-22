@@ -1,0 +1,304 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/t_THq8UUaoCABcy47uKPplXXBzY\"",
+ "discoveryVersion": "v1",
+ "id": "mosaicmessages:v1",
+ "name": "mosaicmessages",
+ "version": "v1",
+ "description": "This is an API",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://mosaic-messaging.appspot.com/_ah/api/mosaicmessages/v1/",
+ "basePath": "/_ah/api/mosaicmessages/v1/",
+ "rootUrl": "https://mosaic-messaging.appspot.com/_ah/api/",
+ "servicePath": "mosaicmessages/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "Key": {
+   "id": "Key",
+   "type": "object",
+   "properties": {
+    "appId": {
+     "type": "string"
+    },
+    "complete": {
+     "type": "boolean"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "namespace": {
+     "type": "string"
+    },
+    "parent": {
+     "$ref": "Key"
+    }
+   }
+  },
+  "MosaicMessage": {
+   "id": "MosaicMessage",
+   "type": "object",
+   "properties": {
+    "body": {
+     "type": "string"
+    },
+    "created": {
+     "type": "string",
+     "format": "int64"
+    },
+    "encodedKey": {
+     "type": "string"
+    },
+    "expiry": {
+     "type": "string",
+     "format": "int64"
+    },
+    "geocells": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "key": {
+     "$ref": "Key"
+    },
+    "latitudeE6": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "longitudeE6": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "radius": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "reports": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "title": {
+     "type": "string"
+    },
+    "user": {
+     "$ref": "MosaicUser"
+    },
+    "visitors": {
+     "type": "array",
+     "items": {
+      "$ref": "Key"
+     }
+    },
+    "visits": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "MosaicMessageCollection": {
+   "id": "MosaicMessageCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "MosaicMessage"
+     }
+    }
+   }
+  },
+  "MosaicUser": {
+   "id": "MosaicUser",
+   "type": "object",
+   "properties": {
+    "encodedKey": {
+     "type": "string"
+    },
+    "key": {
+     "$ref": "Key"
+    },
+    "messages": {
+     "type": "array",
+     "items": {
+      "$ref": "MosaicMessage"
+     }
+    },
+    "nickname": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "methods": {
+  "getMosaicMessage": {
+   "id": "mosaicmessages.getMosaicMessage",
+   "path": "mosaicmessage/{id}",
+   "httpMethod": "GET",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "response": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "insertMosaicMessage": {
+   "id": "mosaicmessages.insertMosaicMessage",
+   "path": "mosaicmessage",
+   "httpMethod": "POST",
+   "request": {
+    "$ref": "MosaicMessage"
+   },
+   "response": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "listMosaicMessage": {
+   "id": "mosaicmessages.listMosaicMessage",
+   "path": "mosaicmessage/{latE6}/{lonE6}",
+   "httpMethod": "GET",
+   "parameters": {
+    "latE6": {
+     "type": "integer",
+     "required": true,
+     "format": "int32",
+     "location": "path"
+    },
+    "lonE6": {
+     "type": "integer",
+     "required": true,
+     "format": "int32",
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "latE6",
+    "lonE6"
+   ],
+   "response": {
+    "$ref": "MosaicMessageCollection"
+   }
+  },
+  "removeMosaicMessage": {
+   "id": "mosaicmessages.removeMosaicMessage",
+   "path": "mosaicmessage/{id}",
+   "httpMethod": "DELETE",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "response": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "reportMosaicMessage": {
+   "id": "mosaicmessages.reportMosaicMessage",
+   "path": "reportMosaicMessage/{id}",
+   "httpMethod": "POST",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ]
+  },
+  "updateMosaicMessage": {
+   "id": "mosaicmessages.updateMosaicMessage",
+   "path": "mosaicmessage",
+   "httpMethod": "PUT",
+   "request": {
+    "$ref": "MosaicMessage"
+   },
+   "response": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "viewMosaicMessage": {
+   "id": "mosaicmessages.viewMosaicMessage",
+   "path": "viewMosaicMessage/{id}",
+   "httpMethod": "POST",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ]
+  }
+ }
+}

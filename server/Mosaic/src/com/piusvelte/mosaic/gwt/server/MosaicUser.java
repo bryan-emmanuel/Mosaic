@@ -22,7 +22,6 @@ package com.piusvelte.mosaic.gwt.server;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,11 +39,8 @@ public class MosaicUser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key key;
 	
-	@Column(unique = true)
-	private String email;
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	private List<MosaicMessage> mosaicMessages;
+	private List<MosaicMessage> messages;
 	
 	private String nickname;
 	
@@ -58,21 +54,13 @@ public class MosaicUser {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	
+	public List<MosaicMessage> getMessages() {
+		return messages;
 	}
 	
-	public List<MosaicMessage> getMosaicMessages() {
-		return mosaicMessages;
-	}
-	
-	public void addMosaicMessage(MosaicMessage message) {
-		this.mosaicMessages.add(message);
+	public void addMessage(MosaicMessage message) {
+		this.messages.add(message);
 	}
 	
 	public void setKey(Key key) {

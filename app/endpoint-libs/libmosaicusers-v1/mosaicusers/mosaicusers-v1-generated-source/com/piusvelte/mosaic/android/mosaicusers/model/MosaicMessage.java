@@ -112,7 +112,13 @@ public final class MosaicMessage extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<String> visitors;
+  private java.util.List<Key> visitors;
+
+  static {
+    // hack to force ProGuard to consider Key used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(Key.class);
+  }
 
   /**
    * The value may be {@code null}.
@@ -328,7 +334,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public java.util.List<String> getVisitors() {
+  public java.util.List<Key> getVisitors() {
     return visitors;
   }
 
@@ -336,7 +342,7 @@ public final class MosaicMessage extends GenericJson {
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setVisitors(java.util.List<String> visitors) {
+  public MosaicMessage setVisitors(java.util.List<Key> visitors) {
     this.visitors = visitors;
     return this;
   }
