@@ -12,7 +12,7 @@
 /*
  * This file was generated.
  *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
- *  on 2013-02-22 at 19:21:30 UTC 
+ *  on 2013-02-24 at 03:16:46 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicusers;
@@ -25,6 +25,7 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
+import com.google.api.client.json.JsonString;
 import com.google.common.base.Preconditions;
 
 /**
@@ -77,7 +78,7 @@ public class Mosaicusers extends AbstractGoogleJsonClient {
    *
    * @since 1.7
    */
-  public static final String DEFAULT_SERVICE_PATH = "mosaicusers/v1/";
+  public static final String DEFAULT_SERVICE_PATH = "mosaicusers/v1/user/";
 
   /**
    * The default encoded base URL of the service. This is determined when the library is generated
@@ -145,411 +146,520 @@ public class Mosaicusers extends AbstractGoogleJsonClient {
   }
 
   /**
-   * Create a request for the method "getMosaicUser".
+   * An accessor for creating requests from the User collection.
    *
-   * This request holds the parameters needed by the the mosaicusers server.  After setting any
-   * optional parameters, call the {@link GetMosaicUser#execute()} method to invoke the remote
-   * operation.
+   * <p>The typical use is:</p>
+   * <pre>
+   *   {@code Mosaicusers mosaicusers = new Mosaicusers(...);}
+   *   {@code Mosaicusers.User.List request = mosaicusers.user().list(parameters ...)}
+   * </pre>
    *
-   * @param id
-   * @return the request
+   * @return the resource collection
    */
-  public GetMosaicUser getMosaicUser(String id) throws java.io.IOException {
-    GetMosaicUser result = new GetMosaicUser(id);
-    initialize(result);
-    return result;
+  public User user() {
+    return new User();
   }
 
-  public class GetMosaicUser extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
-
-    private static final String REST_PATH = "mosaicuser/{id}";
+  /**
+   * The "user" collection of methods.
+   */
+  public class User {
 
     /**
-     * Create a request for the method "getMosaicUser".
+     * Create a request for the method "user.get".
      *
      * This request holds the parameters needed by the the mosaicusers server.  After setting any
-     * optional parameters, call the {@link GetMosaicUser#execute()} method to invoke the remote
-     * operation. <p> {@link GetMosaicUser#initialize(AbstractGoogleClientRequest)} must be called to
-     * initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Get#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @since 1.13
+     * @return the request
      */
-    protected GetMosaicUser(String id) {
-      super(Mosaicusers.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+    public Get get(Long id) throws java.io.IOException {
+      Get result = new Get(id);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
-      return super.executeUsingHead();
+    public class Get extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
+
+      private static final String REST_PATH = "get/{id}";
+
+      /**
+       * Create a request for the method "user.get".
+       *
+       * This request holds the parameters needed by the the mosaicusers server.  After setting any
+       * optional parameters, call the {@link Get#execute()} method to invoke the remote operation. <p>
+       * {@link Get#initialize(AbstractGoogleClientRequest)} must be called to initialize this instance
+       * immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @since 1.13
+       */
+      protected Get(Long id) {
+        super(Mosaicusers.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public Get setAlt(String alt) {
+        return (Get) super.setAlt(alt);
+      }
+
+      @Override
+      public Get setFields(String fields) {
+        return (Get) super.setFields(fields);
+      }
+
+      @Override
+      public Get setKey(String key) {
+        return (Get) super.setKey(key);
+      }
+
+      @Override
+      public Get setOauthToken(String oauthToken) {
+        return (Get) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Get setPrettyPrint(Boolean prettyPrint) {
+        return (Get) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Get setQuotaUser(String quotaUser) {
+        return (Get) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Get setUserIp(String userIp) {
+        return (Get) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Get setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
     }
-
-    @Override
-    public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
-      return super.buildHttpRequestUsingHead();
-    }
-
-    @Override
-    public GetMosaicUser setAlt(String alt) {
-      return (GetMosaicUser) super.setAlt(alt);
-    }
-
-    @Override
-    public GetMosaicUser setFields(String fields) {
-      return (GetMosaicUser) super.setFields(fields);
-    }
-
-    @Override
-    public GetMosaicUser setKey(String key) {
-      return (GetMosaicUser) super.setKey(key);
-    }
-
-    @Override
-    public GetMosaicUser setOauthToken(String oauthToken) {
-      return (GetMosaicUser) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetMosaicUser setPrettyPrint(Boolean prettyPrint) {
-      return (GetMosaicUser) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetMosaicUser setQuotaUser(String quotaUser) {
-      return (GetMosaicUser) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetMosaicUser setUserIp(String userIp) {
-      return (GetMosaicUser) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private String id;
-
     /**
-
-     */
-    public String getId() {
-      return id;
-    }
-
-    public GetMosaicUser setId(String id) {
-      this.id = id;
-      return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "insertMosaicUser".
-   *
-   * This request holds the parameters needed by the the mosaicusers server.  After setting any
-   * optional parameters, call the {@link InsertMosaicUser#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
-   * @return the request
-   */
-  public InsertMosaicUser insertMosaicUser(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) throws java.io.IOException {
-    InsertMosaicUser result = new InsertMosaicUser(content);
-    initialize(result);
-    return result;
-  }
-
-  public class InsertMosaicUser extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
-
-    private static final String REST_PATH = "mosaicuser";
-
-    /**
-     * Create a request for the method "insertMosaicUser".
+     * Create a request for the method "user.insert".
      *
      * This request holds the parameters needed by the the mosaicusers server.  After setting any
-     * optional parameters, call the {@link InsertMosaicUser#execute()} method to invoke the remote
-     * operation. <p> {@link InsertMosaicUser#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Insert#execute()} method to invoke the remote operation.
      *
-     * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
-     * @since 1.13
+     * @return the request
      */
-    protected InsertMosaicUser(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) {
-      super(Mosaicusers.this, "POST", REST_PATH, content, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+    public Insert insert() throws java.io.IOException {
+      Insert result = new Insert();
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public InsertMosaicUser setAlt(String alt) {
-      return (InsertMosaicUser) super.setAlt(alt);
+    public class Insert extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
+
+      private static final String REST_PATH = "insert";
+
+      /**
+       * Create a request for the method "user.insert".
+       *
+       * This request holds the parameters needed by the the mosaicusers server.  After setting any
+       * optional parameters, call the {@link Insert#execute()} method to invoke the remote operation.
+       * <p> {@link Insert#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @since 1.13
+       */
+      protected Insert() {
+        super(Mosaicusers.this, "POST", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+      }
+
+      @Override
+      public Insert setAlt(String alt) {
+        return (Insert) super.setAlt(alt);
+      }
+
+      @Override
+      public Insert setFields(String fields) {
+        return (Insert) super.setFields(fields);
+      }
+
+      @Override
+      public Insert setKey(String key) {
+        return (Insert) super.setKey(key);
+      }
+
+      @Override
+      public Insert setOauthToken(String oauthToken) {
+        return (Insert) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Insert setPrettyPrint(Boolean prettyPrint) {
+        return (Insert) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Insert setQuotaUser(String quotaUser) {
+        return (Insert) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Insert setUserIp(String userIp) {
+        return (Insert) super.setUserIp(userIp);
+      }
+
     }
-
-    @Override
-    public InsertMosaicUser setFields(String fields) {
-      return (InsertMosaicUser) super.setFields(fields);
-    }
-
-    @Override
-    public InsertMosaicUser setKey(String key) {
-      return (InsertMosaicUser) super.setKey(key);
-    }
-
-    @Override
-    public InsertMosaicUser setOauthToken(String oauthToken) {
-      return (InsertMosaicUser) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public InsertMosaicUser setPrettyPrint(Boolean prettyPrint) {
-      return (InsertMosaicUser) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public InsertMosaicUser setQuotaUser(String quotaUser) {
-      return (InsertMosaicUser) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public InsertMosaicUser setUserIp(String userIp) {
-      return (InsertMosaicUser) super.setUserIp(userIp);
-    }
-
-  }
-
-  /**
-   * Create a request for the method "listMosaicUser".
-   *
-   * This request holds the parameters needed by the the mosaicusers server.  After setting any
-   * optional parameters, call the {@link ListMosaicUser#execute()} method to invoke the remote
-   * operation.
-   *
-   * @return the request
-   */
-  public ListMosaicUser listMosaicUser() throws java.io.IOException {
-    ListMosaicUser result = new ListMosaicUser();
-    initialize(result);
-    return result;
-  }
-
-  public class ListMosaicUser extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection> {
-
-    private static final String REST_PATH = "mosaicuser";
-
     /**
-     * Create a request for the method "listMosaicUser".
+     * Create a request for the method "user.list".
      *
      * This request holds the parameters needed by the the mosaicusers server.  After setting any
-     * optional parameters, call the {@link ListMosaicUser#execute()} method to invoke the remote
-     * operation. <p> {@link ListMosaicUser#initialize(AbstractGoogleClientRequest)} must be called to
-     * initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link List#execute()} method to invoke the remote operation.
      *
-     * @since 1.13
+     * @return the request
      */
-    protected ListMosaicUser() {
-      super(Mosaicusers.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection.class);
+    public List list() throws java.io.IOException {
+      List result = new List();
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
-      return super.executeUsingHead();
+    public class List extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection> {
+
+      private static final String REST_PATH = "list";
+
+      /**
+       * Create a request for the method "user.list".
+       *
+       * This request holds the parameters needed by the the mosaicusers server.  After setting any
+       * optional parameters, call the {@link List#execute()} method to invoke the remote operation. <p>
+       * {@link List#initialize(AbstractGoogleClientRequest)} must be called to initialize this instance
+       * immediately after invoking the constructor. </p>
+       *
+       * @since 1.13
+       */
+      protected List() {
+        super(Mosaicusers.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUserCollection.class);
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public List setAlt(String alt) {
+        return (List) super.setAlt(alt);
+      }
+
+      @Override
+      public List setFields(String fields) {
+        return (List) super.setFields(fields);
+      }
+
+      @Override
+      public List setKey(String key) {
+        return (List) super.setKey(key);
+      }
+
+      @Override
+      public List setOauthToken(String oauthToken) {
+        return (List) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public List setPrettyPrint(Boolean prettyPrint) {
+        return (List) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public List setQuotaUser(String quotaUser) {
+        return (List) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public List setUserIp(String userIp) {
+        return (List) super.setUserIp(userIp);
+      }
+
     }
-
-    @Override
-    public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
-      return super.buildHttpRequestUsingHead();
-    }
-
-    @Override
-    public ListMosaicUser setAlt(String alt) {
-      return (ListMosaicUser) super.setAlt(alt);
-    }
-
-    @Override
-    public ListMosaicUser setFields(String fields) {
-      return (ListMosaicUser) super.setFields(fields);
-    }
-
-    @Override
-    public ListMosaicUser setKey(String key) {
-      return (ListMosaicUser) super.setKey(key);
-    }
-
-    @Override
-    public ListMosaicUser setOauthToken(String oauthToken) {
-      return (ListMosaicUser) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public ListMosaicUser setPrettyPrint(Boolean prettyPrint) {
-      return (ListMosaicUser) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public ListMosaicUser setQuotaUser(String quotaUser) {
-      return (ListMosaicUser) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public ListMosaicUser setUserIp(String userIp) {
-      return (ListMosaicUser) super.setUserIp(userIp);
-    }
-
-  }
-
-  /**
-   * Create a request for the method "removeMosaicUser".
-   *
-   * This request holds the parameters needed by the the mosaicusers server.  After setting any
-   * optional parameters, call the {@link RemoveMosaicUser#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param id
-   * @return the request
-   */
-  public RemoveMosaicUser removeMosaicUser(String id) throws java.io.IOException {
-    RemoveMosaicUser result = new RemoveMosaicUser(id);
-    initialize(result);
-    return result;
-  }
-
-  public class RemoveMosaicUser extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
-
-    private static final String REST_PATH = "mosaicuser/{id}";
-
     /**
-     * Create a request for the method "removeMosaicUser".
+     * Create a request for the method "user.patch".
      *
      * This request holds the parameters needed by the the mosaicusers server.  After setting any
-     * optional parameters, call the {@link RemoveMosaicUser#execute()} method to invoke the remote
-     * operation. <p> {@link RemoveMosaicUser#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Patch#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @since 1.13
+     * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
+     * @return the request
      */
-    protected RemoveMosaicUser(String id) {
-      super(Mosaicusers.this, "DELETE", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+    public Patch patch(Long id, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) throws java.io.IOException {
+      Patch result = new Patch(id, content);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public RemoveMosaicUser setAlt(String alt) {
-      return (RemoveMosaicUser) super.setAlt(alt);
+    public class Patch extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
+
+      private static final String REST_PATH = "update";
+
+      /**
+       * Create a request for the method "user.patch".
+       *
+       * This request holds the parameters needed by the the mosaicusers server.  After setting any
+       * optional parameters, call the {@link Patch#execute()} method to invoke the remote operation.
+       * <p> {@link Patch#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
+       * @since 1.13
+       */
+      protected Patch(Long id, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) {
+        super(Mosaicusers.this, "PATCH", REST_PATH, content, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public Patch setAlt(String alt) {
+        return (Patch) super.setAlt(alt);
+      }
+
+      @Override
+      public Patch setFields(String fields) {
+        return (Patch) super.setFields(fields);
+      }
+
+      @Override
+      public Patch setKey(String key) {
+        return (Patch) super.setKey(key);
+      }
+
+      @Override
+      public Patch setOauthToken(String oauthToken) {
+        return (Patch) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Patch setPrettyPrint(Boolean prettyPrint) {
+        return (Patch) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Patch setQuotaUser(String quotaUser) {
+        return (Patch) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Patch setUserIp(String userIp) {
+        return (Patch) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Patch setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
     }
-
-    @Override
-    public RemoveMosaicUser setFields(String fields) {
-      return (RemoveMosaicUser) super.setFields(fields);
-    }
-
-    @Override
-    public RemoveMosaicUser setKey(String key) {
-      return (RemoveMosaicUser) super.setKey(key);
-    }
-
-    @Override
-    public RemoveMosaicUser setOauthToken(String oauthToken) {
-      return (RemoveMosaicUser) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public RemoveMosaicUser setPrettyPrint(Boolean prettyPrint) {
-      return (RemoveMosaicUser) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public RemoveMosaicUser setQuotaUser(String quotaUser) {
-      return (RemoveMosaicUser) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public RemoveMosaicUser setUserIp(String userIp) {
-      return (RemoveMosaicUser) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private String id;
-
     /**
-
-     */
-    public String getId() {
-      return id;
-    }
-
-    public RemoveMosaicUser setId(String id) {
-      this.id = id;
-      return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "updateMosaicUser".
-   *
-   * This request holds the parameters needed by the the mosaicusers server.  After setting any
-   * optional parameters, call the {@link UpdateMosaicUser#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
-   * @return the request
-   */
-  public UpdateMosaicUser updateMosaicUser(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) throws java.io.IOException {
-    UpdateMosaicUser result = new UpdateMosaicUser(content);
-    initialize(result);
-    return result;
-  }
-
-  public class UpdateMosaicUser extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
-
-    private static final String REST_PATH = "mosaicuser";
-
-    /**
-     * Create a request for the method "updateMosaicUser".
+     * Create a request for the method "user.remove".
      *
      * This request holds the parameters needed by the the mosaicusers server.  After setting any
-     * optional parameters, call the {@link UpdateMosaicUser#execute()} method to invoke the remote
-     * operation. <p> {@link UpdateMosaicUser#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Remove#execute()} method to invoke the remote operation.
+     *
+     * @param id
+     * @return the request
+     */
+    public Remove remove(Long id) throws java.io.IOException {
+      Remove result = new Remove(id);
+      initialize(result);
+      return result;
+    }
+
+    public class Remove extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
+
+      private static final String REST_PATH = "remove/{id}";
+
+      /**
+       * Create a request for the method "user.remove".
+       *
+       * This request holds the parameters needed by the the mosaicusers server.  After setting any
+       * optional parameters, call the {@link Remove#execute()} method to invoke the remote operation.
+       * <p> {@link Remove#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @since 1.13
+       */
+      protected Remove(Long id) {
+        super(Mosaicusers.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public Remove setAlt(String alt) {
+        return (Remove) super.setAlt(alt);
+      }
+
+      @Override
+      public Remove setFields(String fields) {
+        return (Remove) super.setFields(fields);
+      }
+
+      @Override
+      public Remove setKey(String key) {
+        return (Remove) super.setKey(key);
+      }
+
+      @Override
+      public Remove setOauthToken(String oauthToken) {
+        return (Remove) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Remove setPrettyPrint(Boolean prettyPrint) {
+        return (Remove) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Remove setQuotaUser(String quotaUser) {
+        return (Remove) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Remove setUserIp(String userIp) {
+        return (Remove) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Remove setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
+    }
+    /**
+     * Create a request for the method "user.update".
+     *
+     * This request holds the parameters needed by the the mosaicusers server.  After setting any
+     * optional parameters, call the {@link Update#execute()} method to invoke the remote operation.
      *
      * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
-     * @since 1.13
+     * @return the request
      */
-    protected UpdateMosaicUser(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) {
-      super(Mosaicusers.this, "PUT", REST_PATH, content, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+    public Update update(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) throws java.io.IOException {
+      Update result = new Update(content);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public UpdateMosaicUser setAlt(String alt) {
-      return (UpdateMosaicUser) super.setAlt(alt);
-    }
+    public class Update extends MosaicusersRequest<com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser> {
 
-    @Override
-    public UpdateMosaicUser setFields(String fields) {
-      return (UpdateMosaicUser) super.setFields(fields);
-    }
+      private static final String REST_PATH = "update";
 
-    @Override
-    public UpdateMosaicUser setKey(String key) {
-      return (UpdateMosaicUser) super.setKey(key);
-    }
+      /**
+       * Create a request for the method "user.update".
+       *
+       * This request holds the parameters needed by the the mosaicusers server.  After setting any
+       * optional parameters, call the {@link Update#execute()} method to invoke the remote operation.
+       * <p> {@link Update#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param content the {@link com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser}
+       * @since 1.13
+       */
+      protected Update(com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser content) {
+        super(Mosaicusers.this, "POST", REST_PATH, content, com.piusvelte.mosaic.android.mosaicusers.model.MosaicUser.class);
+      }
 
-    @Override
-    public UpdateMosaicUser setOauthToken(String oauthToken) {
-      return (UpdateMosaicUser) super.setOauthToken(oauthToken);
-    }
+      @Override
+      public Update setAlt(String alt) {
+        return (Update) super.setAlt(alt);
+      }
 
-    @Override
-    public UpdateMosaicUser setPrettyPrint(Boolean prettyPrint) {
-      return (UpdateMosaicUser) super.setPrettyPrint(prettyPrint);
-    }
+      @Override
+      public Update setFields(String fields) {
+        return (Update) super.setFields(fields);
+      }
 
-    @Override
-    public UpdateMosaicUser setQuotaUser(String quotaUser) {
-      return (UpdateMosaicUser) super.setQuotaUser(quotaUser);
-    }
+      @Override
+      public Update setKey(String key) {
+        return (Update) super.setKey(key);
+      }
 
-    @Override
-    public UpdateMosaicUser setUserIp(String userIp) {
-      return (UpdateMosaicUser) super.setUserIp(userIp);
+      @Override
+      public Update setOauthToken(String oauthToken) {
+        return (Update) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Update setPrettyPrint(Boolean prettyPrint) {
+        return (Update) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Update setQuotaUser(String quotaUser) {
+        return (Update) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Update setUserIp(String userIp) {
+        return (Update) super.setUserIp(userIp);
+      }
+
     }
 
   }

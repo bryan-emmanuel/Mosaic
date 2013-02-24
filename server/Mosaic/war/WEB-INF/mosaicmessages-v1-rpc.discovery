@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/t_THq8UUaoCABcy47uKPplXXBzY\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/4qPS6dUdEB2g1JC-pgeUq71Crq8\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessages:v1",
  "name": "mosaicmessages",
@@ -60,34 +60,6 @@
   }
  },
  "schemas": {
-  "Key": {
-   "id": "Key",
-   "type": "object",
-   "properties": {
-    "appId": {
-     "type": "string"
-    },
-    "complete": {
-     "type": "boolean"
-    },
-    "id": {
-     "type": "string",
-     "format": "int64"
-    },
-    "kind": {
-     "type": "string"
-    },
-    "name": {
-     "type": "string"
-    },
-    "namespace": {
-     "type": "string"
-    },
-    "parent": {
-     "$ref": "Key"
-    }
-   }
-  },
   "MosaicMessage": {
    "id": "MosaicMessage",
    "type": "object",
@@ -99,9 +71,6 @@
      "type": "string",
      "format": "int64"
     },
-    "encodedKey": {
-     "type": "string"
-    },
     "expiry": {
      "type": "string",
      "format": "int64"
@@ -112,8 +81,9 @@
       "type": "string"
      }
     },
-    "key": {
-     "$ref": "Key"
+    "id": {
+     "type": "string",
+     "format": "int64"
     },
     "latitudeE6": {
      "type": "integer",
@@ -137,13 +107,11 @@
     "user": {
      "$ref": "MosaicUser"
     },
-    "visitors": {
-     "type": "array",
-     "items": {
-      "$ref": "Key"
-     }
+    "user_id": {
+     "type": "string",
+     "format": "int64"
     },
-    "visits": {
+    "views": {
      "type": "integer",
      "format": "int32"
     }
@@ -165,17 +133,12 @@
    "id": "MosaicUser",
    "type": "object",
    "properties": {
-    "encodedKey": {
+    "email": {
      "type": "string"
     },
-    "key": {
-     "$ref": "Key"
-    },
-    "messages": {
-     "type": "array",
-     "items": {
-      "$ref": "MosaicMessage"
-     }
+    "id": {
+     "type": "string",
+     "format": "int64"
     },
     "nickname": {
      "type": "string"
@@ -184,13 +147,14 @@
   }
  },
  "methods": {
-  "mosaicmessages.getMosaicMessage": {
-   "id": "mosaicmessages.getMosaicMessage",
+  "mosaicmessages.message.get": {
+   "id": "mosaicmessages.message.get",
    "allowGet": true,
    "parameters": {
     "id": {
      "type": "string",
-     "required": true
+     "required": true,
+     "format": "int64"
     }
    },
    "parameterOrder": [
@@ -200,8 +164,8 @@
     "$ref": "MosaicMessage"
    }
   },
-  "mosaicmessages.insertMosaicMessage": {
-   "id": "mosaicmessages.insertMosaicMessage",
+  "mosaicmessages.message.insert": {
+   "id": "mosaicmessages.message.insert",
    "parameters": {
     "resource": {
      "$ref": "MosaicMessage"
@@ -214,8 +178,8 @@
     "$ref": "MosaicMessage"
    }
   },
-  "mosaicmessages.listMosaicMessage": {
-   "id": "mosaicmessages.listMosaicMessage",
+  "mosaicmessages.message.list": {
+   "id": "mosaicmessages.message.list",
    "allowGet": true,
    "parameters": {
     "latE6": {
@@ -237,12 +201,60 @@
     "$ref": "MosaicMessageCollection"
    }
   },
-  "mosaicmessages.removeMosaicMessage": {
-   "id": "mosaicmessages.removeMosaicMessage",
+  "mosaicmessages.message.patch": {
+   "id": "mosaicmessages.message.patch",
+   "supportsPatch": true,
    "parameters": {
+    "body": {
+     "type": "string"
+    },
+    "created": {
+     "type": "string",
+     "format": "int64"
+    },
+    "expiry": {
+     "type": "string",
+     "format": "int64"
+    },
+    "geocells": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
     "id": {
      "type": "string",
-     "required": true
+     "format": "int64"
+    },
+    "latitudeE6": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "longitudeE6": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "radius": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "reports": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "title": {
+     "type": "string"
+    },
+    "user": {
+     "$ref": "MosaicUser"
+    },
+    "user_id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "views": {
+     "type": "integer",
+     "format": "int32"
     }
    },
    "parameterOrder": [
@@ -252,20 +264,39 @@
     "$ref": "MosaicMessage"
    }
   },
-  "mosaicmessages.reportMosaicMessage": {
-   "id": "mosaicmessages.reportMosaicMessage",
+  "mosaicmessages.message.remove": {
+   "id": "mosaicmessages.message.remove",
+   "allowGet": true,
    "parameters": {
     "id": {
      "type": "string",
-     "required": true
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "MosaicMessage"
+   }
+  },
+  "mosaicmessages.message.report": {
+   "id": "mosaicmessages.message.report",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
     }
    },
    "parameterOrder": [
     "id"
    ]
   },
-  "mosaicmessages.updateMosaicMessage": {
-   "id": "mosaicmessages.updateMosaicMessage",
+  "mosaicmessages.message.update": {
+   "id": "mosaicmessages.message.update",
    "parameters": {
     "resource": {
      "$ref": "MosaicMessage"
@@ -278,12 +309,14 @@
     "$ref": "MosaicMessage"
    }
   },
-  "mosaicmessages.viewMosaicMessage": {
-   "id": "mosaicmessages.viewMosaicMessage",
+  "mosaicmessages.message.view": {
+   "id": "mosaicmessages.message.view",
+   "allowGet": true,
    "parameters": {
     "id": {
      "type": "string",
-     "required": true
+     "required": true,
+     "format": "int64"
     }
    },
    "parameterOrder": [

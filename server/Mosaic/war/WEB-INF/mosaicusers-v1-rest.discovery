@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/sAdyHgByixybOXE2n3LJkeyHQY4\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/miSg3olBthzG1cECDXlbhmEHxAU\"",
  "discoveryVersion": "v1",
  "id": "mosaicusers:v1",
  "name": "mosaicusers",
@@ -11,10 +11,10 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://mosaic-messaging.appspot.com/_ah/api/mosaicusers/v1/",
- "basePath": "/_ah/api/mosaicusers/v1/",
+ "baseUrl": "https://mosaic-messaging.appspot.com/_ah/api/mosaicusers/v1/user/",
+ "basePath": "/_ah/api/mosaicusers/v1/user/",
  "rootUrl": "https://mosaic-messaging.appspot.com/_ah/api/",
- "servicePath": "mosaicusers/v1/",
+ "servicePath": "mosaicusers/v1/user/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -62,110 +62,16 @@
   }
  },
  "schemas": {
-  "Key": {
-   "id": "Key",
-   "type": "object",
-   "properties": {
-    "appId": {
-     "type": "string"
-    },
-    "complete": {
-     "type": "boolean"
-    },
-    "id": {
-     "type": "string",
-     "format": "int64"
-    },
-    "kind": {
-     "type": "string"
-    },
-    "name": {
-     "type": "string"
-    },
-    "namespace": {
-     "type": "string"
-    },
-    "parent": {
-     "$ref": "Key"
-    }
-   }
-  },
-  "MosaicMessage": {
-   "id": "MosaicMessage",
-   "type": "object",
-   "properties": {
-    "body": {
-     "type": "string"
-    },
-    "created": {
-     "type": "string",
-     "format": "int64"
-    },
-    "encodedKey": {
-     "type": "string"
-    },
-    "expiry": {
-     "type": "string",
-     "format": "int64"
-    },
-    "geocells": {
-     "type": "array",
-     "items": {
-      "type": "string"
-     }
-    },
-    "key": {
-     "$ref": "Key"
-    },
-    "latitudeE6": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "longitudeE6": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "radius": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "reports": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "title": {
-     "type": "string"
-    },
-    "user": {
-     "$ref": "MosaicUser"
-    },
-    "visitors": {
-     "type": "array",
-     "items": {
-      "$ref": "Key"
-     }
-    },
-    "visits": {
-     "type": "integer",
-     "format": "int32"
-    }
-   }
-  },
   "MosaicUser": {
    "id": "MosaicUser",
    "type": "object",
    "properties": {
-    "encodedKey": {
+    "email": {
      "type": "string"
     },
-    "key": {
-     "$ref": "Key"
-    },
-    "messages": {
-     "type": "array",
-     "items": {
-      "$ref": "MosaicMessage"
-     }
+    "id": {
+     "type": "string",
+     "format": "int64"
     },
     "nickname": {
      "type": "string"
@@ -185,71 +91,96 @@
    }
   }
  },
- "methods": {
-  "getMosaicUser": {
-   "id": "mosaicusers.getMosaicUser",
-   "path": "mosaicuser/{id}",
-   "httpMethod": "GET",
-   "parameters": {
-    "id": {
-     "type": "string",
-     "required": true,
-     "location": "path"
+ "resources": {
+  "user": {
+   "methods": {
+    "get": {
+     "id": "mosaicusers.user.get",
+     "path": "get/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "MosaicUser"
+     }
+    },
+    "insert": {
+     "id": "mosaicusers.user.insert",
+     "path": "insert",
+     "httpMethod": "POST",
+     "response": {
+      "$ref": "MosaicUser"
+     }
+    },
+    "list": {
+     "id": "mosaicusers.user.list",
+     "path": "list",
+     "httpMethod": "GET",
+     "response": {
+      "$ref": "MosaicUserCollection"
+     }
+    },
+    "patch": {
+     "id": "mosaicusers.user.patch",
+     "path": "update",
+     "httpMethod": "PATCH",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "required": true,
+       "format": "int64",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "request": {
+      "$ref": "MosaicUser"
+     },
+     "response": {
+      "$ref": "MosaicUser"
+     }
+    },
+    "remove": {
+     "id": "mosaicusers.user.remove",
+     "path": "remove/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "MosaicUser"
+     }
+    },
+    "update": {
+     "id": "mosaicusers.user.update",
+     "path": "update",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "MosaicUser"
+     },
+     "response": {
+      "$ref": "MosaicUser"
+     }
     }
-   },
-   "parameterOrder": [
-    "id"
-   ],
-   "response": {
-    "$ref": "MosaicUser"
-   }
-  },
-  "insertMosaicUser": {
-   "id": "mosaicusers.insertMosaicUser",
-   "path": "mosaicuser",
-   "httpMethod": "POST",
-   "request": {
-    "$ref": "MosaicUser"
-   },
-   "response": {
-    "$ref": "MosaicUser"
-   }
-  },
-  "listMosaicUser": {
-   "id": "mosaicusers.listMosaicUser",
-   "path": "mosaicuser",
-   "httpMethod": "GET",
-   "response": {
-    "$ref": "MosaicUserCollection"
-   }
-  },
-  "removeMosaicUser": {
-   "id": "mosaicusers.removeMosaicUser",
-   "path": "mosaicuser/{id}",
-   "httpMethod": "DELETE",
-   "parameters": {
-    "id": {
-     "type": "string",
-     "required": true,
-     "location": "path"
-    }
-   },
-   "parameterOrder": [
-    "id"
-   ],
-   "response": {
-    "$ref": "MosaicUser"
-   }
-  },
-  "updateMosaicUser": {
-   "id": "mosaicusers.updateMosaicUser",
-   "path": "mosaicuser",
-   "httpMethod": "PUT",
-   "request": {
-    "$ref": "MosaicUser"
-   },
-   "response": {
-    "$ref": "MosaicUser"
    }
   }
  }

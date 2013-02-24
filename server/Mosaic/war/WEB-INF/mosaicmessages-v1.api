@@ -24,9 +24,9 @@
     "maxAge" : 0
   },
   "methods" : {
-    "mosaicmessages.updateMosaicMessage" : {
-      "path" : "mosaicmessage",
-      "httpMethod" : "PUT",
+    "mosaicmessages.message.update" : {
+      "path" : "message/update",
+      "httpMethod" : "POST",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
@@ -39,8 +39,8 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "mosaicmessages.insertMosaicMessage" : {
-      "path" : "mosaicmessage",
+    "mosaicmessages.message.insert" : {
+      "path" : "message/insert",
       "httpMethod" : "POST",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
@@ -54,9 +54,9 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "mosaicmessages.viewMosaicMessage" : {
-      "path" : "viewMosaicMessage/{id}",
-      "httpMethod" : "POST",
+    "mosaicmessages.message.view" : {
+      "path" : "message/view/{id}",
+      "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
@@ -64,7 +64,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
@@ -74,8 +74,8 @@
         "body" : "empty"
       }
     },
-    "mosaicmessages.listMosaicMessage" : {
-      "path" : "mosaicmessage/{latE6}/{lonE6}",
+    "mosaicmessages.message.list" : {
+      "path" : "message/list",
       "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
@@ -98,9 +98,9 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "mosaicmessages.removeMosaicMessage" : {
-      "path" : "mosaicmessage/{id}",
-      "httpMethod" : "DELETE",
+    "mosaicmessages.message.remove" : {
+      "path" : "message/remove/{id}",
+      "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
@@ -108,7 +108,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
@@ -118,8 +118,8 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "mosaicmessages.getMosaicMessage" : {
-      "path" : "mosaicmessage/{id}",
+    "mosaicmessages.message.get" : {
+      "path" : "message/get/{id}",
       "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
@@ -128,7 +128,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
@@ -138,9 +138,9 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "mosaicmessages.reportMosaicMessage" : {
-      "path" : "reportMosaicMessage/{id}",
-      "httpMethod" : "POST",
+    "mosaicmessages.message.report" : {
+      "path" : "message/report/{id}",
+      "httpMethod" : "GET",
       "scopes" : [ ],
       "audiences" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com" ],
       "clientIds" : [ "147772138122-5c836j8cn0nrtgkcotqaoh72e154i2d4.apps.googleusercontent.com", "147772138122.apps.googleusercontent.com" ],
@@ -148,7 +148,7 @@
       "request" : {
         "parameters" : {
           "id" : {
-            "type" : "string",
+            "type" : "int64",
             "required" : true
           }
         },
@@ -165,8 +165,9 @@
         "id" : "MosaicMessage",
         "type" : "object",
         "properties" : {
-          "key" : {
-            "$ref" : "Key"
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
           },
           "title" : {
             "type" : "string"
@@ -191,17 +192,15 @@
             "type" : "string",
             "format" : "int64"
           },
-          "visits" : {
+          "views" : {
             "type" : "integer"
           },
           "reports" : {
             "type" : "integer"
           },
-          "visitors" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Key"
-            }
+          "user_id" : {
+            "type" : "string",
+            "format" : "int64"
           },
           "user" : {
             "$ref" : "MosaicUser"
@@ -211,37 +210,6 @@
             "items" : {
               "type" : "string"
             }
-          },
-          "encodedKey" : {
-            "type" : "string"
-          }
-        }
-      },
-      "Key" : {
-        "id" : "Key",
-        "type" : "object",
-        "properties" : {
-          "kind" : {
-            "type" : "string"
-          },
-          "appId" : {
-            "type" : "string"
-          },
-          "id" : {
-            "type" : "string",
-            "format" : "int64"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "parent" : {
-            "$ref" : "Key"
-          },
-          "complete" : {
-            "type" : "boolean"
-          },
-          "namespace" : {
-            "type" : "string"
           }
         }
       },
@@ -249,19 +217,14 @@
         "id" : "MosaicUser",
         "type" : "object",
         "properties" : {
-          "key" : {
-            "$ref" : "Key"
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
           },
-          "messages" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "MosaicMessage"
-            }
-          },
-          "nickname" : {
+          "email" : {
             "type" : "string"
           },
-          "encodedKey" : {
+          "nickname" : {
             "type" : "string"
           }
         }

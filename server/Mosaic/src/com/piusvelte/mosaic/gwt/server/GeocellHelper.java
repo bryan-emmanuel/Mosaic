@@ -72,13 +72,7 @@ public class GeocellHelper {
 		double east = MAX_LONGITUDE;
 		double west = MIN_LONGITUDE;
 		StringBuilder geocell = new StringBuilder();
-		boolean radiusMet = false;
-		while ((geocell.length() < resolution) && !radiusMet) {
-			if ((distanceLatitude(latitude, north) > radius)
-					&& (distanceLatitude(latitude, south) > radius)
-					&& (distanceLongitude(latitude, longitude, east) > radius)
-					&& (distanceLongitude(latitude, longitude, west) > radius))
-				radiusMet = true;
+		while (geocell.length() < resolution) {
 			double subcellLonSpan = (east - west) / GEOCELL_GRID_SIZE;
 			double subcellLatSpan = (north - south) / GEOCELL_GRID_SIZE;
 			int x = Math.min((int) (GEOCELL_GRID_SIZE * (latitude - west) / (east - west)),
@@ -92,7 +86,13 @@ public class GeocellHelper {
 			west += subcellLonSpan * x;
 			east = west + subcellLonSpan;
 		}
-		return geocell.toString();
+		if ((distanceLatitude(latitude, north) > radius)
+				&& (distanceLatitude(latitude, south) > radius)
+				&& (distanceLongitude(latitude, longitude, east) > radius)
+				&& (distanceLongitude(latitude, longitude, west) > radius))
+			return geocell.toString().substring(0, geocell.length() - 1);
+		else
+			return geocell.toString();
 	}
 	
 	public static List<String> getGeocells(double latitude, double longitude) {
@@ -115,8 +115,11 @@ public class GeocellHelper {
 			String nextGeocell = getGeocellWithinRadius(latitude, longitude, resolution, radius);
 			if (!nextGeocell.equals(lastGeocell))
 				geocells.add(nextGeocell);
-			else
+			else {
+				// add the final bounding box
+				geocells.add(getGeocell(latitude, longitude, resolution));
 				break;
+			}
 			lastGeocell = nextGeocell;
 		}
 		return geocells;

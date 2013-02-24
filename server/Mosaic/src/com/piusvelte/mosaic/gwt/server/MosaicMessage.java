@@ -26,18 +26,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 @Entity
 public class MosaicMessage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key key;
+	private long id;
 	private String title;
 	private String body;
 	private long created;
@@ -45,33 +41,16 @@ public class MosaicMessage {
 	private int longitudeE6;
 	private int radius;
 	private long expiry;
-	private int visits;
+	private int views;
 	private int reports;
-	private List<Key> visitors;
+	private long user_id;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
 	private MosaicUser user;
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<String> geocells;
 	
 	public MosaicMessage() {
-	}
-	
-	public void setKey(Key key) {
-		this.key = key;
-	}
-	
-	public void setEncodedKey(String key) {
-		this.key = KeyFactory.stringToKey(key);
-	}
-
-	public Key getKey() {
-		return key;
-	}
-	
-	public String getEncodedKey() {
-		return KeyFactory.keyToString(key);
 	}
 	
 	public String getTitle() {
@@ -130,29 +109,29 @@ public class MosaicMessage {
 		this.expiry = expiry;
 	}
 
-	public int getVisits() {
-		return visits;
+	public int getViews() {
+		return views;
 	}
 
-	public void setVisits(int visits) {
-		this.visits = visits;
+	public void addView() {
+		views++;
 	}
 
 	public int getReports() {
 		return reports;
 	}
 
-	public void setReports(int reports) {
-		this.reports = reports;
+	public void addReport() {
+		reports++;
+		reports++;
 	}
 
-	public List<Key> getVisitors() {
-		return visitors;
+	public List<String> getGeocells() {
+		return geocells;
 	}
 
-	public void addVisitor(Key visitor) {
-		if (!visitors.contains(visitor))
-			visitors.add(visitor);
+	public void setGeocells(List<String> geocells) {
+		this.geocells = geocells;
 	}
 
 	public MosaicUser getUser() {
@@ -163,12 +142,20 @@ public class MosaicMessage {
 		this.user = user;
 	}
 
-	public List<String> getGeocells() {
-		return geocells;
+	public long getId() {
+		return id;
 	}
 
-	public void setGeocells(List<String> geocells) {
-		this.geocells = geocells;
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
 	}
 	
 }

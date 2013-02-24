@@ -49,14 +49,14 @@ import android.util.Log;
 public class MosaicService extends Service implements LocationListener {
 
 	private static final String TAG = "MosaicService";
-	public String appengineWebappClientId;
+	private GoogleAccountCredential credential;
 	private HttpTransport transport = AndroidHttp.newCompatibleTransport();
 	private JsonFactory jsonFactory = new GsonFactory();
 	protected MosaicUser mosaicUser = null;
 	private LocationManager locationManager = null;
 	protected int latitudeE6 = Integer.MAX_VALUE;
 	protected int longitudeE6 = Integer.MAX_VALUE;
-	protected HashMap<String, MosaicMessage> messages = new HashMap<String, MosaicMessage>();
+	protected HashMap<Long, MosaicMessage> messages = new HashMap<Long, MosaicMessage>();
 	private static long UPDATE_TIME = 10000L;
 	private static float UPDATE_DISTANCE = 10F;
 	private String[] providers = new String[]{LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER};
@@ -87,13 +87,15 @@ public class MosaicService extends Service implements LocationListener {
 			setNickname(mosaicUser.getNickname());
 		else {
 			SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
-			if (sharedPreferences.contains(getString(R.string.preference_account_name))) {
-				appengineWebappClientId = "server:client_id:" + getString(R.string.client_id);
-				String accountName = sharedPreferences.getString(getString(R.string.preference_account_name), null);
-				if (accountName != null)
-					new GetUserTask(this, accountName).execute();
+			String accountName = sharedPreferences.getString(getString(R.string.preference_account_name), null);
+			long user_id = sharedPreferences.getLong(getString(R.string.preference_user_id), Mosaic.INVALID_ID);
+			if (accountName != null) {
+				credential = GoogleAccountCredential.usingAudience(this, "server:client_id:" + getString(R.string.client_id));
+				credential.setSelectedAccountName(mosaicUser.getEmail());
+				if (user_id != Mosaic.INVALID_ID)
+					new GetUserTask(this, user_id).execute();
 				else
-					setNickname(null);
+					new InsertUserTask(this).execute();
 			} else
 				setNickname(null);
 		}
@@ -142,10 +144,10 @@ public class MosaicService extends Service implements LocationListener {
 	}
 
 	protected void addMessage(MosaicMessage message) {
-		messages.put(message.getKey().toString(), message);
+		messages.put(message.getId(), message);
 		if (iMain != null) {
 			try {
-				iMain.addMessage(message.getKey().toString(), fromE6(message.getLatitudeE6()), fromE6(message.getLongitudeE6()), message.getTitle(), message.getBody(), message.getUser().getNickname());
+				iMain.addMessage(message.getId(), fromE6(message.getLatitudeE6()), fromE6(message.getLongitudeE6()), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -180,23 +182,40 @@ public class MosaicService extends Service implements LocationListener {
 			}
 		}
 	}
+	
+	protected void setUserId(long id) {
+		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+		.edit()
+		.putLong(getString(R.string.preference_user_id), id)
+		.commit();
+		setNickname(mosaicUser.getNickname());
+	}
+	
+	protected void clearAccount() {
+		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+		.edit()
+		.putString(getString(R.string.preference_account_name), null)
+		.putLong(getString(R.string.preference_user_id), Mosaic.INVALID_ID)
+		.commit();
+		setNickname(null);
+	}
 
 	protected void updateMessage(MosaicMessage message) {
-		message.put(message.getKey().toString(), message);
+		messages.put(message.getId(), message);
 		if (iMain != null) {
 			try {
-				iMain.updateMarker(message.getKey().toString(), message.getTitle() + " - " + message.getUser().getNickname(), message.getBody(), message.getUser().getNickname());
+				iMain.updateMarker(message.getId(), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	private int toE6(double d) {
 		return (int) (d * 1E6);
 	}
-	
+
 	private double fromE6(int e6) {
 		return e6 / 1E6;
 	}
@@ -224,19 +243,20 @@ public class MosaicService extends Service implements LocationListener {
 		}
 
 		@Override
-		public void insertMessage(String title, String body, int latitude,
-				int longitude, int radius, long expiry) throws RemoteException {
+		public void insertMessage(String title, String body, int latE6,
+				int lonE6, int radius, long expiry) throws RemoteException {
 			MosaicMessage message = new MosaicMessage();
 			message.setTitle(title);
 			message.setBody(body);
-			message.setLatitudeE6(latitude);
-			message.setLongitudeE6(longitude);
+			message.setLatitudeE6(latE6);
+			message.setLongitudeE6(lonE6);
 			message.setRadius(radius);
+			message.setUserId(mosaicUser.getId());
 			new InsertMessageTask(MosaicService.this, message).execute();
 		}
 
 		@Override
-		public void updateMessage(String id, String title, String body,
+		public void updateMessage(long id, String title, String body,
 				int radius, long expiry)
 						throws RemoteException {
 			MosaicMessage message = messages.get(id);
@@ -248,28 +268,28 @@ public class MosaicService extends Service implements LocationListener {
 		}
 
 		@Override
-		public void getMessage(String id) throws RemoteException {
+		public void getMessage(long id) throws RemoteException {
 			if (messages.containsKey(id)) {
 				MosaicMessage message = messages.get(id);
 				new ViewMessageTask(MosaicService.this, id).execute();
-				if (mosaicUser.getEncodedKey().equals(message.getUser().getEncodedKey()))
-					iMain.editMessage(message.getKey().toString(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
+				if (mosaicUser.getId() == message.getUserId())
+					iMain.editMessage(message.getId(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
 				else
-					iMain.viewMessage(message.getKey().toString(), message.getTitle(), message.getBody(), message.getUser().getNickname());
+					iMain.viewMessage(message.getId(), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} else {
 				//TODO error
 			}
 		}
 
 		@Override
-		public void reportMessage(String id) throws RemoteException {
+		public void reportMessage(long id) throws RemoteException {
 			new ReportMessageTask(MosaicService.this, id).execute();
 		}
 
 		@Override
-		public void deleteMessage(String id) throws RemoteException {
+		public void removeMessage(long id) throws RemoteException {
 			messages.remove(id);
-			new DeleteMessageTask(MosaicService.this, id).execute();
+			new RemoteMessageTask(MosaicService.this, id).execute();
 		}
 	};
 
@@ -306,16 +326,47 @@ public class MosaicService extends Service implements LocationListener {
 	public void onStatusChanged(String provider, int status, Bundle arg2) {
 		// TODO Auto-generated method stub
 	}
-	
+
+	class InsertUserTask extends AsyncTask<Void, Void, Void> {
+
+		MosaicService callback;
+		Mosaicusers endpoint;
+
+		InsertUserTask(MosaicService callback) {
+			this.callback = callback;
+			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
+					jsonFactory,
+					credential);
+			endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				mosaicUser = endpoint.user().insert().execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (mosaicUser != null)
+				callback.setUserId(mosaicUser.getId());
+			else
+				callback.clearAccount();
+		}
+	}
+
 	class UpdateUserTask extends AsyncTask<Void, Void, Void> {
 
 		MosaicService callback;
 		Mosaicusers endpoint;
-		
+
 		UpdateUserTask(MosaicService callback) {
 			this.callback = callback;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
 					credential);
@@ -325,18 +376,14 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected Void doInBackground(Void... params) { 
 			try {
-				mosaicUser = endpoint.getMosaicUser(mosaicUser.getKey().getName()).execute();
+				mosaicUser = endpoint.user().update(mosaicUser).execute();
 			} catch (IOException e) {
-				try {
-					mosaicUser = endpoint.insertMosaicUser(new MosaicUser()).execute();
-				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Void result) {
 		}
@@ -347,12 +394,11 @@ public class MosaicService extends Service implements LocationListener {
 		MosaicService callback;
 		Mosaicusers endpoint;
 		String accountName;
-		
-		GetUserTask(MosaicService callback, String accountName) {
+		long id;
+
+		GetUserTask(MosaicService callback, long id) {
 			this.callback = callback;
-			this.accountName = accountName;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(accountName);
+			this.id = id;
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
 					credential);
@@ -362,19 +408,14 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				mosaicUser = endpoint.getMosaicUser(accountName).execute();
+				mosaicUser = endpoint.user().get(id).execute();
 			} catch (IOException e) {
-				try {
-					mosaicUser = endpoint.insertMosaicUser(new MosaicUser()).execute();
-				} catch (IOException e2) {
-					mosaicUser = null;
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Void result) {
 			if (mosaicUser != null)
@@ -395,8 +436,6 @@ public class MosaicService extends Service implements LocationListener {
 			this.callback = callback;
 			this.latitude = latitude;
 			this.longitude = longitude;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId)
-					.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -407,32 +446,30 @@ public class MosaicService extends Service implements LocationListener {
 		protected List<MosaicMessage> doInBackground(Void... params) {
 			Log.d(TAG, "GetMessagesTask");
 			try {
-				return endpoint.listMosaicMessage(latitude, longitude).execute().getItems();
+				return endpoint.message().list(latitude, longitude).execute().getItems();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(List<MosaicMessage> messages) {
 			callback.setMessages(messages);
 		}
 
 	}
-	
+
 	class InsertMessageTask extends AsyncTask<Void, Void, MosaicMessage> {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
 		MosaicMessage message;
-		
+
 		InsertMessageTask(MosaicService callback, MosaicMessage message) {
 			this.callback = callback;
 			this.message = message;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -441,34 +478,31 @@ public class MosaicService extends Service implements LocationListener {
 
 		@Override
 		protected MosaicMessage doInBackground(Void... params) {
-			Log.d(TAG, "InsertMessageTask");
 			try {
-				return endpoint.insertMosaicMessage(message).execute();
+				return endpoint.message().insert(message).execute();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(MosaicMessage message) {
 			if (message != null)
 				callback.addMessage(message);
 		}
 	}
-	
+
 	class ViewMessageTask extends AsyncTask<Void, Void, Void> {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
-		String id;
-		
-		ViewMessageTask(MosaicService callback, String id) {
+		long id;
+
+		ViewMessageTask(MosaicService callback, long id) {
 			this.callback = callback;
 			this.id = id;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -478,7 +512,7 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected Void doInBackground(Void... params) { 
 			try {
-				endpoint.viewMosaicMessage(id).execute();
+				endpoint.message().view(id).execute();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -486,18 +520,16 @@ public class MosaicService extends Service implements LocationListener {
 			return null;
 		}
 	}
-	
+
 	class UpdateMessageTask extends AsyncTask<Void, Void, MosaicMessage> {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
 		MosaicMessage message;
-		
+
 		UpdateMessageTask(MosaicService callback, MosaicMessage message) {
 			this.callback = callback;
 			this.message = message;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -507,32 +539,30 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected MosaicMessage doInBackground(Void... params) { 
 			try {
-				return endpoint.updateMosaicMessage(message).execute();
+				return endpoint.message().update(message).execute();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(MosaicMessage message) {
 			if (message != null)
 				callback.updateMessage(message);
 		}
 	}
-	
+
 	class ReportMessageTask extends AsyncTask<Void, Void, Void> {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
-		String id;
-		
-		ReportMessageTask(MosaicService callback, String id) {
+		long id;
+
+		ReportMessageTask(MosaicService callback, long id) {
 			this.callback = callback;
 			this.id = id;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -542,7 +572,7 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected Void doInBackground(Void... params) { 
 			try {
-				endpoint.reportMosaicMessage(id).execute();
+				endpoint.message().report(id).execute();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -550,18 +580,16 @@ public class MosaicService extends Service implements LocationListener {
 			return null;
 		}
 	}
-	
-	class DeleteMessageTask extends AsyncTask<Void, Void, Void> {
+
+	class RemoteMessageTask extends AsyncTask<Void, Void, Void> {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
-		String id;
-		
-		DeleteMessageTask(MosaicService callback, String id) {
+		long id;
+
+		RemoteMessageTask(MosaicService callback, long id) {
 			this.callback = callback;
 			this.id = id;
-			GoogleAccountCredential credential = GoogleAccountCredential.usingAudience(callback, appengineWebappClientId);
-			credential.setSelectedAccountName(mosaicUser.getKey().getName());
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
 					jsonFactory,
 					credential);
@@ -571,7 +599,7 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		protected Void doInBackground(Void... params) { 
 			try {
-				endpoint.removeMosaicMessage(id).execute();
+				endpoint.message().remove(id).execute();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

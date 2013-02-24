@@ -22,9 +22,9 @@ package com.piusvelte.mosaic.android;
 interface ILocationService {
 	void setCallback(in IBinder mainBinder);
 	void changeNickname(String nickname);
-	void insertMessage(String title, String body, int latitude, int longitude, int radius, long expiry);
-	void updateMessage(String id, String title, String body, int radius, long expiry);
-	void getMessage(String id);
-	void reportMessage(String id);
-	void deleteMessage(String id);
+	void insertMessage(String title, String body, int latE6, int lonE6, int radius, long expiry);
+	void updateMessage(long id, String title, String body, int radius, long expiry);
+	void getMessage(long id);
+	void reportMessage(long id);
+	void removeMessage(long id);
 }

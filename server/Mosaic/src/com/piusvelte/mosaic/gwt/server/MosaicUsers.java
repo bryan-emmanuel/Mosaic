@@ -22,7 +22,7 @@ package com.piusvelte.mosaic.gwt.server;
 import com.piusvelte.mosaic.gwt.server.EMF;
 
 import com.google.api.server.spi.config.Api;
-import com.google.appengine.api.datastore.KeyFactory;
+import com.google.api.server.spi.config.ApiMethod;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
@@ -40,13 +40,10 @@ audiences = {Ids.ANDROID_AUDIENCE}
 )
 public class MosaicUsers {
 
-	/**
-	 * This method lists all the entities inserted in datastore.
-	 * It uses HTTP GET method.
-	 *
-	 * @return List of all entities persisted.
-	 * @throws OAuthRequestException 
-	 */
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "user.list",
+			path = "user/list")
 	@SuppressWarnings({ "cast", "unchecked" })
 	public List<MosaicUser> listMosaicUser(User user) throws OAuthRequestException {
 		if (user != null) {
@@ -66,20 +63,16 @@ public class MosaicUsers {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This method gets the entity having primary key id. It uses HTTP GET method.
-	 *
-	 * @param id the primary key of the java bean.
-	 * @return The entity with primary key id.
-	 * @throws OAuthRequestException 
-	 */
-	public MosaicUser getMosaicUser(@Named("id") String id, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "user.get",
+			path = "user/get/{id}")
+	public MosaicUser getMosaicUser(@Named("id") long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
 			try {
-				KeyFactory.createKey("MosaicUser", id);
-				mosaicuser = (MosaicUser) mgr.find(MosaicUser.class, KeyFactory.stringToKey(id));
+				mosaicuser = mgr.find(MosaicUser.class, id);
 			} finally {
 				mgr.close();
 			}
@@ -88,19 +81,16 @@ public class MosaicUsers {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This inserts the entity into App Engine datastore.
-	 * It uses HTTP POST method.
-	 *
-	 * @param mosaicuser the entity to be inserted.
-	 * @return The inserted entity.
-	 * @throws OAuthRequestException 
-	 */
-	public MosaicUser insertMosaicUser(MosaicUser mosaicuser, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "POST",
+			name = "user.insert",
+			path = "user/insert")
+	public MosaicUser insertMosaicUser(User user) throws OAuthRequestException {
 		if (user != null) {
+			MosaicUser mosaicuser = new MosaicUser();
 			EntityManager mgr = getEntityManager();
 			try {
-				mosaicuser.setKey(KeyFactory.createKey("MosaicUser", user.getEmail()));
+				mosaicuser.setEmail(user.getEmail());
 				mosaicuser.setNickname(user.getNickname());
 				mgr.persist(mosaicuser);
 			} finally {
@@ -111,14 +101,10 @@ public class MosaicUsers {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This method is used for updating a entity.
-	 * It uses HTTP PUT method.
-	 *
-	 * @param mosaicuser the entity to be updated.
-	 * @return The updated entity.
-	 * @throws OAuthRequestException 
-	 */
+	@ApiMethod(
+			httpMethod = "POST",
+			name = "user.update",
+			path = "user/update")
 	public MosaicUser updateMosaicUser(MosaicUser mosaicuser, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
@@ -132,20 +118,21 @@ public class MosaicUsers {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This method removes the entity with primary key id.
-	 * It uses HTTP DELETE method.
-	 *
-	 * @param id the primary key of the entity to be deleted.
-	 * @return The deleted entity.
-	 * @throws OAuthRequestException 
-	 */
-	public MosaicUser removeMosaicUser(@Named("id") String id, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "user.remove",
+			path = "user/remove/{id}")
+	@SuppressWarnings({ "cast", "unchecked" })
+	public MosaicUser removeMosaicUser(@Named("id") long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
 			try {
-				mosaicuser = mgr.find(MosaicUser.class, KeyFactory.stringToKey(id));
+				mosaicuser = mgr.find(MosaicUser.class, id);
+				Query query = mgr.createQuery("select from MosaicMessage as MosaicMessage where user_id = :user_id")
+						.setParameter("user_id", id);
+				for (Object obj : (List<Object>) query.getResultList())
+					mgr.remove(obj);
 				mgr.remove(mosaicuser);
 			} finally {
 				mgr.close();

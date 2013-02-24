@@ -12,7 +12,7 @@
 /*
  * This file was generated.
  *  with google-apis-code-generator 1.2.0 (build: 2013-02-14 15:45:00 UTC)
- *  on 2013-02-22 at 19:21:14 UTC 
+ *  on 2013-02-24 at 03:16:30 UTC 
  */
 
 package com.piusvelte.mosaic.android.mosaicmessages;
@@ -25,6 +25,7 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
+import com.google.api.client.json.JsonString;
 import com.google.common.base.Preconditions;
 
 /**
@@ -77,7 +78,7 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
    *
    * @since 1.7
    */
-  public static final String DEFAULT_SERVICE_PATH = "mosaicmessages/v1/";
+  public static final String DEFAULT_SERVICE_PATH = "mosaicmessages/v1/message/";
 
   /**
    * The default encoded base URL of the service. This is determined when the library is generated
@@ -145,623 +146,750 @@ public class Mosaicmessages extends AbstractGoogleJsonClient {
   }
 
   /**
-   * Create a request for the method "getMosaicMessage".
+   * An accessor for creating requests from the Message collection.
    *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link GetMosaicMessage#execute()} method to invoke the remote
-   * operation.
+   * <p>The typical use is:</p>
+   * <pre>
+   *   {@code Mosaicmessages mosaicmessages = new Mosaicmessages(...);}
+   *   {@code Mosaicmessages.Message.List request = mosaicmessages.message().list(parameters ...)}
+   * </pre>
    *
-   * @param id
-   * @return the request
+   * @return the resource collection
    */
-  public GetMosaicMessage getMosaicMessage(String id) throws java.io.IOException {
-    GetMosaicMessage result = new GetMosaicMessage(id);
-    initialize(result);
-    return result;
+  public Message message() {
+    return new Message();
   }
 
-  public class GetMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
-
-    private static final String REST_PATH = "mosaicmessage/{id}";
+  /**
+   * The "message" collection of methods.
+   */
+  public class Message {
 
     /**
-     * Create a request for the method "getMosaicMessage".
+     * Create a request for the method "message.get".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link GetMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link GetMosaicMessage#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Get#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @since 1.13
+     * @return the request
      */
-    protected GetMosaicMessage(String id) {
-      super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+    public Get get(Long id) throws java.io.IOException {
+      Get result = new Get(id);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
-      return super.executeUsingHead();
+    public class Get extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
+
+      private static final String REST_PATH = "get/{id}";
+
+      /**
+       * Create a request for the method "message.get".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link Get#execute()} method to invoke the remote operation. <p>
+       * {@link Get#initialize(AbstractGoogleClientRequest)} must be called to initialize this instance
+       * immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @since 1.13
+       */
+      protected Get(Long id) {
+        super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public Get setAlt(String alt) {
+        return (Get) super.setAlt(alt);
+      }
+
+      @Override
+      public Get setFields(String fields) {
+        return (Get) super.setFields(fields);
+      }
+
+      @Override
+      public Get setKey(String key) {
+        return (Get) super.setKey(key);
+      }
+
+      @Override
+      public Get setOauthToken(String oauthToken) {
+        return (Get) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Get setPrettyPrint(Boolean prettyPrint) {
+        return (Get) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Get setQuotaUser(String quotaUser) {
+        return (Get) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Get setUserIp(String userIp) {
+        return (Get) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Get setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
     }
-
-    @Override
-    public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
-      return super.buildHttpRequestUsingHead();
-    }
-
-    @Override
-    public GetMosaicMessage setAlt(String alt) {
-      return (GetMosaicMessage) super.setAlt(alt);
-    }
-
-    @Override
-    public GetMosaicMessage setFields(String fields) {
-      return (GetMosaicMessage) super.setFields(fields);
-    }
-
-    @Override
-    public GetMosaicMessage setKey(String key) {
-      return (GetMosaicMessage) super.setKey(key);
-    }
-
-    @Override
-    public GetMosaicMessage setOauthToken(String oauthToken) {
-      return (GetMosaicMessage) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (GetMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetMosaicMessage setQuotaUser(String quotaUser) {
-      return (GetMosaicMessage) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetMosaicMessage setUserIp(String userIp) {
-      return (GetMosaicMessage) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private String id;
-
     /**
-
-     */
-    public String getId() {
-      return id;
-    }
-
-    public GetMosaicMessage setId(String id) {
-      this.id = id;
-      return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "insertMosaicMessage".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link InsertMosaicMessage#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
-   * @return the request
-   */
-  public InsertMosaicMessage insertMosaicMessage(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) throws java.io.IOException {
-    InsertMosaicMessage result = new InsertMosaicMessage(content);
-    initialize(result);
-    return result;
-  }
-
-  public class InsertMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
-
-    private static final String REST_PATH = "mosaicmessage";
-
-    /**
-     * Create a request for the method "insertMosaicMessage".
+     * Create a request for the method "message.insert".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link InsertMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link InsertMosaicMessage#initialize(AbstractGoogleClientRequest)} must be
-     * called to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Insert#execute()} method to invoke the remote operation.
      *
      * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
-     * @since 1.13
+     * @return the request
      */
-    protected InsertMosaicMessage(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) {
-      super(Mosaicmessages.this, "POST", REST_PATH, content, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+    public Insert insert(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) throws java.io.IOException {
+      Insert result = new Insert(content);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public InsertMosaicMessage setAlt(String alt) {
-      return (InsertMosaicMessage) super.setAlt(alt);
+    public class Insert extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
+
+      private static final String REST_PATH = "insert";
+
+      /**
+       * Create a request for the method "message.insert".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link Insert#execute()} method to invoke the remote operation.
+       * <p> {@link Insert#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
+       * @since 1.13
+       */
+      protected Insert(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) {
+        super(Mosaicmessages.this, "POST", REST_PATH, content, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+      }
+
+      @Override
+      public Insert setAlt(String alt) {
+        return (Insert) super.setAlt(alt);
+      }
+
+      @Override
+      public Insert setFields(String fields) {
+        return (Insert) super.setFields(fields);
+      }
+
+      @Override
+      public Insert setKey(String key) {
+        return (Insert) super.setKey(key);
+      }
+
+      @Override
+      public Insert setOauthToken(String oauthToken) {
+        return (Insert) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Insert setPrettyPrint(Boolean prettyPrint) {
+        return (Insert) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Insert setQuotaUser(String quotaUser) {
+        return (Insert) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Insert setUserIp(String userIp) {
+        return (Insert) super.setUserIp(userIp);
+      }
+
     }
-
-    @Override
-    public InsertMosaicMessage setFields(String fields) {
-      return (InsertMosaicMessage) super.setFields(fields);
-    }
-
-    @Override
-    public InsertMosaicMessage setKey(String key) {
-      return (InsertMosaicMessage) super.setKey(key);
-    }
-
-    @Override
-    public InsertMosaicMessage setOauthToken(String oauthToken) {
-      return (InsertMosaicMessage) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public InsertMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (InsertMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public InsertMosaicMessage setQuotaUser(String quotaUser) {
-      return (InsertMosaicMessage) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public InsertMosaicMessage setUserIp(String userIp) {
-      return (InsertMosaicMessage) super.setUserIp(userIp);
-    }
-
-  }
-
-  /**
-   * Create a request for the method "listMosaicMessage".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link ListMosaicMessage#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param latE6
-   * @param lonE6
-   * @return the request
-   */
-  public ListMosaicMessage listMosaicMessage(Integer latE6, Integer lonE6) throws java.io.IOException {
-    ListMosaicMessage result = new ListMosaicMessage(latE6, lonE6);
-    initialize(result);
-    return result;
-  }
-
-  public class ListMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection> {
-
-    private static final String REST_PATH = "mosaicmessage/{latE6}/{lonE6}";
-
     /**
-     * Create a request for the method "listMosaicMessage".
+     * Create a request for the method "message.list".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link ListMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link ListMosaicMessage#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link List#execute()} method to invoke the remote operation.
      *
      * @param latE6
      * @param lonE6
-     * @since 1.13
+     * @return the request
      */
-    protected ListMosaicMessage(Integer latE6, Integer lonE6) {
-      super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection.class);
-      this.latE6 = Preconditions.checkNotNull(latE6, "Required parameter latE6 must be specified.");
-      this.lonE6 = Preconditions.checkNotNull(lonE6, "Required parameter lonE6 must be specified.");
+    public List list(Integer latE6, Integer lonE6) throws java.io.IOException {
+      List result = new List(latE6, lonE6);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
-      return super.executeUsingHead();
+    public class List extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection> {
+
+      private static final String REST_PATH = "list";
+
+      /**
+       * Create a request for the method "message.list".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link List#execute()} method to invoke the remote operation. <p>
+       * {@link List#initialize(AbstractGoogleClientRequest)} must be called to initialize this instance
+       * immediately after invoking the constructor. </p>
+       *
+       * @param latE6
+       * @param lonE6
+       * @since 1.13
+       */
+      protected List(Integer latE6, Integer lonE6) {
+        super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessageCollection.class);
+        this.latE6 = Preconditions.checkNotNull(latE6, "Required parameter latE6 must be specified.");
+        this.lonE6 = Preconditions.checkNotNull(lonE6, "Required parameter lonE6 must be specified.");
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public List setAlt(String alt) {
+        return (List) super.setAlt(alt);
+      }
+
+      @Override
+      public List setFields(String fields) {
+        return (List) super.setFields(fields);
+      }
+
+      @Override
+      public List setKey(String key) {
+        return (List) super.setKey(key);
+      }
+
+      @Override
+      public List setOauthToken(String oauthToken) {
+        return (List) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public List setPrettyPrint(Boolean prettyPrint) {
+        return (List) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public List setQuotaUser(String quotaUser) {
+        return (List) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public List setUserIp(String userIp) {
+        return (List) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Integer latE6;
+
+      /**
+
+       */
+      public Integer getLatE6() {
+        return latE6;
+      }
+
+      public List setLatE6(Integer latE6) {
+        this.latE6 = latE6;
+        return this;
+      }
+
+      @com.google.api.client.util.Key
+      private Integer lonE6;
+
+      /**
+
+       */
+      public Integer getLonE6() {
+        return lonE6;
+      }
+
+      public List setLonE6(Integer lonE6) {
+        this.lonE6 = lonE6;
+        return this;
+      }
+
     }
-
-    @Override
-    public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
-      return super.buildHttpRequestUsingHead();
-    }
-
-    @Override
-    public ListMosaicMessage setAlt(String alt) {
-      return (ListMosaicMessage) super.setAlt(alt);
-    }
-
-    @Override
-    public ListMosaicMessage setFields(String fields) {
-      return (ListMosaicMessage) super.setFields(fields);
-    }
-
-    @Override
-    public ListMosaicMessage setKey(String key) {
-      return (ListMosaicMessage) super.setKey(key);
-    }
-
-    @Override
-    public ListMosaicMessage setOauthToken(String oauthToken) {
-      return (ListMosaicMessage) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public ListMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (ListMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public ListMosaicMessage setQuotaUser(String quotaUser) {
-      return (ListMosaicMessage) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public ListMosaicMessage setUserIp(String userIp) {
-      return (ListMosaicMessage) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private Integer latE6;
-
     /**
-
-     */
-    public Integer getLatE6() {
-      return latE6;
-    }
-
-    public ListMosaicMessage setLatE6(Integer latE6) {
-      this.latE6 = latE6;
-      return this;
-    }
-
-    @com.google.api.client.util.Key
-    private Integer lonE6;
-
-    /**
-
-     */
-    public Integer getLonE6() {
-      return lonE6;
-    }
-
-    public ListMosaicMessage setLonE6(Integer lonE6) {
-      this.lonE6 = lonE6;
-      return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "removeMosaicMessage".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link RemoveMosaicMessage#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param id
-   * @return the request
-   */
-  public RemoveMosaicMessage removeMosaicMessage(String id) throws java.io.IOException {
-    RemoveMosaicMessage result = new RemoveMosaicMessage(id);
-    initialize(result);
-    return result;
-  }
-
-  public class RemoveMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
-
-    private static final String REST_PATH = "mosaicmessage/{id}";
-
-    /**
-     * Create a request for the method "removeMosaicMessage".
+     * Create a request for the method "message.patch".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link RemoveMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link RemoveMosaicMessage#initialize(AbstractGoogleClientRequest)} must be
-     * called to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Patch#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @since 1.13
+     * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
+     * @return the request
      */
-    protected RemoveMosaicMessage(String id) {
-      super(Mosaicmessages.this, "DELETE", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+    public Patch patch(Long id, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) throws java.io.IOException {
+      Patch result = new Patch(id, content);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public RemoveMosaicMessage setAlt(String alt) {
-      return (RemoveMosaicMessage) super.setAlt(alt);
+    public class Patch extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
+
+      private static final String REST_PATH = "update";
+
+      /**
+       * Create a request for the method "message.patch".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link Patch#execute()} method to invoke the remote operation.
+       * <p> {@link Patch#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
+       * @since 1.13
+       */
+      protected Patch(Long id, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) {
+        super(Mosaicmessages.this, "PATCH", REST_PATH, content, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public Patch setAlt(String alt) {
+        return (Patch) super.setAlt(alt);
+      }
+
+      @Override
+      public Patch setFields(String fields) {
+        return (Patch) super.setFields(fields);
+      }
+
+      @Override
+      public Patch setKey(String key) {
+        return (Patch) super.setKey(key);
+      }
+
+      @Override
+      public Patch setOauthToken(String oauthToken) {
+        return (Patch) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Patch setPrettyPrint(Boolean prettyPrint) {
+        return (Patch) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Patch setQuotaUser(String quotaUser) {
+        return (Patch) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Patch setUserIp(String userIp) {
+        return (Patch) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Patch setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
     }
-
-    @Override
-    public RemoveMosaicMessage setFields(String fields) {
-      return (RemoveMosaicMessage) super.setFields(fields);
-    }
-
-    @Override
-    public RemoveMosaicMessage setKey(String key) {
-      return (RemoveMosaicMessage) super.setKey(key);
-    }
-
-    @Override
-    public RemoveMosaicMessage setOauthToken(String oauthToken) {
-      return (RemoveMosaicMessage) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public RemoveMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (RemoveMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public RemoveMosaicMessage setQuotaUser(String quotaUser) {
-      return (RemoveMosaicMessage) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public RemoveMosaicMessage setUserIp(String userIp) {
-      return (RemoveMosaicMessage) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private String id;
-
     /**
-
-     */
-    public String getId() {
-      return id;
-    }
-
-    public RemoveMosaicMessage setId(String id) {
-      this.id = id;
-      return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "reportMosaicMessage".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link ReportMosaicMessage#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param id
-   * @return the request
-   */
-  public ReportMosaicMessage reportMosaicMessage(String id) throws java.io.IOException {
-    ReportMosaicMessage result = new ReportMosaicMessage(id);
-    initialize(result);
-    return result;
-  }
-
-  public class ReportMosaicMessage extends MosaicmessagesRequest<Void> {
-
-    private static final String REST_PATH = "reportMosaicMessage/{id}";
-
-    /**
-     * Create a request for the method "reportMosaicMessage".
+     * Create a request for the method "message.remove".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link ReportMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link ReportMosaicMessage#initialize(AbstractGoogleClientRequest)} must be
-     * called to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Remove#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @since 1.13
+     * @return the request
      */
-    protected ReportMosaicMessage(String id) {
-      super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+    public Remove remove(Long id) throws java.io.IOException {
+      Remove result = new Remove(id);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public ReportMosaicMessage setAlt(String alt) {
-      return (ReportMosaicMessage) super.setAlt(alt);
+    public class Remove extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
+
+      private static final String REST_PATH = "remove/{id}";
+
+      /**
+       * Create a request for the method "message.remove".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link Remove#execute()} method to invoke the remote operation.
+       * <p> {@link Remove#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @since 1.13
+       */
+      protected Remove(Long id) {
+        super(Mosaicmessages.this, "GET", REST_PATH, null, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public Remove setAlt(String alt) {
+        return (Remove) super.setAlt(alt);
+      }
+
+      @Override
+      public Remove setFields(String fields) {
+        return (Remove) super.setFields(fields);
+      }
+
+      @Override
+      public Remove setKey(String key) {
+        return (Remove) super.setKey(key);
+      }
+
+      @Override
+      public Remove setOauthToken(String oauthToken) {
+        return (Remove) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Remove setPrettyPrint(Boolean prettyPrint) {
+        return (Remove) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Remove setQuotaUser(String quotaUser) {
+        return (Remove) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Remove setUserIp(String userIp) {
+        return (Remove) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Remove setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
     }
-
-    @Override
-    public ReportMosaicMessage setFields(String fields) {
-      return (ReportMosaicMessage) super.setFields(fields);
-    }
-
-    @Override
-    public ReportMosaicMessage setKey(String key) {
-      return (ReportMosaicMessage) super.setKey(key);
-    }
-
-    @Override
-    public ReportMosaicMessage setOauthToken(String oauthToken) {
-      return (ReportMosaicMessage) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public ReportMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (ReportMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public ReportMosaicMessage setQuotaUser(String quotaUser) {
-      return (ReportMosaicMessage) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public ReportMosaicMessage setUserIp(String userIp) {
-      return (ReportMosaicMessage) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private String id;
-
     /**
-
-     */
-    public String getId() {
-      return id;
-    }
-
-    public ReportMosaicMessage setId(String id) {
-      this.id = id;
-      return this;
-    }
-
-  }
-
-  /**
-   * Create a request for the method "updateMosaicMessage".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link UpdateMosaicMessage#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
-   * @return the request
-   */
-  public UpdateMosaicMessage updateMosaicMessage(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) throws java.io.IOException {
-    UpdateMosaicMessage result = new UpdateMosaicMessage(content);
-    initialize(result);
-    return result;
-  }
-
-  public class UpdateMosaicMessage extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
-
-    private static final String REST_PATH = "mosaicmessage";
-
-    /**
-     * Create a request for the method "updateMosaicMessage".
+     * Create a request for the method "message.report".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link UpdateMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link UpdateMosaicMessage#initialize(AbstractGoogleClientRequest)} must be
-     * called to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link Report#execute()} method to invoke the remote operation.
+     *
+     * @param id
+     * @return the request
+     */
+    public Report report(Long id) throws java.io.IOException {
+      Report result = new Report(id);
+      initialize(result);
+      return result;
+    }
+
+    public class Report extends MosaicmessagesRequest<Void> {
+
+      private static final String REST_PATH = "report/{id}";
+
+      /**
+       * Create a request for the method "message.report".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link Report#execute()} method to invoke the remote operation.
+       * <p> {@link Report#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @since 1.13
+       */
+      protected Report(Long id) {
+        super(Mosaicmessages.this, "GET", REST_PATH, null, Void.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
+
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
+
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
+
+      @Override
+      public Report setAlt(String alt) {
+        return (Report) super.setAlt(alt);
+      }
+
+      @Override
+      public Report setFields(String fields) {
+        return (Report) super.setFields(fields);
+      }
+
+      @Override
+      public Report setKey(String key) {
+        return (Report) super.setKey(key);
+      }
+
+      @Override
+      public Report setOauthToken(String oauthToken) {
+        return (Report) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Report setPrettyPrint(Boolean prettyPrint) {
+        return (Report) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Report setQuotaUser(String quotaUser) {
+        return (Report) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Report setUserIp(String userIp) {
+        return (Report) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public Report setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
+    }
+    /**
+     * Create a request for the method "message.update".
+     *
+     * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+     * optional parameters, call the {@link Update#execute()} method to invoke the remote operation.
      *
      * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
-     * @since 1.13
+     * @return the request
      */
-    protected UpdateMosaicMessage(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) {
-      super(Mosaicmessages.this, "PUT", REST_PATH, content, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+    public Update update(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) throws java.io.IOException {
+      Update result = new Update(content);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public UpdateMosaicMessage setAlt(String alt) {
-      return (UpdateMosaicMessage) super.setAlt(alt);
+    public class Update extends MosaicmessagesRequest<com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage> {
+
+      private static final String REST_PATH = "update";
+
+      /**
+       * Create a request for the method "message.update".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link Update#execute()} method to invoke the remote operation.
+       * <p> {@link Update#initialize(AbstractGoogleClientRequest)} must be called to initialize this
+       * instance immediately after invoking the constructor. </p>
+       *
+       * @param content the {@link com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage}
+       * @since 1.13
+       */
+      protected Update(com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage content) {
+        super(Mosaicmessages.this, "POST", REST_PATH, content, com.piusvelte.mosaic.android.mosaicmessages.model.MosaicMessage.class);
+      }
+
+      @Override
+      public Update setAlt(String alt) {
+        return (Update) super.setAlt(alt);
+      }
+
+      @Override
+      public Update setFields(String fields) {
+        return (Update) super.setFields(fields);
+      }
+
+      @Override
+      public Update setKey(String key) {
+        return (Update) super.setKey(key);
+      }
+
+      @Override
+      public Update setOauthToken(String oauthToken) {
+        return (Update) super.setOauthToken(oauthToken);
+      }
+
+      @Override
+      public Update setPrettyPrint(Boolean prettyPrint) {
+        return (Update) super.setPrettyPrint(prettyPrint);
+      }
+
+      @Override
+      public Update setQuotaUser(String quotaUser) {
+        return (Update) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public Update setUserIp(String userIp) {
+        return (Update) super.setUserIp(userIp);
+      }
+
     }
-
-    @Override
-    public UpdateMosaicMessage setFields(String fields) {
-      return (UpdateMosaicMessage) super.setFields(fields);
-    }
-
-    @Override
-    public UpdateMosaicMessage setKey(String key) {
-      return (UpdateMosaicMessage) super.setKey(key);
-    }
-
-    @Override
-    public UpdateMosaicMessage setOauthToken(String oauthToken) {
-      return (UpdateMosaicMessage) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public UpdateMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (UpdateMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public UpdateMosaicMessage setQuotaUser(String quotaUser) {
-      return (UpdateMosaicMessage) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public UpdateMosaicMessage setUserIp(String userIp) {
-      return (UpdateMosaicMessage) super.setUserIp(userIp);
-    }
-
-  }
-
-  /**
-   * Create a request for the method "viewMosaicMessage".
-   *
-   * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-   * optional parameters, call the {@link ViewMosaicMessage#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param id
-   * @return the request
-   */
-  public ViewMosaicMessage viewMosaicMessage(String id) throws java.io.IOException {
-    ViewMosaicMessage result = new ViewMosaicMessage(id);
-    initialize(result);
-    return result;
-  }
-
-  public class ViewMosaicMessage extends MosaicmessagesRequest<Void> {
-
-    private static final String REST_PATH = "viewMosaicMessage/{id}";
-
     /**
-     * Create a request for the method "viewMosaicMessage".
+     * Create a request for the method "message.view".
      *
      * This request holds the parameters needed by the the mosaicmessages server.  After setting any
-     * optional parameters, call the {@link ViewMosaicMessage#execute()} method to invoke the remote
-     * operation. <p> {@link ViewMosaicMessage#initialize(AbstractGoogleClientRequest)} must be called
-     * to initialize this instance immediately after invoking the constructor. </p>
+     * optional parameters, call the {@link View#execute()} method to invoke the remote operation.
      *
      * @param id
-     * @since 1.13
+     * @return the request
      */
-    protected ViewMosaicMessage(String id) {
-      super(Mosaicmessages.this, "POST", REST_PATH, null, Void.class);
-      this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+    public View view(Long id) throws java.io.IOException {
+      View result = new View(id);
+      initialize(result);
+      return result;
     }
 
-    @Override
-    public ViewMosaicMessage setAlt(String alt) {
-      return (ViewMosaicMessage) super.setAlt(alt);
-    }
+    public class View extends MosaicmessagesRequest<Void> {
 
-    @Override
-    public ViewMosaicMessage setFields(String fields) {
-      return (ViewMosaicMessage) super.setFields(fields);
-    }
+      private static final String REST_PATH = "view/{id}";
 
-    @Override
-    public ViewMosaicMessage setKey(String key) {
-      return (ViewMosaicMessage) super.setKey(key);
-    }
+      /**
+       * Create a request for the method "message.view".
+       *
+       * This request holds the parameters needed by the the mosaicmessages server.  After setting any
+       * optional parameters, call the {@link View#execute()} method to invoke the remote operation. <p>
+       * {@link View#initialize(AbstractGoogleClientRequest)} must be called to initialize this instance
+       * immediately after invoking the constructor. </p>
+       *
+       * @param id
+       * @since 1.13
+       */
+      protected View(Long id) {
+        super(Mosaicmessages.this, "GET", REST_PATH, null, Void.class);
+        this.id = Preconditions.checkNotNull(id, "Required parameter id must be specified.");
+      }
 
-    @Override
-    public ViewMosaicMessage setOauthToken(String oauthToken) {
-      return (ViewMosaicMessage) super.setOauthToken(oauthToken);
-    }
+      @Override
+      public com.google.api.client.http.HttpResponse executeUsingHead() throws java.io.IOException {
+        return super.executeUsingHead();
+      }
 
-    @Override
-    public ViewMosaicMessage setPrettyPrint(Boolean prettyPrint) {
-      return (ViewMosaicMessage) super.setPrettyPrint(prettyPrint);
-    }
+      @Override
+      public com.google.api.client.http.HttpRequest buildHttpRequestUsingHead() throws java.io.IOException {
+        return super.buildHttpRequestUsingHead();
+      }
 
-    @Override
-    public ViewMosaicMessage setQuotaUser(String quotaUser) {
-      return (ViewMosaicMessage) super.setQuotaUser(quotaUser);
-    }
+      @Override
+      public View setAlt(String alt) {
+        return (View) super.setAlt(alt);
+      }
 
-    @Override
-    public ViewMosaicMessage setUserIp(String userIp) {
-      return (ViewMosaicMessage) super.setUserIp(userIp);
-    }
+      @Override
+      public View setFields(String fields) {
+        return (View) super.setFields(fields);
+      }
 
-    @com.google.api.client.util.Key
-    private String id;
+      @Override
+      public View setKey(String key) {
+        return (View) super.setKey(key);
+      }
 
-    /**
+      @Override
+      public View setOauthToken(String oauthToken) {
+        return (View) super.setOauthToken(oauthToken);
+      }
 
-     */
-    public String getId() {
-      return id;
-    }
+      @Override
+      public View setPrettyPrint(Boolean prettyPrint) {
+        return (View) super.setPrettyPrint(prettyPrint);
+      }
 
-    public ViewMosaicMessage setId(String id) {
-      this.id = id;
-      return this;
+      @Override
+      public View setQuotaUser(String quotaUser) {
+        return (View) super.setQuotaUser(quotaUser);
+      }
+
+      @Override
+      public View setUserIp(String userIp) {
+        return (View) super.setUserIp(userIp);
+      }
+
+      @com.google.api.client.util.Key
+      private Long id;
+
+      /**
+
+       */
+      public Long getId() {
+        return id;
+      }
+
+      public View setId(Long id) {
+        this.id = id;
+        return this;
+      }
+
     }
 
   }

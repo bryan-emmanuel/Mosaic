@@ -75,8 +75,8 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	private static final int REQUEST_INSERT_MESSAGE = 0;
 	private static final int REQUEST_UPDATE_MESSAGE = 1;
 	private static final int REQUEST_VIEW_MESSAGE = 2;
-	private HashMap<String, String> markerIds = new HashMap<String, String>();
-	private HashMap<String, Marker> markers = new HashMap<String, Marker>();
+	private HashMap<String, Long> messages = new HashMap<String, Long>();
+	private HashMap<Long, Marker> markers = new HashMap<Long, Marker>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -227,24 +227,24 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void clearMessages() throws RemoteException {
 			map.clear();
-			markerIds.clear();
+			messages.clear();
 			markers.clear();
 		}
 
 		@Override
-		public void addMessage(String id, double latitude, double longitude, String title, String body, String nickname)
+		public void addMessage(long id, double latitude, double longitude, String title, String body, String nick)
 				throws RemoteException {
 			Marker marker = map.addMarker(new MarkerOptions()
 			.position(new LatLng(latitude, longitude))
-			.title(title + " - " + nickname)
+			.title(title + " -" + nick)
 			.snippet(body)
 			.draggable(false));
-			markerIds.put(marker.getId(), id);
+			messages.put(marker.getId(), id);
 			markers.put(id, marker);
 		}
 
 		@Override
-		public void editMessage(String id, String title, String body,
+		public void editMessage(long id, String title, String body,
 				int radius, long expiry) throws RemoteException {
 			startActivityForResult(new Intent(Main.this, MessageEditor.class)
 			.putExtra(Mosaic.EXTRA_ID, id)
@@ -255,19 +255,18 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		}
 
 		@Override
-		public void viewMessage(String id, String title, String body,
-				String nickname) throws RemoteException {
+		public void viewMessage(long id, String title, String body, String nick) throws RemoteException {
 			startActivityForResult(new Intent(Main.this, MessageViewer.class)
 			.putExtra(Mosaic.EXTRA_ID, id)
-			.putExtra(Mosaic.EXTRA_TITLE, title + " - " + nickname)
+			.putExtra(Mosaic.EXTRA_TITLE, title + " -" + nick)
 			.putExtra(Mosaic.EXTRA_BODY, body), REQUEST_VIEW_MESSAGE);
 		}
 
 		@Override
-		public void updateMarker(String id, String title, String body, String nickname)
+		public void updateMarker(long id, String title, String body, String nick)
 				throws RemoteException {
 			Marker marker = markers.get(id);
-			marker.setTitle(title + " - " + nickname);
+			marker.setTitle(title + " -" + nick);
 			marker.setSnippet(body);
 		}
 	};
@@ -290,9 +289,9 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
-		if (markerIds.containsKey(marker.getId())) {
+		if (messages.containsKey(marker.getId())) {
 			try {
-				iLocationService.getMessage(markerIds.get(marker.getId()));
+				iLocationService.getMessage(messages.get(marker.getId()));
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -328,7 +327,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		} else if ((requestCode == REQUEST_UPDATE_MESSAGE) && (resultCode == RESULT_OK)) {
 			if (data.hasExtra(Mosaic.EXTRA_TITLE)) {
 				try {
-					iLocationService.updateMessage(data.getStringExtra(Mosaic.EXTRA_ID),
+					iLocationService.updateMessage(data.getLongExtra(Mosaic.EXTRA_ID, Mosaic.INVALID_ID),
 							data.getStringExtra(Mosaic.EXTRA_TITLE),
 							data.getStringExtra(Mosaic.EXTRA_BODY),
 							data.getIntExtra(Mosaic.EXTRA_RADIUS, 0),
@@ -338,13 +337,13 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 					e.printStackTrace();
 				}
 			} else {
-				String id = data.getStringExtra(Mosaic.EXTRA_ID);
+				long id = data.getLongExtra(Mosaic.EXTRA_ID, Mosaic.INVALID_ID);
 				Marker marker = markers.get(id);
 				markers.remove(id);
-				markerIds.remove(marker.getId());
+				messages.remove(marker.getId());
 				marker.remove();
 				try {
-					iLocationService.deleteMessage(id);
+					iLocationService.removeMessage(id);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -352,7 +351,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			}
 		} else if ((requestCode == REQUEST_VIEW_MESSAGE) && (resultCode == RESULT_OK)) {
 			try {
-				iLocationService.reportMessage(markerIds.get(data.getStringExtra(Mosaic.EXTRA_ID)));
+				iLocationService.reportMessage(data.getLongExtra(Mosaic.EXTRA_ID, Mosaic.INVALID_ID));
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

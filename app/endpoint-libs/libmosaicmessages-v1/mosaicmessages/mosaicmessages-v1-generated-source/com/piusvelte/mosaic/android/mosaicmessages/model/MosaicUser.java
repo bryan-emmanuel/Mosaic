@@ -16,6 +16,7 @@
 package com.piusvelte.mosaic.android.mosaicmessages.model;
 
 import com.google.api.client.json.GenericJson;
+import com.google.api.client.json.JsonString;
 
 /**
  * Model definition for MosaicUser.
@@ -39,25 +40,13 @@ public final class MosaicUser extends GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private String encodedKey;
+  private String email;
 
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private Key key;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<MosaicMessage> messages;
-
-  static {
-    // hack to force ProGuard to consider MosaicMessage used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(MosaicMessage.class);
-  }
+  @com.google.api.client.util.Key @JsonString
+  private Long id;
 
   /**
    * The value may be {@code null}.
@@ -69,16 +58,16 @@ public final class MosaicUser extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public String getEncodedKey() {
-    return encodedKey;
+  public String getEmail() {
+    return email;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicUser setEncodedKey(String encodedKey) {
-    this.encodedKey = encodedKey;
+  public MosaicUser setEmail(String email) {
+    this.email = email;
     return this;
   }
 
@@ -86,33 +75,16 @@ public final class MosaicUser extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Key getKey() {
-    return key;
+  public Long getId() {
+    return id;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicUser setKey(Key key) {
-    this.key = key;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public java.util.List<MosaicMessage> getMessages() {
-    return messages;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicUser setMessages(java.util.List<MosaicMessage> messages) {
-    this.messages = messages;
+  public MosaicUser setId(Long id) {
+    this.id = id;
     return this;
   }
 

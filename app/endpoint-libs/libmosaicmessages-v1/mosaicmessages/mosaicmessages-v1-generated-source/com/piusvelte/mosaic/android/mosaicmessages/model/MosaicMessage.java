@@ -51,12 +51,6 @@ public final class MosaicMessage extends GenericJson {
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private String encodedKey;
-
-  /**
-   * The value may be {@code null}.
-   */
   @com.google.api.client.util.Key @JsonString
   private Long expiry;
 
@@ -69,8 +63,8 @@ public final class MosaicMessage extends GenericJson {
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private Key key;
+  @com.google.api.client.util.Key @JsonString
+  private Long id;
 
   /**
    * The value may be {@code null}.
@@ -111,20 +105,14 @@ public final class MosaicMessage extends GenericJson {
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private java.util.List<Key> visitors;
-
-  static {
-    // hack to force ProGuard to consider Key used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(Key.class);
-  }
+  @com.google.api.client.util.Key("user_id") @JsonString
+  private Long userId;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Integer visits;
+  private Integer views;
 
   /**
 
@@ -157,23 +145,6 @@ public final class MosaicMessage extends GenericJson {
    */
   public MosaicMessage setCreated(Long created) {
     this.created = created;
-    return this;
-  }
-
-  /**
-
-   * The value returned may be {@code null}.
-   */
-  public String getEncodedKey() {
-    return encodedKey;
-  }
-
-  /**
-
-   * The value set may be {@code null}.
-   */
-  public MosaicMessage setEncodedKey(String encodedKey) {
-    this.encodedKey = encodedKey;
     return this;
   }
 
@@ -215,16 +186,16 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Key getKey() {
-    return key;
+  public Long getId() {
+    return id;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setKey(Key key) {
-    this.key = key;
+  public MosaicMessage setId(Long id) {
+    this.id = id;
     return this;
   }
 
@@ -334,16 +305,16 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public java.util.List<Key> getVisitors() {
-    return visitors;
+  public Long getUserId() {
+    return userId;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setVisitors(java.util.List<Key> visitors) {
-    this.visitors = visitors;
+  public MosaicMessage setUserId(Long userId) {
+    this.userId = userId;
     return this;
   }
 
@@ -351,16 +322,16 @@ public final class MosaicMessage extends GenericJson {
 
    * The value returned may be {@code null}.
    */
-  public Integer getVisits() {
-    return visits;
+  public Integer getViews() {
+    return views;
   }
 
   /**
 
    * The value set may be {@code null}.
    */
-  public MosaicMessage setVisits(Integer visits) {
-    this.visits = visits;
+  public MosaicMessage setViews(Integer views) {
+    this.views = views;
     return this;
   }
 

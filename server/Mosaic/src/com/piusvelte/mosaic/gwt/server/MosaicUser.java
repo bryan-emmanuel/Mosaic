@@ -19,28 +19,19 @@
  */
 package com.piusvelte.mosaic.gwt.server;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 @Entity
 public class MosaicUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key key;
+	private long id;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	private List<MosaicMessage> messages;
+	private String email;
 	
 	private String nickname;
 	
@@ -54,29 +45,21 @@ public class MosaicUser {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
-	public List<MosaicMessage> getMessages() {
-		return messages;
-	}
-	
-	public void addMessage(MosaicMessage message) {
-		this.messages.add(message);
-	}
-	
-	public void setKey(Key key) {
-		this.key = key;
-	}
-	
-	public void setEncodedKey(String key) {
-		this.key = KeyFactory.stringToKey(key);
+
+	public long getId() {
+		return id;
 	}
 
-	public Key getKey() {
-		return key;
-	}
-	
-	public String getEncodedKey() {
-		return KeyFactory.keyToString(key);
+	public void setId(long id) {
+		this.id = id;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 }

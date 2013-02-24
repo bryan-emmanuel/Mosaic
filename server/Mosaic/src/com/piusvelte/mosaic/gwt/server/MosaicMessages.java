@@ -22,7 +22,7 @@ package com.piusvelte.mosaic.gwt.server;
 import com.piusvelte.mosaic.gwt.server.EMF;
 
 import com.google.api.server.spi.config.Api;
-import com.google.appengine.api.datastore.KeyFactory;
+import com.google.api.server.spi.config.ApiMethod;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
@@ -40,13 +40,10 @@ clientIds = {Ids.WEB_CLIENT_ID,
 		)
 public class MosaicMessages {
 
-	/**
-	 * This method lists all the entities inserted in datastore.
-	 * It uses HTTP GET method.
-	 *
-	 * @return List of all entities persisted.
-	 * @throws OAuthRequestException 
-	 */
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "message.list",
+			path = "message/list")
 	@SuppressWarnings({ "cast", "unchecked" })
 	public List<MosaicMessage> listMosaicMessage(@Named("latE6") int latE6, @Named("lonE6") int lonE6, User user) throws OAuthRequestException {
 		if (user != null) {
@@ -70,7 +67,7 @@ public class MosaicMessages {
 						.createQuery(queryStr.toString());
 				List<MosaicMessage> msgs = query.getResultList();
 				for (MosaicMessage msg : msgs) {
-					if ((msg.getReports() <= msg.getVisits())
+					if ((msg.getReports() <= msg.getViews())
 							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(msg.getLatitudeE6()), GeocellHelper.fromE6(msg.getLongitudeE6())) < msg.getRadius()))
 						result.add(msg);
 				}
@@ -82,18 +79,17 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This method gets the entity having primary key id. It uses HTTP GET method.
-	 *
-	 * @param id the primary key of the java bean.
-	 * @return The entity with primary key id.
-	 */
-	public MosaicMessage getMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "message.get",
+			path = "message/get/{id}")
+	public MosaicMessage getMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				mosaicmessage = mgr.find(MosaicMessage.class, id);
+				mosaicmessage.setUser(mgr.find(MosaicUser.class, mosaicmessage.getUser_id()));
 			} finally {
 				mgr.close();
 			}
@@ -102,23 +98,17 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This inserts the entity into App Engine datastore.
-	 * It uses HTTP POST method.
-	 *
-	 * @param mosaicmessage the entity to be inserted.
-	 * @return The inserted entity.
-	 */
+	@ApiMethod(
+			httpMethod = "POST",
+			name = "message.insert",
+			path = "message/insert")
 	public MosaicMessage insertMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
 			mosaicmessage.setGeocells(GeocellHelper.getGeocellsWithinRadius(GeocellHelper.fromE6(mosaicmessage.getLatitudeE6()), GeocellHelper.fromE6(mosaicmessage.getLongitudeE6()), mosaicmessage.getRadius()));
 			EntityManager mgr = getEntityManager();
 			try {
-				MosaicUser mosaicuser = mgr.find(MosaicUser.class, KeyFactory.createKey("MosaicUser", user.getEmail()));
-				mosaicmessage.setUser(mosaicuser);
-				mosaicuser.addMessage(mosaicmessage);
-				mgr.persist(mosaicuser);
 				mgr.persist(mosaicmessage);
+				mosaicmessage.setUser(mgr.find(MosaicUser.class, mosaicmessage.getUser_id()));
 			} finally {
 				mgr.close();
 			}
@@ -127,13 +117,10 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This method is used for updating a entity.
-	 * It uses HTTP PUT method.
-	 *
-	 * @param mosaicmessage the entity to be updated.
-	 * @return The updated entity.
-	 */
+	@ApiMethod(
+			httpMethod = "POST",
+			name = "message.update",
+			path = "message/update")
 	public MosaicMessage updateMosaicMessage(MosaicMessage mosaicmessage, User user) throws OAuthRequestException {
 		if (user != null) {
 			mosaicmessage.setGeocells(GeocellHelper.getGeocellsWithinRadius(GeocellHelper.fromE6(mosaicmessage.getLatitudeE6()), GeocellHelper.fromE6(mosaicmessage.getLongitudeE6()), mosaicmessage.getRadius()));
@@ -148,20 +135,17 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	/**
-	 * This method removes the entity with primary key id.
-	 * It uses HTTP DELETE method.
-	 *
-	 * @param id the primary key of the entity to be deleted.
-	 * @return The deleted entity.
-	 */
-	public MosaicMessage removeMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "message.remove",
+			path = "message/remove/{id}")
+	public MosaicMessage removeMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
-				mgr.remove(mosaicmessage);
+//				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
+				mgr.remove(mgr.find(MosaicMessage.class, id));
 			} finally {
 				mgr.close();
 			}
@@ -170,13 +154,17 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	public void reportMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "message.report",
+			path = "message/report/{id}")
+	public void reportMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
-				mosaicmessage.setReports(mosaicmessage.getReports() + 2);
+				mosaicmessage = mgr.find(MosaicMessage.class, id);
+				mosaicmessage.addReport();
 				mgr.persist(mosaicmessage);
 			} finally {
 				mgr.close();
@@ -185,13 +173,16 @@ public class MosaicMessages {
 			throw new OAuthRequestException("Invalid user.");
 	}
 
-	public void viewMosaicMessage(@Named("id") String id, User user) throws OAuthRequestException {
+	@ApiMethod(
+			httpMethod = "GET",
+			name = "message.view",
+			path = "message/view/{id}")
+	public void viewMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			try {
-				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
-				mosaicmessage.addVisitor(KeyFactory.createKey("MosaicUser", user.getEmail()));
-				mosaicmessage.setVisits(mosaicmessage.getVisits() + 1);
+				MosaicMessage mosaicmessage = mgr.find(MosaicMessage.class, id);
+				mosaicmessage.addView();
 				mgr.persist(mosaicmessage);
 			} finally {
 				mgr.close();
