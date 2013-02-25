@@ -34,7 +34,7 @@ public class MosaicMessage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String title;
 	private String body;
 	private long created;
@@ -44,7 +44,7 @@ public class MosaicMessage {
 	private long expiry;
 	private int views;
 	private int reports;
-	private long user_id;
+	private Long user_id;
 	
 	@Transient
 	private MosaicUser user;
@@ -152,11 +152,11 @@ public class MosaicMessage {
 		this.id = id;
 	}
 
-	public long getUser_id() {
+	public Long getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(long user_id) {
+	public void setUser_id(Long user_id) {
 		this.user_id = user_id;
 	}
 	

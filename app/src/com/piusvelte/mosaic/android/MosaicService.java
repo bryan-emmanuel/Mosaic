@@ -172,7 +172,10 @@ public class MosaicService extends Service implements LocationListener {
 	}
 
 	protected void setNickname(String nickname) {
-		initLocationManager();
+		if (nickname == null)
+			clearAccount();
+		else
+			initLocationManager();
 		if (iMain != null) {
 			try {
 				iMain.setNickname(nickname);
@@ -192,12 +195,12 @@ public class MosaicService extends Service implements LocationListener {
 	}
 	
 	protected void clearAccount() {
+		mosaicUser = null;
 		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
 		.edit()
 		.putString(getString(R.string.preference_account_name), null)
 		.putLong(getString(R.string.preference_user_id), Mosaic.INVALID_ID)
 		.commit();
-		setNickname(null);
 	}
 
 	protected void updateMessage(MosaicMessage message) {
@@ -334,6 +337,7 @@ public class MosaicService extends Service implements LocationListener {
 		Mosaicusers endpoint;
 
 		InsertUserTask(MosaicService callback) {
+			Log.d(TAG, "InsertUserTask");
 			this.callback = callback;
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
@@ -357,7 +361,7 @@ public class MosaicService extends Service implements LocationListener {
 			if (mosaicUser != null)
 				callback.setUserId(mosaicUser.getId());
 			else
-				callback.clearAccount();
+				callback.setNickname(null);
 		}
 	}
 
@@ -398,6 +402,7 @@ public class MosaicService extends Service implements LocationListener {
 		long id;
 
 		GetUserTask(MosaicService callback, long id) {
+			Log.d(TAG, "GetUserTask, id: " + id);
 			this.callback = callback;
 			this.id = id;
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,

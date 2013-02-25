@@ -67,7 +67,7 @@ public class MosaicUsers {
 			httpMethod = "GET",
 			name = "user.get",
 			path = "user/get/{id}")
-	public MosaicUser getMosaicUser(@Named("id") long id, User user) throws OAuthRequestException {
+	public MosaicUser getMosaicUser(@Named("id") Long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
@@ -93,6 +93,11 @@ public class MosaicUsers {
 				mosaicuser.setEmail(user.getEmail());
 				mosaicuser.setNickname(user.getNickname());
 				mgr.persist(mosaicuser);
+			} catch (Exception e) {
+				mosaicuser = (MosaicUser) mgr
+						.createQuery("select from MosaicUser as MosaicUser where email = :email")
+						.setParameter("email", user.getEmail())
+						.getSingleResult();
 			} finally {
 				mgr.close();
 			}
@@ -123,13 +128,14 @@ public class MosaicUsers {
 			name = "user.remove",
 			path = "user/remove/{id}")
 	@SuppressWarnings({ "cast", "unchecked" })
-	public MosaicUser removeMosaicUser(@Named("id") long id, User user) throws OAuthRequestException {
+	public MosaicUser removeMosaicUser(@Named("id") Long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicUser mosaicuser = null;
 			try {
 				mosaicuser = mgr.find(MosaicUser.class, id);
-				Query query = mgr.createQuery("select from MosaicMessage as MosaicMessage where user_id = :user_id")
+				Query query = mgr
+						.createQuery("select from MosaicMessage as MosaicMessage where user_id = :user_id")
 						.setParameter("user_id", id);
 				for (Object obj : (List<Object>) query.getResultList())
 					mgr.remove(obj);

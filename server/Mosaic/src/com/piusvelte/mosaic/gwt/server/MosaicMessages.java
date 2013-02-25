@@ -51,24 +51,16 @@ public class MosaicMessages {
 			try {
 				double lat = GeocellHelper.fromE6(latE6);
 				double lon = GeocellHelper.fromE6(lonE6);
-				List<String> geocells = GeocellHelper.getGeocells(lat, lon);
-				StringBuffer queryStr = new StringBuffer("select from MosaicMessage as MosaicMessage where geocells in (");
-				boolean first = true;
-				for (String geocell : geocells) {
-					if (first)
-						first = false;
-					else
-						queryStr.append(",");
-					queryStr.append("\'" + geocell + "\'");
-				}
-				queryStr.append(")");
 				List<MosaicMessage> messages = mgr
-						.createQuery(queryStr.toString())
+						.createQuery("select from MosaicMessage as MosaicMessage where geocells in (:geocells)")
+						.setParameter("geocells", GeocellHelper.getGeocells(lat, lon))
 						.getResultList();
 				for (MosaicMessage m : messages) {
 					if ((m.getReports() <= m.getViews())
-							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(m.getLatitudeE6()), GeocellHelper.fromE6(m.getLongitudeE6())) < m.getRadius()))
+							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(m.getLatitudeE6()), GeocellHelper.fromE6(m.getLongitudeE6())) < m.getRadius())) {
+						m.setUser(mgr.find(MosaicUser.class, m.getUser_id()));
 						result.add(m);
+					}
 				}
 			} finally {
 				mgr.close();
@@ -82,7 +74,7 @@ public class MosaicMessages {
 			httpMethod = "GET",
 			name = "message.get",
 			path = "message/get/{id}")
-	public MosaicMessage getMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
+	public MosaicMessage getMosaicMessage(@Named("id") Long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
@@ -138,12 +130,11 @@ public class MosaicMessages {
 			httpMethod = "GET",
 			name = "message.remove",
 			path = "message/remove/{id}")
-	public MosaicMessage removeMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
+	public MosaicMessage removeMosaicMessage(@Named("id") Long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
 			try {
-//				mosaicmessage = mgr.find(MosaicMessage.class, KeyFactory.stringToKey(id));
 				mgr.remove(mgr.find(MosaicMessage.class, id));
 			} finally {
 				mgr.close();
@@ -157,7 +148,7 @@ public class MosaicMessages {
 			httpMethod = "GET",
 			name = "message.report",
 			path = "message/report/{id}")
-	public void reportMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
+	public void reportMosaicMessage(@Named("id") Long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			MosaicMessage mosaicmessage = null;
@@ -176,7 +167,7 @@ public class MosaicMessages {
 			httpMethod = "GET",
 			name = "message.view",
 			path = "message/view/{id}")
-	public void viewMosaicMessage(@Named("id") long id, User user) throws OAuthRequestException {
+	public void viewMosaicMessage(@Named("id") Long id, User user) throws OAuthRequestException {
 		if (user != null) {
 			EntityManager mgr = getEntityManager();
 			try {
