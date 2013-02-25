@@ -91,7 +91,7 @@ public class MosaicService extends Service implements LocationListener {
 			long user_id = sharedPreferences.getLong(getString(R.string.preference_user_id), Mosaic.INVALID_ID);
 			if (accountName != null) {
 				credential = GoogleAccountCredential.usingAudience(this, "server:client_id:" + getString(R.string.client_id));
-				credential.setSelectedAccountName(mosaicUser.getEmail());
+				credential.setSelectedAccountName(accountName);
 				if (user_id != Mosaic.INVALID_ID)
 					new GetUserTask(this, user_id).execute();
 				else
@@ -251,6 +251,7 @@ public class MosaicService extends Service implements LocationListener {
 			message.setLatitudeE6(latE6);
 			message.setLongitudeE6(lonE6);
 			message.setRadius(radius);
+			message.setCreated(System.currentTimeMillis());
 			message.setUserId(mosaicUser.getId());
 			new InsertMessageTask(MosaicService.this, message).execute();
 		}
@@ -444,7 +445,6 @@ public class MosaicService extends Service implements LocationListener {
 
 		@Override
 		protected List<MosaicMessage> doInBackground(Void... params) {
-			Log.d(TAG, "GetMessagesTask");
 			try {
 				return endpoint.message().list(latitude, longitude).execute().getItems();
 			} catch (IOException e) {

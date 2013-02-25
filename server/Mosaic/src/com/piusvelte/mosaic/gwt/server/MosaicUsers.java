@@ -50,11 +50,11 @@ public class MosaicUsers {
 			EntityManager mgr = getEntityManager();
 			List<MosaicUser> result = new ArrayList<MosaicUser>();
 			try {
-				Query query = mgr
-						.createQuery("select from MosaicUser as MosaicUser");
-				for (Object obj : (List<Object>) query.getResultList()) {
-					result.add(((MosaicUser) obj));
-				}
+				List<MosaicUser> users = mgr
+						.createQuery("select from MosaicUser as MosaicUser")
+						.getResultList();
+				for (MosaicUser u : users)
+					result.add(u);
 			} finally {
 				mgr.close();
 			}

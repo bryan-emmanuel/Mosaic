@@ -27,6 +27,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class MosaicMessage {
@@ -45,6 +46,7 @@ public class MosaicMessage {
 	private int reports;
 	private long user_id;
 	
+	@Transient
 	private MosaicUser user;
 	
 	@OneToMany(fetch = FetchType.EAGER)

@@ -31,7 +31,6 @@ import java.util.List;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 @Api(name = "mosaicmessages",
 clientIds = {Ids.WEB_CLIENT_ID,
@@ -63,13 +62,13 @@ public class MosaicMessages {
 					queryStr.append("\'" + geocell + "\'");
 				}
 				queryStr.append(")");
-				Query query = mgr
-						.createQuery(queryStr.toString());
-				List<MosaicMessage> msgs = query.getResultList();
-				for (MosaicMessage msg : msgs) {
-					if ((msg.getReports() <= msg.getViews())
-							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(msg.getLatitudeE6()), GeocellHelper.fromE6(msg.getLongitudeE6())) < msg.getRadius()))
-						result.add(msg);
+				List<MosaicMessage> messages = mgr
+						.createQuery(queryStr.toString())
+						.getResultList();
+				for (MosaicMessage m : messages) {
+					if ((m.getReports() <= m.getViews())
+							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(m.getLatitudeE6()), GeocellHelper.fromE6(m.getLongitudeE6())) < m.getRadius()))
+						result.add(m);
 				}
 			} finally {
 				mgr.close();

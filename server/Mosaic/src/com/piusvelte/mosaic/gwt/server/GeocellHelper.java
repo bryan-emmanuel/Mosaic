@@ -66,7 +66,7 @@ public class GeocellHelper {
 		return geocell.toString();
 	}
 	
-	public static String getGeocellWithinRadius(double latitude, double longitude, int resolution, int radius) {
+	public static String getGeocellWithinRadius(double latitude, double longitude, int resolution, int radius) throws Exception {
 		double north = MAX_LATITUDE;
 		double south = MIN_LATITUDE;
 		double east = MAX_LONGITUDE;
@@ -90,7 +90,7 @@ public class GeocellHelper {
 				&& (distanceLatitude(latitude, south) > radius)
 				&& (distanceLongitude(latitude, longitude, east) > radius)
 				&& (distanceLongitude(latitude, longitude, west) > radius))
-			return geocell.toString().substring(0, geocell.length() - 1);
+			throw new Exception("out of bounds");
 		else
 			return geocell.toString();
 	}
@@ -110,17 +110,14 @@ public class GeocellHelper {
 	
 	public static List<String> getGeocellsWithinRadius(double latitude, double longitude, int radius) {
 		List<String> geocells = new ArrayList<String>();
-		String lastGeocell = "";
 		for (int resolution = MAX_RESOLUTION; resolution > 0; resolution--) {
-			String nextGeocell = getGeocellWithinRadius(latitude, longitude, resolution, radius);
-			if (!nextGeocell.equals(lastGeocell))
-				geocells.add(nextGeocell);
-			else {
+			try {
+				geocells.add(getGeocellWithinRadius(latitude, longitude, resolution, radius));
+			} catch (Exception e) {
 				// add the final bounding box
 				geocells.add(getGeocell(latitude, longitude, resolution));
 				break;
 			}
-			lastGeocell = nextGeocell;
 		}
 		return geocells;
 	}
