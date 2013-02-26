@@ -22,25 +22,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
+    <EditText
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:singleLine="true" />
-
+        android:singleLine="true"
+        android:inputType="none" />
+    
     <Button
         android:id="@+id/report"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:text="@string/report" />
 
-    <TextView
+    <EditText
         android:id="@+id/body"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/report"
-        android:layout_below="@id/title" />
+        android:layout_below="@id/title"
+        android:gravity="top"
+        android:inputType="none" />
 
 </RelativeLayout>

@@ -198,10 +198,6 @@
           "reports" : {
             "type" : "integer"
           },
-          "user_id" : {
-            "type" : "string",
-            "format" : "int64"
-          },
           "user" : {
             "$ref" : "MosaicUser"
           },
@@ -210,6 +206,10 @@
             "items" : {
               "type" : "string"
             }
+          },
+          "userId" : {
+            "type" : "string",
+            "format" : "int64"
           }
         }
       },

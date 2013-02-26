@@ -58,7 +58,7 @@ public class MosaicMessages {
 				for (MosaicMessage m : messages) {
 					if ((m.getReports() <= m.getViews())
 							&& (GeocellHelper.distance(lat, lon, GeocellHelper.fromE6(m.getLatitudeE6()), GeocellHelper.fromE6(m.getLongitudeE6())) < m.getRadius())) {
-						m.setUser(mgr.find(MosaicUser.class, m.getUser_id()));
+						m.setUser(mgr.find(MosaicUser.class, m.getUserId()));
 						result.add(m);
 					}
 				}
@@ -80,7 +80,7 @@ public class MosaicMessages {
 			MosaicMessage mosaicmessage = null;
 			try {
 				mosaicmessage = mgr.find(MosaicMessage.class, id);
-				mosaicmessage.setUser(mgr.find(MosaicUser.class, mosaicmessage.getUser_id()));
+				mosaicmessage.setUser(mgr.find(MosaicUser.class, mosaicmessage.getUserId()));
 			} finally {
 				mgr.close();
 			}
@@ -99,7 +99,7 @@ public class MosaicMessages {
 			EntityManager mgr = getEntityManager();
 			try {
 				mgr.persist(mosaicmessage);
-				mosaicmessage.setUser(mgr.find(MosaicUser.class, mosaicmessage.getUser_id()));
+				mosaicmessage.setUser(mgr.find(MosaicUser.class, mosaicmessage.getUserId()));
 			} finally {
 				mgr.close();
 			}

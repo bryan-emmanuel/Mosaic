@@ -105,7 +105,7 @@ public final class MosaicMessage extends GenericJson {
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key("user_id") @JsonString
+  @com.google.api.client.util.Key @JsonString
   private Long userId;
 
   /**

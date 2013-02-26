@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/4qPS6dUdEB2g1JC-pgeUq71Crq8\"",
+ "etag": "\"2MERlHgXUfSlVQnFAL3vX-58eZg/2M5u3jfy_c0MWQ4TSlmiMKkPzOM\"",
  "discoveryVersion": "v1",
  "id": "mosaicmessages:v1",
  "name": "mosaicmessages",
@@ -109,7 +109,7 @@
     "user": {
      "$ref": "MosaicUser"
     },
-    "user_id": {
+    "userId": {
      "type": "string",
      "format": "int64"
     },

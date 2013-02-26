@@ -276,7 +276,7 @@ public class MosaicService extends Service implements LocationListener {
 			if (messages.containsKey(id)) {
 				MosaicMessage message = messages.get(id);
 				new ViewMessageTask(MosaicService.this, id).execute();
-				if (mosaicUser.getId() == message.getUserId())
+				if (message.getUserId().equals(mosaicUser.getId()))
 					iMain.editMessage(message.getId(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
 				else
 					iMain.viewMessage(message.getId(), message.getTitle(), message.getBody(), message.getUser().getNickname());
@@ -293,7 +293,7 @@ public class MosaicService extends Service implements LocationListener {
 		@Override
 		public void removeMessage(long id) throws RemoteException {
 			messages.remove(id);
-			new RemoteMessageTask(MosaicService.this, id).execute();
+			new RemoveMessageTask(MosaicService.this, id).execute();
 		}
 	};
 
@@ -337,7 +337,6 @@ public class MosaicService extends Service implements LocationListener {
 		Mosaicusers endpoint;
 
 		InsertUserTask(MosaicService callback) {
-			Log.d(TAG, "InsertUserTask");
 			this.callback = callback;
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
 					jsonFactory,
@@ -402,7 +401,6 @@ public class MosaicService extends Service implements LocationListener {
 		long id;
 
 		GetUserTask(MosaicService callback, long id) {
-			Log.d(TAG, "GetUserTask, id: " + id);
 			this.callback = callback;
 			this.id = id;
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
@@ -586,13 +584,13 @@ public class MosaicService extends Service implements LocationListener {
 		}
 	}
 
-	class RemoteMessageTask extends AsyncTask<Void, Void, Void> {
+	class RemoveMessageTask extends AsyncTask<Void, Void, Void> {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
 		long id;
 
-		RemoteMessageTask(MosaicService callback, long id) {
+		RemoveMessageTask(MosaicService callback, long id) {
 			this.callback = callback;
 			this.id = id;
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
