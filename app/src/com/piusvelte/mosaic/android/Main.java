@@ -239,6 +239,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			.title(title + " -" + nick)
 			.snippet(body)
 			.draggable(false));
+			marker.showInfoWindow();
 			messages.put(marker.getId(), id);
 			markers.put(id, marker);
 		}
@@ -296,10 +297,9 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
-			//TODO error!
-		}
-		return false;
+		} else
+			marker.remove();
+		return true;
 	}
 
 	@Override

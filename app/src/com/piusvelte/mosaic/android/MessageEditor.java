@@ -24,6 +24,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,42 +38,48 @@ import android.widget.TextView;
 
 public class MessageEditor extends Activity implements OnCheckedChangeListener, OnClickListener, OnSeekBarChangeListener {
 	
+	private static final String TAG = "MessageEditor";
 	private Button btnSave;
 	private Button btnCancel;
 	private CheckBox expires;
 	private DatePicker expiry;
 	private TextView radius;
+	private SeekBar sbRadius;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.messageedit);
+		btnCancel = (Button) findViewById(R.id.cancel);
+		btnSave = (Button) findViewById(R.id.save);
+		radius = (TextView) findViewById(R.id.lbl_radius);
+		sbRadius = (SeekBar) findViewById(R.id.radius);
+		expires = (CheckBox) findViewById(R.id.expires);
+		expiry = (DatePicker) findViewById(R.id.expiry);
 		Intent i = getIntent();
 		if (i.hasExtra(Mosaic.EXTRA_TITLE))
 			((TextView) findViewById(R.id.title)).setText(i.getStringExtra(Mosaic.EXTRA_TITLE));
 		if (i.hasExtra(Mosaic.EXTRA_BODY))
 			((TextView) findViewById(R.id.body)).setText(i.getStringExtra(Mosaic.EXTRA_BODY));
-		if (i.hasExtra(Mosaic.EXTRA_RADIUS))
-			((SeekBar) findViewById(R.id.radius)).setProgress(i.getIntExtra(Mosaic.EXTRA_RADIUS, 0));
-		expires = (CheckBox) findViewById(R.id.expires);
-		expiry = (DatePicker) findViewById(R.id.expiry);
+		if (i.hasExtra(Mosaic.EXTRA_RADIUS)) {
+			int progress = i.getIntExtra(Mosaic.EXTRA_RADIUS, 0);
+			sbRadius.setProgress(progress);
+			radius.setText(String.format(getString(R.string.radius_progress), progress));
+		}
 		if (i.hasExtra(Mosaic.EXTRA_EXPIRY) && (i.getIntExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES) != Mosaic.NEVER_EXPIRES)) {
 			Calendar c = Calendar.getInstance();
-			c.setTimeInMillis(i.getIntExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES));
+			c.setTimeInMillis(i.getLongExtra(Mosaic.EXTRA_EXPIRY, Mosaic.NEVER_EXPIRES));
 			expiry.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 			expires.setChecked(true);		
 			expiry.setEnabled(true);
 		} else		
 			expiry.setEnabled(false);
+		sbRadius.setOnSeekBarChangeListener(this);
 		expires.setOnCheckedChangeListener(this);
-		btnSave = (Button) findViewById(R.id.save);
 		btnSave.setOnClickListener(this);
-		btnCancel = (Button) findViewById(R.id.cancel);
 		if (i.hasExtra(Mosaic.EXTRA_ID))
 			btnCancel.setText(R.string.delete);
 		btnCancel.setOnClickListener(this);
-		radius = (TextView) findViewById(R.id.lbl_radius);
-		((SeekBar) findViewById(R.id.radius)).setOnSeekBarChangeListener(this);
 		setResult(RESULT_CANCELED);
 	}
 
