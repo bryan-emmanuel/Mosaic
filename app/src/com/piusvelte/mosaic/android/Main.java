@@ -47,6 +47,8 @@ import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -60,6 +62,12 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Bitmap.Config;
+import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -113,7 +121,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 				})
 				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
@@ -162,6 +170,31 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			}
 		}
 		unbindService(this);
+	}
+
+	private static final double EARTH_RADIUS = 6378100.0;
+
+	private BitmapDescriptor getMarkerIcon(double lat, double lng, int radius) {
+		double lat1 = radius / EARTH_RADIUS;
+		double lng1 = radius / (EARTH_RADIUS * Math.cos((Math.PI * lat / 180)));
+		double lat2 = lat + lat1 * 180 / Math.PI;
+		double lng2 = lng + lng1 * 180 / Math.PI;
+		Point p1 = map.getProjection().toScreenLocation(new LatLng(lat, lng));
+		Point p2 = map.getProjection().toScreenLocation(new LatLng(lat2, lng2));
+		int r = Math.abs(p1.x - p2.x);
+		Bitmap b = Bitmap.createBitmap(r * 2, r * 2, Config.ARGB_8888);
+		Canvas c = new Canvas(b);
+		Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+		fill.setColor(getResources().getColor(R.color.radius_fill));
+		fill.setStyle(Style.FILL);
+		Paint stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+		stroke.setColor(getResources().getColor(R.color.radius_stroke));
+		stroke.setStyle(Style.STROKE);
+		c.drawCircle(r, r, r, fill);
+		c.drawCircle(r, r, r, stroke);
+		BitmapDescriptor bd = BitmapDescriptorFactory.fromBitmap(b);
+		b.recycle();
+		return bd;
 	}
 
 	private IMain.Stub iMain = new IMain.Stub() {
@@ -226,22 +259,31 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void clearMessages() throws RemoteException {
-			map.clear();
 			messages.clear();
 			markers.clear();
+			map.clear();
 		}
 
 		@Override
-		public void addMessage(long id, double latitude, double longitude, String title, String body, String nick)
+		public void addMessage(long id, double latitude, double longitude, int radius, String title, String body, String nick)
 				throws RemoteException {
-			Marker marker = map.addMarker(new MarkerOptions()
-			.position(new LatLng(latitude, longitude))
-			.title(title + " -" + nick)
-			.snippet(body)
-			.draggable(false));
+			Marker marker = null;
+			if (markers.containsKey(id))
+				marker = markers.get(id);
+			if (marker != null) {
+				marker.setTitle(title + " -" + nick);
+				marker.setSnippet(body);
+			} else {
+				marker = map.addMarker(new MarkerOptions()
+				.position(new LatLng(latitude, longitude))
+				.title(title + " -" + nick)
+				.snippet(body)
+				.draggable(false)
+				.icon(getMarkerIcon(latitude, longitude, radius)));
+				markers.put(id, marker);
+				messages.put(marker.getId(), id);
+			}
 			marker.showInfoWindow();
-			messages.put(marker.getId(), id);
-			markers.put(id, marker);
 		}
 
 		@Override
@@ -264,11 +306,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		}
 
 		@Override
-		public void updateMarker(long id, String title, String body, String nick)
-				throws RemoteException {
-			Marker marker = markers.get(id);
-			marker.setTitle(title + " -" + nick);
-			marker.setSnippet(body);
+		public void removeMarker(long id) throws RemoteException {
+			if (markers.containsKey(id)) {
+				if (messages.containsKey(markers.get(id).getId()))
+					messages.remove(markers.get(id).getId());
+				markers.get(id).remove();
+			}
 		}
 	};
 

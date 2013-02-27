@@ -22,9 +22,9 @@ package com.piusvelte.mosaic.android;
 interface IMain {
 	void setCoordinates(double latitude, double longitude);
 	void setNickname(String nickname);
-	void addMessage(long id, double latitude, double longitude, String title, String body, String nick);
+	void addMessage(long id, double latitude, double longitude, int radius, String title, String body, String nick);
 	void clearMessages();
 	void viewMessage(long id, String title, String body, String nick);
 	void editMessage(long id, String title, String body, int radius, long expiry);
-	void updateMarker(long id, String title, String body, String nick);
+	void removeMarker(long id);
 }

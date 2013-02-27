@@ -20,6 +20,7 @@
 package com.piusvelte.mosaic.android;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -147,7 +148,7 @@ public class MosaicService extends Service implements LocationListener {
 		messages.put(message.getId(), message);
 		if (iMain != null) {
 			try {
-				iMain.addMessage(message.getId(), fromE6(message.getLatitudeE6()), fromE6(message.getLongitudeE6()), message.getTitle(), message.getBody(), message.getUser().getNickname());
+				iMain.addMessage(message.getId(), fromE6(message.getLatitudeE6()), fromE6(message.getLongitudeE6()), message.getRadius(), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,19 +156,47 @@ public class MosaicService extends Service implements LocationListener {
 		}
 	}
 
-	protected void setMessages(List<MosaicMessage> messages) {
-		this.messages.clear();
-		if (iMain != null) {
-			try {
-				iMain.clearMessages();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	protected void setMessages(List<MosaicMessage> msgs) {
 		if (messages != null) {
-			for (MosaicMessage message : messages)
-				addMessage(message);
+			ArrayList<Long> newIds = new ArrayList<Long>();
+			for (MosaicMessage msg : msgs) {
+				if (iMain != null) {
+					try {
+						iMain.addMessage(msg.getId(), fromE6(msg.getLatitudeE6()), fromE6(msg.getLongitudeE6()), msg.getRadius(), msg.getTitle(), msg.getBody(), msg.getUser().getNickname());
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				messages.put(msg.getId(), msg);
+				newIds.add(msg.getId());
+			}
+			ArrayList<Long> removalIds = new ArrayList<Long>();
+			for (Long id : messages.keySet()) {
+				if (!newIds.contains(id))
+					removalIds.add(id);
+			}
+			for (long id : removalIds) {
+				messages.remove(id);
+				if (iMain != null) {
+					try {
+						iMain.removeMarker(id);
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		} else {
+			messages.clear();
+			if (iMain != null) {
+				try {
+					iMain.clearMessages();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -185,7 +214,7 @@ public class MosaicService extends Service implements LocationListener {
 			}
 		}
 	}
-	
+
 	protected void setUserId(long id) {
 		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
 		.edit()
@@ -193,7 +222,7 @@ public class MosaicService extends Service implements LocationListener {
 		.commit();
 		setNickname(mosaicUser.getNickname());
 	}
-	
+
 	protected void clearAccount() {
 		mosaicUser = null;
 		getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
@@ -207,7 +236,7 @@ public class MosaicService extends Service implements LocationListener {
 		messages.put(message.getId(), message);
 		if (iMain != null) {
 			try {
-				iMain.updateMarker(message.getId(), message.getTitle(), message.getBody(), message.getUser().getNickname());
+				iMain.addMessage(message.getId(), fromE6(message.getLatitudeE6()), fromE6(message.getLongitudeE6()), message.getRadius(), message.getTitle(), message.getBody(), message.getUser().getNickname());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
