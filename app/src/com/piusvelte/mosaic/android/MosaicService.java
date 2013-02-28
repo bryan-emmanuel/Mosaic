@@ -157,7 +157,7 @@ public class MosaicService extends Service implements LocationListener {
 	}
 
 	protected void setMessages(List<MosaicMessage> msgs) {
-		if (messages != null) {
+		if (msgs != null) {
 			ArrayList<Long> newIds = new ArrayList<Long>();
 			for (MosaicMessage msg : msgs) {
 				if (iMain != null) {
@@ -292,7 +292,7 @@ public class MosaicService extends Service implements LocationListener {
 		public void updateMessage(long id, String title, String body,
 				int radius, long expiry)
 						throws RemoteException {
-			MosaicMessage message = messages.get(id);
+			MosaicMessage message = messages.get((Long) id);
 			message.setTitle(title);
 			message.setBody(body);
 			message.setRadius(radius);
@@ -302,8 +302,8 @@ public class MosaicService extends Service implements LocationListener {
 
 		@Override
 		public void getMessage(long id) throws RemoteException {
-			if (messages.containsKey(id)) {
-				MosaicMessage message = messages.get(id);
+			if (messages.containsKey((Long) id)) {
+				MosaicMessage message = messages.get((Long) id);
 				new ViewMessageTask(MosaicService.this, id).execute();
 				if (message.getUserId().equals(mosaicUser.getId()))
 					iMain.editMessage(message.getId(), message.getTitle(), message.getBody(), message.getRadius(), message.getExpiry());
@@ -321,7 +321,7 @@ public class MosaicService extends Service implements LocationListener {
 
 		@Override
 		public void removeMessage(long id) throws RemoteException {
-			messages.remove(id);
+			messages.remove((Long) id);
 			new RemoveMessageTask(MosaicService.this, id).execute();
 		}
 	};
@@ -427,9 +427,9 @@ public class MosaicService extends Service implements LocationListener {
 		MosaicService callback;
 		Mosaicusers endpoint;
 		String accountName;
-		long id;
+		Long id;
 
-		GetUserTask(MosaicService callback, long id) {
+		GetUserTask(MosaicService callback, Long id) {
 			this.callback = callback;
 			this.id = id;
 			Mosaicusers.Builder endpointBuilder = new Mosaicusers.Builder(transport,
@@ -530,9 +530,9 @@ public class MosaicService extends Service implements LocationListener {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
-		long id;
+		Long id;
 
-		ViewMessageTask(MosaicService callback, long id) {
+		ViewMessageTask(MosaicService callback, Long id) {
 			this.callback = callback;
 			this.id = id;
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
@@ -590,9 +590,9 @@ public class MosaicService extends Service implements LocationListener {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
-		long id;
+		Long id;
 
-		ReportMessageTask(MosaicService callback, long id) {
+		ReportMessageTask(MosaicService callback, Long id) {
 			this.callback = callback;
 			this.id = id;
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,
@@ -617,9 +617,9 @@ public class MosaicService extends Service implements LocationListener {
 
 		MosaicService callback;
 		Mosaicmessages endpoint;
-		long id;
+		Long id;
 
-		RemoveMessageTask(MosaicService callback, long id) {
+		RemoveMessageTask(MosaicService callback, Long id) {
 			this.callback = callback;
 			this.id = id;
 			Mosaicmessages.Builder endpointBuilder = new Mosaicmessages.Builder(transport,

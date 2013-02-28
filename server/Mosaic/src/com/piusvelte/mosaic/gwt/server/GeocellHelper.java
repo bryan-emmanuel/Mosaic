@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeocellHelper {
-	public static final int EARTHS_RADIUS = 6378135;
+	public static final int EARTH_RADIUS = 6378135;
 	public static final int MAX_RESOLUTION = 13;
 	public static final double MIN_LONGITUDE = -180.0d;
 	public static final double MAX_LONGITUDE = 180.0d;
@@ -135,7 +135,7 @@ public class GeocellHelper {
 		double p1lon = Math.toRadians(lon1);
 		double p2lat = Math.toRadians(lat2);
 		double p2lon = Math.toRadians(lon2);
-		return EARTHS_RADIUS
+		return EARTH_RADIUS
 				* Math.acos(makeDoubleInRange(Math.sin(p1lat) * Math.sin(p2lat)
 						+ Math.cos(p1lat) * Math.cos(p2lat)
 						* Math.cos(p2lon - p1lon)));
@@ -150,11 +150,11 @@ public class GeocellHelper {
 	}
 
 	public static int distanceLatitude(double north, double south) {
-		return (int) Math.ceil((Math.toRadians(Math.abs(north - south)) * EARTHS_RADIUS));
+		return (int) Math.ceil((Math.toRadians(Math.abs(north - south)) * EARTH_RADIUS));
 	}
 
 	public static int distanceLongitude(double latitude, double east, double west) {
-		return (int) Math.ceil((Math.toRadians(Math.abs(east - west)) * Math.cos(Math.toRadians(latitude)) * EARTHS_RADIUS));
+		return (int) Math.ceil((Math.toRadians(Math.abs(east - west)) * Math.cos(Math.toRadians(latitude)) * EARTH_RADIUS));
 	}
 
 }

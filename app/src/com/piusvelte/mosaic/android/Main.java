@@ -45,6 +45,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -172,17 +173,32 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		unbindService(this);
 	}
 
-	private static final double EARTH_RADIUS = 6378100.0;
+	private static final double EARTH_RADIUS = 6378135d;
+	
+	private int getOffset(int radius) {
+		return (int) (Math.sin(45) * radius);
+	}
+	
+	private double getOffsetLatitude(double lat, int offset) {
+		return lat + Math.toDegrees(offset / EARTH_RADIUS);
+	}
+	
+	private double getOffsetLongitude(double lat, double lng, int offset) {
+		return lng + Math.toDegrees(offset / (EARTH_RADIUS * Math.cos(Math.toRadians(lat))));
+	}
+	
+	private int getMarkerRadius(double lat, double lng, int radius) {
+		Projection p = map.getProjection();
+		Point p1 = p.toScreenLocation(new LatLng(lat, lng));
+		Point p2 = p.toScreenLocation(new LatLng(getOffsetLatitude(lat, radius), lng));
+		return Math.abs(p1.y - p2.y);
+	}
 
 	private BitmapDescriptor getMarkerIcon(double lat, double lng, int radius) {
-		double lat1 = radius / EARTH_RADIUS;
-		double lng1 = radius / (EARTH_RADIUS * Math.cos((Math.PI * lat / 180)));
-		double lat2 = lat + lat1 * 180 / Math.PI;
-		double lng2 = lng + lng1 * 180 / Math.PI;
-		Point p1 = map.getProjection().toScreenLocation(new LatLng(lat, lng));
-		Point p2 = map.getProjection().toScreenLocation(new LatLng(lat2, lng2));
-		int r = Math.abs(p1.x - p2.x);
-		Bitmap b = Bitmap.createBitmap(r * 2, r * 2, Config.ARGB_8888);
+		int r = getMarkerRadius(lat, lng, radius);
+		if (r == 0)
+			return null;
+		Bitmap b = Bitmap.createBitmap(r * 2 + 2, r * 2 + 2, Config.ARGB_8888);
 		Canvas c = new Canvas(b);
 		Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
 		fill.setColor(getResources().getColor(R.color.radius_fill));
@@ -204,7 +220,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				throws RemoteException {
 			if (latitude != Integer.MAX_VALUE) {
 				if (map != null)
-					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 20F));
+					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 18F));
 			} else {
 				new AlertDialog.Builder(Main.this)
 				.setTitle("GPS Settings")
@@ -268,7 +284,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void addMessage(long id, double latitude, double longitude, int radius, String title, String body, String nick)
 				throws RemoteException {
 			Marker marker = null;
-			if (markers.containsKey(id))
+			if (markers.containsKey((Long) id))
 				marker = markers.get(id);
 			if (marker != null) {
 				marker.setTitle(title + " -" + nick);
@@ -280,8 +296,8 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				.snippet(body)
 				.draggable(false)
 				.icon(getMarkerIcon(latitude, longitude, radius)));
-				markers.put(id, marker);
-				messages.put(marker.getId(), id);
+				markers.put((Long) id, marker);
+				messages.put(marker.getId(), (Long) id);
 			}
 			marker.showInfoWindow();
 		}
@@ -307,10 +323,10 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void removeMarker(long id) throws RemoteException {
-			if (markers.containsKey(id)) {
-				if (messages.containsKey(markers.get(id).getId()))
-					messages.remove(markers.get(id).getId());
-				markers.get(id).remove();
+			if (markers.containsKey((Long) id)) {
+				if (messages.containsKey(markers.get((Long) id).getId()))
+					messages.remove(markers.get((Long) id).getId());
+				markers.get((Long) id).remove();
 			}
 		}
 	};
