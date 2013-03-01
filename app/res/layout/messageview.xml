@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:singleLine="true"
-        android:inputType="none" />
+        android:inputType="none"
+        android:enabled="false" />
     
     <Button
         android:id="@+id/report"
@@ -45,6 +46,7 @@
         android:layout_above="@id/report"
         android:layout_below="@id/title"
         android:gravity="top"
-        android:inputType="none" />
+        android:inputType="none"
+        android:enabled="false" />
 
 </RelativeLayout>

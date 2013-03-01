@@ -21,7 +21,7 @@
 
 <resources>
 
-    <color name="radius_stroke">#FF0066FF</color>
-    <color name="radius_fill">#220066FF</color>
+    <color name="radius_stroke">#FF0088FF</color>
+    <color name="radius_fill">#330088FF</color>
 
 </resources>

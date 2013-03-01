@@ -178,42 +178,24 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 	private static final double EARTH_RADIUS = 6378135d;
 
-	private double[][] getOffsets(int radius) {
-		double[][] offsets = new double[89][2];
-		offsets[0][0] = radius;
-		offsets[0][1] = 0;
-		for (int a = 1; a < 89; a++) {
-			offsets[a][0] = Math.sin(a) * radius;
-			offsets[a][1] = Math.cos(a) * radius;
-		}
-		return offsets;
-	}
-
 	private PolygonOptions getPolygon(double lat, double lng, int radius) {
-		double[][] offsets = getOffsets(radius);
 		PolygonOptions options = new PolygonOptions()
 		.geodesic(true)
 		.fillColor(getResources().getColor(R.color.radius_fill))
 		.strokeColor(getResources().getColor(R.color.radius_stroke))
 		.strokeWidth(1f);
-		for (int a = 0; a < offsets.length; a++)
-			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][0], 1), getOffsetLongitude(lat, lng, offsets[a][1], -1)));
-		for (int a = 0; a < offsets.length; a++)
-			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][1], -1), getOffsetLongitude(lat, lng, offsets[a][0], -1)));
-		for (int a = 0; a < offsets.length; a++)
-			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][0], -1), getOffsetLongitude(lat, lng, offsets[a][1], 1)));
-		for (int a = 0; a < offsets.length; a++)
-			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][1], 1), getOffsetLongitude(lat, lng, offsets[a][0], 1)));
-		options.add(new LatLng(getOffsetLatitude(lat, offsets[0][0], 1), getOffsetLongitude(lat, lng, offsets[0][1], -1)));
+		for (int a = 0; a < 360; a++)
+			options.add(new LatLng(getOffsetLatitude(lat, Math.sin(a) * radius),
+					getOffsetLongitude(lat, lng, Math.cos(a) * radius)));
 		return options;
 	}
 
-	private double getOffsetLatitude(double lat, double offset, int sign) {
-		return lat + Math.toDegrees(offset / EARTH_RADIUS) * sign;
+	private double getOffsetLatitude(double lat, double offset) {
+		return lat + Math.toDegrees(offset / EARTH_RADIUS);
 	}
 
-	private double getOffsetLongitude(double lat, double lng, double offset, int sign) {
-		return lng + Math.toDegrees(offset / (EARTH_RADIUS * Math.cos(Math.toRadians(lat)))) * sign;
+	private double getOffsetLongitude(double lat, double lng, double offset) {
+		return lng + Math.toDegrees(offset / (EARTH_RADIUS * Math.cos(Math.toRadians(lat))));
 	}
 
 	private IMain.Stub iMain = new IMain.Stub() {
