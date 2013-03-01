@@ -53,6 +53,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import android.os.Bundle;
 import android.os.IBinder;
@@ -86,6 +88,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	private static final int REQUEST_VIEW_MESSAGE = 2;
 	private HashMap<String, Long> messages = new HashMap<String, Long>();
 	private HashMap<Long, Marker> markers = new HashMap<Long, Marker>();
+	private HashMap<Long, Polygon> polygons = new HashMap<Long, Polygon>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -174,43 +177,43 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	}
 
 	private static final double EARTH_RADIUS = 6378135d;
-	
-	private int getOffset(int radius) {
-		return (int) (Math.sin(45) * radius);
-	}
-	
-	private double getOffsetLatitude(double lat, int offset) {
-		return lat + Math.toDegrees(offset / EARTH_RADIUS);
-	}
-	
-	private double getOffsetLongitude(double lat, double lng, int offset) {
-		return lng + Math.toDegrees(offset / (EARTH_RADIUS * Math.cos(Math.toRadians(lat))));
-	}
-	
-	private int getMarkerRadius(double lat, double lng, int radius) {
-		Projection p = map.getProjection();
-		Point p1 = p.toScreenLocation(new LatLng(lat, lng));
-		Point p2 = p.toScreenLocation(new LatLng(getOffsetLatitude(lat, radius), lng));
-		return Math.abs(p1.y - p2.y);
+
+	private double[][] getOffsets(int radius) {
+		double[][] offsets = new double[89][2];
+		offsets[0][0] = radius;
+		offsets[0][1] = 0;
+		for (int a = 1; a < 89; a++) {
+			offsets[a][0] = Math.sin(a) * radius;
+			offsets[a][1] = Math.cos(a) * radius;
+		}
+		return offsets;
 	}
 
-	private BitmapDescriptor getMarkerIcon(double lat, double lng, int radius) {
-		int r = getMarkerRadius(lat, lng, radius);
-		if (r == 0)
-			return null;
-		Bitmap b = Bitmap.createBitmap(r * 2 + 2, r * 2 + 2, Config.ARGB_8888);
-		Canvas c = new Canvas(b);
-		Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
-		fill.setColor(getResources().getColor(R.color.radius_fill));
-		fill.setStyle(Style.FILL);
-		Paint stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
-		stroke.setColor(getResources().getColor(R.color.radius_stroke));
-		stroke.setStyle(Style.STROKE);
-		c.drawCircle(r, r, r, fill);
-		c.drawCircle(r, r, r, stroke);
-		BitmapDescriptor bd = BitmapDescriptorFactory.fromBitmap(b);
-		b.recycle();
-		return bd;
+	private PolygonOptions getPolygon(double lat, double lng, int radius) {
+		double[][] offsets = getOffsets(radius);
+		PolygonOptions options = new PolygonOptions()
+		.geodesic(true)
+		.fillColor(getResources().getColor(R.color.radius_fill))
+		.strokeColor(getResources().getColor(R.color.radius_stroke))
+		.strokeWidth(1f);
+		for (int a = 0; a < offsets.length; a++)
+			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][0], 1), getOffsetLongitude(lat, lng, offsets[a][1], -1)));
+		for (int a = 0; a < offsets.length; a++)
+			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][1], -1), getOffsetLongitude(lat, lng, offsets[a][0], -1)));
+		for (int a = 0; a < offsets.length; a++)
+			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][0], -1), getOffsetLongitude(lat, lng, offsets[a][1], 1)));
+		for (int a = 0; a < offsets.length; a++)
+			options.add(new LatLng(getOffsetLatitude(lat, offsets[a][1], 1), getOffsetLongitude(lat, lng, offsets[a][0], 1)));
+		options.add(new LatLng(getOffsetLatitude(lat, offsets[0][0], 1), getOffsetLongitude(lat, lng, offsets[0][1], -1)));
+		return options;
+	}
+
+	private double getOffsetLatitude(double lat, double offset, int sign) {
+		return lat + Math.toDegrees(offset / EARTH_RADIUS) * sign;
+	}
+
+	private double getOffsetLongitude(double lat, double lng, double offset, int sign) {
+		return lng + Math.toDegrees(offset / (EARTH_RADIUS * Math.cos(Math.toRadians(lat)))) * sign;
 	}
 
 	private IMain.Stub iMain = new IMain.Stub() {
@@ -277,6 +280,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		public void clearMessages() throws RemoteException {
 			messages.clear();
 			markers.clear();
+			polygons.clear();
 			map.clear();
 		}
 
@@ -286,6 +290,8 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			Marker marker = null;
 			if (markers.containsKey((Long) id))
 				marker = markers.get(id);
+			if (polygons.containsKey((Long) id))
+				polygons.remove((Long) id).remove();
 			if (marker != null) {
 				marker.setTitle(title + " -" + nick);
 				marker.setSnippet(body);
@@ -295,9 +301,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				.title(title + " -" + nick)
 				.snippet(body)
 				.draggable(false)
-				.icon(getMarkerIcon(latitude, longitude, radius)));
+				.icon(null));
+				//				.icon(getMarkerIcon(latitude, longitude, radius)));
 				markers.put((Long) id, marker);
 				messages.put(marker.getId(), (Long) id);
+				polygons.put((Long) id, map.addPolygon(getPolygon(latitude, longitude, radius)));
 			}
 			marker.showInfoWindow();
 		}
@@ -324,10 +332,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void removeMarker(long id) throws RemoteException {
 			if (markers.containsKey((Long) id)) {
-				if (messages.containsKey(markers.get((Long) id).getId()))
-					messages.remove(markers.get((Long) id).getId());
-				markers.get((Long) id).remove();
+				messages.remove(markers.get((Long) id).getId());
+				markers.remove((Long) id).remove();
 			}
+			if (polygons.containsKey((Long) id))
+				polygons.remove((Long) id).remove();
 		}
 	};
 
@@ -396,11 +405,13 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 					e.printStackTrace();
 				}
 			} else {
-				long id = data.getLongExtra(Mosaic.EXTRA_ID, Mosaic.INVALID_ID);
-				Marker marker = markers.get(id);
-				markers.remove(id);
-				messages.remove(marker.getId());
-				marker.remove();
+				Long id = data.getLongExtra(Mosaic.EXTRA_ID, Mosaic.INVALID_ID);
+				if (markers.containsKey(id)) {
+					messages.remove(markers.get(id).getId());
+					markers.remove(id).remove();
+				}
+				if (polygons.containsKey(id))
+					polygons.remove(id).remove();
 				try {
 					iLocationService.removeMessage(id);
 				} catch (RemoteException e) {
