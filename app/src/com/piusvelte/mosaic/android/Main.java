@@ -76,6 +76,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Main extends android.support.v4.app.FragmentActivity implements ServiceConnection, OnMapLongClickListener, OnMarkerClickListener {
 
@@ -183,7 +184,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		.geodesic(true)
 		.fillColor(getResources().getColor(R.color.radius_fill))
 		.strokeColor(getResources().getColor(R.color.radius_stroke))
-		.strokeWidth(1f);
+		.strokeWidth(1.0f);
 		for (int a = 0; a < 360; a++)
 			options.add(new LatLng(getOffsetLatitude(lat, Math.sin(a) * radius),
 					getOffsetLongitude(lat, lng, Math.cos(a) * radius)));
@@ -269,11 +270,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		@Override
 		public void addMessage(long id, double latitude, double longitude, int radius, String title, String body, String nick)
 				throws RemoteException {
+			Long idL = (Long) id;
 			Marker marker = null;
-			if (markers.containsKey((Long) id))
-				marker = markers.get(id);
-			if (polygons.containsKey((Long) id))
-				polygons.remove((Long) id).remove();
+			if (markers.containsKey(idL))
+				marker = markers.get(idL);
+			if (polygons.containsKey(idL))
+				polygons.remove(idL).remove();
 			if (marker != null) {
 				marker.setTitle(title + " -" + nick);
 				marker.setSnippet(body);
@@ -282,13 +284,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				.position(new LatLng(latitude, longitude))
 				.title(title + " -" + nick)
 				.snippet(body)
-				.draggable(false)
-				.icon(null));
+				.draggable(false));
 				//				.icon(getMarkerIcon(latitude, longitude, radius)));
-				markers.put((Long) id, marker);
-				messages.put(marker.getId(), (Long) id);
-				polygons.put((Long) id, map.addPolygon(getPolygon(latitude, longitude, radius)));
+				markers.put(idL, marker);
+				messages.put(marker.getId(), idL);
 			}
+			polygons.put(idL, map.addPolygon(getPolygon(latitude, longitude, radius)));
 			marker.showInfoWindow();
 		}
 
@@ -313,12 +314,13 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 		@Override
 		public void removeMarker(long id) throws RemoteException {
-			if (markers.containsKey((Long) id)) {
-				messages.remove(markers.get((Long) id).getId());
-				markers.remove((Long) id).remove();
+			Long idL = (Long) id;
+			if (markers.containsKey(idL)) {
+				messages.remove(markers.get(idL).getId());
+				markers.remove(idL).remove();
 			}
-			if (polygons.containsKey((Long) id))
-				polygons.remove((Long) id).remove();
+			if (polygons.containsKey(idL))
+				polygons.remove(idL).remove();
 		}
 	};
 
