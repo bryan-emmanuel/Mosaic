@@ -38,7 +38,9 @@
  */
 package com.piusvelte.mosaic.android;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -179,16 +181,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 
 	private static final double EARTH_RADIUS = 6378135d;
 
-	private PolygonOptions getPolygon(double lat, double lng, int radius) {
-		PolygonOptions options = new PolygonOptions()
-		.geodesic(true)
-		.fillColor(getResources().getColor(R.color.radius_fill))
-		.strokeColor(getResources().getColor(R.color.radius_stroke))
-		.strokeWidth(1.0f);
+	private List<LatLng> getMarkerCircle(double lat, double lng, int radius) {
+		ArrayList<LatLng> coords = new ArrayList<LatLng>();
 		for (int a = 0; a < 360; a++)
-			options.add(new LatLng(getOffsetLatitude(lat, Math.sin(a) * radius),
+			coords.add(new LatLng(getOffsetLatitude(lat, Math.sin(a) * radius),
 					getOffsetLongitude(lat, lng, Math.cos(a) * radius)));
-		return options;
+		return coords;
 	}
 
 	private double getOffsetLatitude(double lat, double offset) {
@@ -289,7 +287,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				markers.put(idL, marker);
 				messages.put(marker.getId(), idL);
 			}
-			polygons.put(idL, map.addPolygon(getPolygon(latitude, longitude, radius)));
+			polygons.put(idL, map.addPolygon(new PolygonOptions()
+			.addAll(getMarkerCircle(latitude, longitude, radius))
+			.fillColor(getResources().getColor(R.color.radius_fill))
+			.strokeColor(getResources().getColor(R.color.radius_stroke))
+			.strokeWidth(1)));
 			marker.showInfoWindow();
 		}
 
