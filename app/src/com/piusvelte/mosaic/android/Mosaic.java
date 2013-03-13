@@ -28,10 +28,10 @@ public class Mosaic {
 	public static final String EXTRA_LATITUDE = "com.piusvelte.mosaic.android.EXTRA_LATITUDE";
 	public static final String EXTRA_LONGITUDE = "com.piusvelte.mosaic.android.EXTRA_LONGITUDE";
 	public static final String EXTRA_RADIUS = "com.piusvelte.mosaic.android.EXTRA_RADIUS";
-	
 	public static final long INVALID_ID = -1;
-	
 	public static final int NEVER_EXPIRES = -1;
+	public static final int RADIUS_UNCHANGED = -1;
+	public static final double EARTH_RADIUS = 6378135d;
 	
 	private Mosaic() {
 	}

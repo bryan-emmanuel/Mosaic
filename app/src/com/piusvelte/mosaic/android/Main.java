@@ -179,8 +179,6 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 		unbindService(this);
 	}
 
-	private static final double EARTH_RADIUS = 6378135d;
-
 	private List<LatLng> getMarkerCircle(double lat, double lng, int radius) {
 		ArrayList<LatLng> coords = new ArrayList<LatLng>();
 		for (int a = 0; a < 360; a++)
@@ -190,11 +188,11 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 	}
 
 	private double getOffsetLatitude(double lat, double offset) {
-		return lat + Math.toDegrees(offset / EARTH_RADIUS);
+		return lat + Math.toDegrees(offset / Mosaic.EARTH_RADIUS);
 	}
 
 	private double getOffsetLongitude(double lat, double lng, double offset) {
-		return lng + Math.toDegrees(offset / (EARTH_RADIUS * Math.cos(Math.toRadians(lat))));
+		return lng + Math.toDegrees(offset / (Mosaic.EARTH_RADIUS * Math.cos(Math.toRadians(lat))));
 	}
 
 	private IMain.Stub iMain = new IMain.Stub() {
@@ -272,7 +270,7 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 			Marker marker = null;
 			if (markers.containsKey(idL))
 				marker = markers.get(idL);
-			if (polygons.containsKey(idL))
+			if ((radius != Mosaic.RADIUS_UNCHANGED) && polygons.containsKey(idL))
 				polygons.remove(idL).remove();
 			if (marker != null) {
 				marker.setTitle(title + " -" + nick);
@@ -287,11 +285,12 @@ public class Main extends android.support.v4.app.FragmentActivity implements Ser
 				markers.put(idL, marker);
 				messages.put(marker.getId(), idL);
 			}
-			polygons.put(idL, map.addPolygon(new PolygonOptions()
-			.addAll(getMarkerCircle(latitude, longitude, radius))
-			.fillColor(getResources().getColor(R.color.radius_fill))
-			.strokeColor(getResources().getColor(R.color.radius_stroke))
-			.strokeWidth(1)));
+			if (radius > 0)
+				polygons.put(idL, map.addPolygon(new PolygonOptions()
+				.addAll(getMarkerCircle(latitude, longitude, radius))
+				.fillColor(getResources().getColor(R.color.radius_fill))
+				.strokeColor(getResources().getColor(R.color.radius_stroke))
+				.strokeWidth(1)));
 			marker.showInfoWindow();
 		}
 

@@ -22,6 +22,7 @@ package com.piusvelte.mosaic.android;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -162,7 +163,10 @@ public class MosaicService extends Service implements LocationListener {
 			for (MosaicMessage msg : msgs) {
 				if (iMain != null) {
 					try {
-						iMain.addMessage(msg.getId(), fromE6(msg.getLatitudeE6()), fromE6(msg.getLongitudeE6()), msg.getRadius(), msg.getTitle(), msg.getBody(), msg.getUser().getNickname());
+						if (messages.containsKey(msg.getId()) && (messages.get(msg.getId()).getRadius() == msg.getRadius()))
+							iMain.addMessage(msg.getId(), fromE6(msg.getLatitudeE6()), fromE6(msg.getLongitudeE6()), Mosaic.RADIUS_UNCHANGED, msg.getTitle(), msg.getBody(), msg.getUser().getNickname());
+						else
+							iMain.addMessage(msg.getId(), fromE6(msg.getLatitudeE6()), fromE6(msg.getLongitudeE6()), msg.getRadius(), msg.getTitle(), msg.getBody(), msg.getUser().getNickname());
 					} catch (RemoteException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -176,7 +180,7 @@ public class MosaicService extends Service implements LocationListener {
 				if (!newIds.contains(id))
 					removalIds.add(id);
 			}
-			for (long id : removalIds) {
+			for (Long id : removalIds) {
 				messages.remove(id);
 				if (iMain != null) {
 					try {
@@ -358,6 +362,54 @@ public class MosaicService extends Service implements LocationListener {
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle arg2) {
 		// TODO Auto-generated method stub
+	}
+	
+	public String[] getTitlesByDistance(double lat, double lon) {
+		double[] distances = new double[messages.size()];
+		String[] titles = new String[distances.length];
+		for (int i = 0; i < distances.length; i++)
+			distances[i] = 0;
+		Iterator<Long> keys = messages.keySet().iterator();
+		while (keys.hasNext()) {
+			MosaicMessage msg = messages.get(keys.next());
+			double distance = distance(fromE6(msg.getLatitudeE6()), fromE6(msg.getLongitudeE6()), lat, lon);
+			for (int i = 0; i < distances.length; i++) {
+				if (distance < distances[i]) {
+					int n = distances.length - 2;
+					while (n >= i) {
+						distances[n + 1] = distances[n];
+						titles[n + 1] = titles[n];
+						n--;
+					}
+					distances[i] = distance;
+					titles[i] = msg.getTitle();
+					break;
+				} else if (i == (distances.length - 1)) {
+					distances[i] = distance;
+					titles[i] = msg.getTitle();
+				}
+			}
+		}
+		return titles;
+	}
+
+	private double distance(double lat1, double lon1, double lat2, double lon2) {
+		double p1lat = Math.toRadians(lat1);
+		double p1lon = Math.toRadians(lon1);
+		double p2lat = Math.toRadians(lat2);
+		double p2lon = Math.toRadians(lon2);
+		return Mosaic.EARTH_RADIUS
+				* Math.acos(makeDoubleInRange(Math.sin(p1lat) * Math.sin(p2lat)
+						+ Math.cos(p1lat) * Math.cos(p2lat)
+						* Math.cos(p2lon - p1lon)));
+	}
+
+	private double makeDoubleInRange(double d) {
+		if (d > 1)
+			return 1;
+		else if (d < -1)
+			return -1;
+		return d;
 	}
 
 	class InsertUserTask extends AsyncTask<Void, Void, Void> {
